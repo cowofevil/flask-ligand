@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools ~= 63.4", "wheel ~= 0.37", "pbr ~= 5.9"]
+build-backend = "pbr.build"
+
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.semantic_release]
+branch = "main"
+version_pattern = "setup.cfg:version = {version}"
+version_variable = "flask_ligand/__init__.py:__version__"
+commit_parser = "semantic_release.history.emoji_parser"
