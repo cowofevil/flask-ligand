@@ -47,7 +47,9 @@ Setup Python Development Environment
 Configuration Settings
 ----------------------
 
-The following environment variables are available to configure behavior of services that use this library:
+The following environment variables are available to configure behavior of services that use this library.
+
+(**Note**: this project does support the use of '.env' files for loading environment variables)
 
 .. list-table:: **Environment Variable Settings**
    :widths: 25 35 50

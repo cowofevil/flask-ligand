@@ -160,6 +160,7 @@ class FlaskLocalConfig(DevConfig):
                 ]
             },
             "OIDC_ISSUER_URL": os.getenv("OIDC_ISSUER_URL"),
+            "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:"),
         }
 
         combined_settings = {**flask_local_settings, **kwargs}
