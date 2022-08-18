@@ -1,9 +1,10 @@
 # ======================================================================================================================
 # Imports
 # ======================================================================================================================
+from __future__ import annotations
 import flask
 import pytest
-from typing import Any, Callable
+from typing import TYPE_CHECKING
 from flask.testing import FlaskClient
 from pytest_mock import MockerFixture
 from flask_ligand import create_app
@@ -11,6 +12,13 @@ from flask_jwt_extended import create_access_token
 from flask_ligand.extensions.jwt import JWT
 
 pytest_plugins = ["flask_ligand"]
+
+
+# ======================================================================================================================
+# Type Checking
+# ======================================================================================================================
+if TYPE_CHECKING:
+    from typing import Any, Callable
 
 
 # ======================================================================================================================
