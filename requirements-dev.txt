@@ -1,5 +1,5 @@
 black~=22.6
-coverage~=6.4
+coverage[toml]~=6.4
 flake8~=5.0
 ipython~=8.4
 mypy~=0.971

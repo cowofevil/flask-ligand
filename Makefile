@@ -98,7 +98,7 @@ lint: ## check style with flake8
 
 .PHONY: type-check
 type-check: ## check Python types using mypy
-	@mypy --install-types --non-interactive flask_ligand app.py setup.py tests
+	@mypy flask_ligand app.py setup.py tests
 
 .PHONY: format
 format: ## format code using black
