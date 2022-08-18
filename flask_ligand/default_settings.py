@@ -43,14 +43,13 @@ class _DefaultConfig(dict):  # type: ignore
             "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
         }
 
-        # TODO: This needs to be changed to using an env_var for configuring PostgreSQL as the database. []
         basic_default_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL"),
             "API_SPEC_OPTIONS": {"servers": [{"url": os.getenv("SERVICE_PUBLIC_URL"), "description": "Public URL"}]},
             "JSON_SORT_KEYS": False,
             "SQLALCHEMY_TRACK_MODIFICATIONS": False,
-            "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:"),
+            "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI"),
             "VERIFY_SSL_CERT": True,
         }
 

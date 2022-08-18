@@ -62,6 +62,7 @@ class TestDefaultConfig(object):
             "SERVICE_PUBLIC_URL": "http://service.public.url",
             "SERVICE_PRIVATE_URL": "http://service.private.url",
             "OIDC_REALM": "oidc_realm",
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
         }
 
         mocker.patch.dict("os.environ", mocked_env)
@@ -86,7 +87,7 @@ class TestDefaultConfig(object):
             "API_SPEC_OPTIONS": {"servers": [{"url": mocked_env["SERVICE_PUBLIC_URL"], "description": "Public URL"}]},
             "JSON_SORT_KEYS": False,
             "SQLALCHEMY_TRACK_MODIFICATIONS": False,
-            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "SQLALCHEMY_DATABASE_URI": mocked_env["SQLALCHEMY_DATABASE_URI"],
             "VERIFY_SSL_CERT": True,
             "OIDC_REALM": mocked_env["OIDC_REALM"],
             "JWT_TOKEN_LOCATION": "headers",

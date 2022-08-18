@@ -44,6 +44,37 @@ Setup Python Development Environment
 
     $ make test-all
 
+Configuration Settings
+----------------------
+
+The following environment variables are available to configure behavior of services that use this library:
+
+.. list-table:: **Environment Variable Settings**
+   :widths: 25 35 50
+
+   * - **ENV**
+     - **Default Value for 'local' Environment**
+     - **Description**
+
+   * - ``SERVICE_PUBLIC_URL``
+     - ``http://localhost:5000``
+     - The public URL for this service. (Used for generating OpenAPI clients)
+   * - ``SERVICE_PRIVATE_URL``
+     - ``http://localhost:5000``
+     - The private URL for this service. (Used for generating OpenAPI clients)
+   * - ``OIDC_ISSUER_URL``
+     - *None* (must be provided)
+     - The Keycloak IAM URL to use for authentication.
+   * - ``OIDC_REALM``
+     - *None* (must be provided)
+     - The Keycloak IAM realm to use for authentication.
+   * - ``SQLALCHEMY_DATABASE_URI``
+     - ``sqlite:///:memory:``
+     - The URI for a PostgreSQL database to use for persistent storage.
+   * - ``OPENAPI_GEN_SERVER_URL``
+     - ``http://api.openapi-generator.tech``
+     - The OpenAPI online generator server URL to use for creating clients.
+
 Contributing
 ------------
 
