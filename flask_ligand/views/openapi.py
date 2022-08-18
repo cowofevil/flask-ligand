@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 # Globals
 # ======================================================================================================================
 BLP = Blueprint(
-    "Emotimetrix OpenAPI Generator",
+    "OpenAPI Client Generator",
     __name__,
     url_prefix="/openapi",
     description="Provides download links to pre-configured OpenAPI clients for this service.",
