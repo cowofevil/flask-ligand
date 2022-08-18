@@ -3,6 +3,13 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.1.2 (2022-08-18)
+### :robot:
+* [504:robot:] Fix Configuration Setting Issue and Update Docs ([`c3aea6c`](https://github.com/cowofevil/flask-ligand/commit/c3aea6c9f40b9f1bd2dd3da96f551733985c0332))
+
+### Other
+* [CHORE] Merge Coverage and Mypy Configuration into Pyproject ([`c187bf4`](https://github.com/cowofevil/flask-ligand/commit/c187bf42dea9b6316dee5a49eed2e9473e2f39c3))
+
 ## v0.1.1 (2022-08-18)
 ### :robot:
 * [FIX:robot:] Update Flask and Fix Type Checking ([`7dbc587`](https://github.com/cowofevil/flask-ligand/commit/7dbc587d71bee3b111dc03ff539222959cbce426))
