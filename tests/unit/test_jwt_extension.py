@@ -8,20 +8,18 @@ import pytest
 from typing import TYPE_CHECKING
 from flask.views import MethodView
 from flask.testing import FlaskClient
-from flask_jwt_extended import current_user
 from marshmallow_sqlalchemy import auto_field
-from sqlalchemy_utils.types.uuid import UUIDType
 from flask_ligand.extensions.database import DB
 from flask_ligand.extensions.api import Blueprint, AutoSchema
-from flask_ligand.extensions.jwt import jwt_role_required, User, DefaultRolesEnum
+from flask_ligand.extensions.jwt import jwt_role_required, DefaultRolesEnum
 
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:
+    from typing import Any
     from flask import Flask
-    from typing import List, Dict, Any
 
 
 # ======================================================================================================================
@@ -34,7 +32,6 @@ BLP = Blueprint(
     url_prefix=JWT_TEST_URL.rstrip("/"),
     description="JWT TEST",
 )
-USER_INFO: User = current_user  # Add type hinting for better autocomplete
 USER_ROLES = [DefaultRolesEnum.user.value]
 ADMIN_ROLES = [
     DefaultRolesEnum.user.value,
@@ -51,7 +48,6 @@ class JwtTestModel(DB.Model):  # type: ignore
     __tablename__ = "jwttest"
 
     message = DB.Column(DB.String(), primary_key=True, nullable=False)
-    user_id = DB.Column(UUIDType(binary=False), nullable=False)
 
 
 class JwtTestSchema(AutoSchema):
@@ -61,7 +57,6 @@ class JwtTestSchema(AutoSchema):
         model = JwtTestModel
 
     message = auto_field(required=True)
-    user_id = auto_field(required=True)
 
 
 @BLP.route("/")
@@ -97,10 +92,10 @@ def jwt_test_url() -> str:
 
 
 @pytest.fixture(scope="function")
-def jwt_test_data_set(user_info: Dict[str, Any]) -> List[Dict[str, Any]]:
+def jwt_test_data_set() -> list[dict[str, Any]]:
     """Test data set for the 'JwtTestView' endpoint."""
 
-    data_set = [{"message": f"message_{i}", "user_id": user_info["id"]} for i in range(3)]
+    data_set = [{"message": f"message_{i}"} for i in range(3)]
 
     return data_set
 
@@ -116,7 +111,7 @@ def jwt_test_client(basic_flask_app: Flask) -> FlaskClient:
 
 @pytest.fixture(scope="function")
 def primed_test_client(
-    jwt_test_client: FlaskClient, jwt_test_url: str, jwt_test_data_set: List[Dict[str, Any]]
+    jwt_test_client: FlaskClient, jwt_test_url: str, jwt_test_data_set: list[dict[str, Any]]
 ) -> FlaskClient:
     """Flask app configured for testing with the database pre-populated with test data."""
 
@@ -131,15 +126,12 @@ def primed_test_client(
 # Test Suites
 # ======================================================================================================================
 class TestJwtExtension(object):
-    """Test cases for verifying the JWT decorators and associated user info."""
+    """Test cases for verifying the JWT decorators."""
 
     # noinspection PyTestParametrized
     @pytest.mark.parametrize("default_roles", [USER_ROLES, ADMIN_ROLES])
     def test_authorized_role(self, primed_test_client, jwt_test_url, access_token_headers):
-        """
-        Verify that the current user role is authorized to access endpoint as well as the user ID and group ID are
-        granted permission to view the resource data.
-        """
+        """Verify that the current user role is authorized to access endpoint"""
 
         with primed_test_client.get(jwt_test_url, headers=access_token_headers) as ret:
             assert ret.status_code == 200
@@ -147,14 +139,14 @@ class TestJwtExtension(object):
 
 
 class TestNegativeJwtExtension(object):
-    """Negative test cases for verifying the JWT decorators and associated user info."""
+    """Negative test cases for verifying the JWT decorators."""
 
     # noinspection PyTestParametrized
     @pytest.mark.parametrize("default_roles", [["insufficient_role"]])
     def test_unauthorized_role(self, primed_test_client, jwt_test_url, access_token_headers):
         """
         Verify that the correct HTTP code is returned when attempting to access a protected endpoint using a JWT
-        access token that doesn't have the appropriate role for specified.
+        access token that doesn't have the appropriate role specified to access the endpoint.
 
         Note: This test does a trick with parameterization to override the implicitly imported "default_roles"
         fixture. See this documentation for more details:

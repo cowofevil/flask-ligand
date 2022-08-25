@@ -36,25 +36,26 @@ class _DefaultConfig(dict):  # type: ignore
 
         open_api_default_settings: dict[str, Any] = {
             "OPENAPI_GEN_SERVER_URL": os.getenv("OPENAPI_GEN_SERVER_URL"),
-            "OPENAPI_VERSION": "3.0.3",
+            "OPENAPI_VERSION": os.getenv("OPENAPI_VERSION", "3.0.3"),
             "OPENAPI_URL_PREFIX": "/",
             "OPENAPI_JSON_PATH": "/openapi/api-spec.json",
-            "OPENAPI_SWAGGER_UI_PATH": "/apidocs",
+            "OPENAPI_SWAGGER_UI_PATH": os.getenv("OPENAPI_SWAGGER_UI_PATH", "/apidocs"),
             "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
+            "API_SPEC_OPTIONS": {"servers": [{"url": os.getenv("SERVICE_PUBLIC_URL"), "description": "Public URL"}]},
         }
 
         basic_default_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL"),
-            "API_SPEC_OPTIONS": {"servers": [{"url": os.getenv("SERVICE_PUBLIC_URL"), "description": "Public URL"}]},
-            "JSON_SORT_KEYS": False,
-            "SQLALCHEMY_TRACK_MODIFICATIONS": False,
             "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI"),
-            "VERIFY_SSL_CERT": True,
+            "SQLALCHEMY_TRACK_MODIFICATIONS": False,
+            "JSON_SORT_KEYS": False,
         }
 
         auth_default_settings: dict[str, Any] = {
+            "OIDC_ISSUER_URL": os.getenv("OIDC_ISSUER_URL"),
             "OIDC_REALM": os.getenv("OIDC_REALM"),
+            "VERIFY_SSL_CERT": True,
             "JWT_TOKEN_LOCATION": "headers",
             "JWT_HEADER_NAME": "Authorization",
             "JWT_HEADER_TYPE": "Bearer",
@@ -103,9 +104,7 @@ class ProdConfig(_DefaultConfig):
 
         prod_settings: dict[str, Any] = {
             "JWT_ALGORITHM": "RS256",
-            "JWT_DECODE_AUDIENCE": "account",
-            "JWT_IDENTITY_CLAIM": "email",
-            "OIDC_ISSUER_URL": os.getenv("OIDC_ISSUER_URL"),
+            "JWT_DECODE_AUDIENCE": os.getenv("JWT_DECODE_AUDIENCE"),
         }
 
         combined_settings = {**prod_settings, **kwargs}
@@ -113,7 +112,7 @@ class ProdConfig(_DefaultConfig):
         super().__init__(api_title, api_version, openapi_client_name, **combined_settings)
 
 
-class DevConfig(ProdConfig):
+class StagingConfig(ProdConfig):
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
         """Configuration for development/staging environments.
 
@@ -135,7 +134,7 @@ class DevConfig(ProdConfig):
         super().__init__(f"DEV {api_title}", api_version, openapi_client_name, **combined_settings)
 
 
-class FlaskLocalConfig(DevConfig):
+class FlaskLocalConfig(StagingConfig):
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
         """Configuration used for running a local Flask server.
 
@@ -150,17 +149,17 @@ class FlaskLocalConfig(DevConfig):
                 uppercase.
         """
 
+        # noinspection HttpUrlsUsage
         flask_local_settings: dict[str, Any] = {
-            "OPENAPI_GEN_SERVER_URL": os.getenv("OPENAPI_GEN_SERVER_URL", "http://api.openapi-generator.tech"),
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://localhost:5000"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL", "http://localhost:5000"),
+            "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:"),
+            "OPENAPI_GEN_SERVER_URL": os.getenv("OPENAPI_GEN_SERVER_URL", "http://api.openapi-generator.tech"),
             "API_SPEC_OPTIONS": {
                 "servers": [
                     {"url": os.getenv("SERVICE_PUBLIC_URL", "http://localhost:5000"), "description": "Public URL"}
                 ]
             },
-            "OIDC_ISSUER_URL": os.getenv("OIDC_ISSUER_URL"),
-            "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:"),
         }
 
         combined_settings = {**flask_local_settings, **kwargs}
@@ -184,18 +183,18 @@ class TestingConfig(_DefaultConfig):
         """
 
         testing_settings: dict[str, Any] = {
-            "OPENAPI_GEN_SERVER_URL": "http://openapi.fake.address",
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://public.url"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL", "http://private.url"),
+            "OIDC_REALM": "TESTING",
+            "OIDC_ISSUER_URL": "TESTING",
+            "VERIFY_SSL_CERT": False,
+            "JWT_ACCESS_TOKEN_EXPIRES": 300,
+            "JWT_SECRET_KEY": "super-duper-secret",
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "OPENAPI_GEN_SERVER_URL": "http://openapi.fake.address",
             "API_SPEC_OPTIONS": {
                 "servers": [{"url": os.getenv("SERVICE_PUBLIC_URL", "http://public.url"), "description": "Public URL"}]
             },
-            "TESTING": True,
-            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
-            "VERIFY_SSL_CERT": False,
-            "JWT_SECRET_KEY": "super-duper-secret",
-            "JWT_ACCESS_TOKEN_EXPIRES": 300,
-            "OIDC_ISSUER_URL": "TESTING",
         }
 
         combined_settings = {**testing_settings, **kwargs}
@@ -208,7 +207,7 @@ class TestingConfig(_DefaultConfig):
 # ======================================================================================================================
 ENVIRONMENTS = {
     "prod": ProdConfig,
-    "dev": DevConfig,
+    "stage": StagingConfig,
     "local": FlaskLocalConfig,
     "testing": TestingConfig,
 }
@@ -223,7 +222,7 @@ def flask_environment_configurator(
     api_title: str,
     api_version: str,
     openapi_client_name: str,
-    **kwargs: dict[str, Any],
+    **kwargs: Any,
 ) -> None:
     """Update a Flask app configuration for a given environment with optional setting overrides.
 
@@ -231,13 +230,13 @@ def flask_environment_configurator(
         app: The root Flask app to configure with the given extension.
         environment: The target environment to create a Flask configuration object for. Available environments:
             'prod': Configured for use in a production environment.
-            'dev': Configured for use in a development/staging environment.
+            'stage': Configured for use in a development/staging environment.
             'local': Configured for use with a local Flask server.
             'testing': Configured for use in unit testing.
         api_title: The title (name) of the API to display in the OpenAPI documentation.
         api_version: The semantic version for the OpenAPI client.
         openapi_client_name: The package name to use for generated OpenAPI clients.
-        kwargs: Additional settings to add to the configuration object.
+        kwargs: Additional settings to add to the configuration object or overrides for unprotected settings.
 
     Raises:
         RuntimeError: Attempted to override a protected setting, specified an additional setting that was not all
