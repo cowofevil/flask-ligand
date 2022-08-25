@@ -17,6 +17,7 @@ Prerequisites
 
 - Python 3.10+
 - virtualenvwrapper_
+- Docker_
 
 Getting Help with Make Tasks
 ============================
@@ -42,40 +43,49 @@ Setup Python Development Environment
 
 4. Verify that environment is ready for development::
 
-    $ make test-all
+    $ make test-tox
 
 Configuration Settings
 ----------------------
 
-The following environment variables are available to configure behavior of services that use this library.
+The following environment variables are available to configure behavior of services that use this library when utilizing
+the built-in 'local' and 'dev' and 'prod' Flask environments. (See `flask_environments.rst`_ for more details about the
+available built-in Flask environments)
 
 (**Note**: this project does support the use of '.env' files for loading environment variables)
 
 .. list-table:: **Environment Variable Settings**
    :widths: 25 35 50
+   :header-rows: 1
 
-   * - **ENV**
-     - **Default Value for 'local' Environment**
-     - **Description**
-
+   * - ENV
+     - Default Value for 'local' Flask Environment
+     - Description
    * - ``SERVICE_PUBLIC_URL``
      - ``http://localhost:5000``
-     - The public URL for this service. (Used for generating OpenAPI clients)
+     - The public URL for this service. (Also used for generating OpenAPI clients)
    * - ``SERVICE_PRIVATE_URL``
      - ``http://localhost:5000``
-     - The private URL for this service. (Used for generating OpenAPI clients)
+     - The private URL for this service. (Also used for generating OpenAPI clients)
    * - ``OIDC_ISSUER_URL``
-     - *None* (must be provided)
-     - The Keycloak IAM URL to use for authentication.
+     - *Not set* (must be provided)
+     - The OpenID Connect IAM URL to use for authentication.
    * - ``OIDC_REALM``
-     - *None* (must be provided)
-     - The Keycloak IAM realm to use for authentication.
+     - *Not set* (must be provided)
+     - The OpenID Connect IAM realm to use for authentication.
    * - ``SQLALCHEMY_DATABASE_URI``
      - ``sqlite:///:memory:``
-     - The URI for a PostgreSQL database to use for persistent storage.
+     - The URI for a PostgreSQL database to use for persistent storage. (See `database_configuration.rst`_ for more
+       information)
    * - ``OPENAPI_GEN_SERVER_URL``
      - ``http://api.openapi-generator.tech``
      - The OpenAPI online generator server URL to use for creating clients.
+
+Integration Testing
+-------------------
+
+See `integration_testing.rst`_ for more details on how to setup and run the integration tests for the ``flask-ligand``
+project.
 
 Contributing
 ------------
@@ -95,9 +105,13 @@ very convenient to use on a regular basis and instead it is recommended to integ
 workflow. Checkout these `editor integration`_ guides for integrating `Python Black`_ with popular IDEs and text
 editors.
 
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _Docker: https://www.docker.com/products/docker-desktop/
+.. _flask_environments.rst: docs/flask_environments.rst
+.. _database_configuration.rst: docs/database_configuration.rst
+.. _integration_testing.rst: docs/integration_testing.rst
 .. _CONTRIBUTING.rst: CONTRIBUTING.rst
 .. _release_process.rst: docs/release_process.rst
-.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 .. _Python Black: https://black.readthedocs.io/en/stable/
 .. _editor integration: https://black.readthedocs.io/en/stable/integrations/editors.html
 

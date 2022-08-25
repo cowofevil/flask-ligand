@@ -45,7 +45,7 @@ Setup Python Development Environment
 
 4. Verify that environment is ready for development::
 
-    $ make test-all
+    $ make test-tox
 
 Setup Fork & Local Feature Branch
 ---------------------------------
@@ -79,7 +79,7 @@ for the change you'll be proposing in the pull request!
 
 Simply execute the following ``make`` target to run tests against all supported Python versions::
 
-    $ make test-all
+    $ make test-tox
 
 Commit Message Formatting
 -------------------------

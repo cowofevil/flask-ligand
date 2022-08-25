@@ -120,7 +120,7 @@ def init_app(app: Flask) -> None:
         oidc_config = get(
             url_path_join(
                 app.config["OIDC_ISSUER_URL"],
-                f"auth/realms/{app.config['OIDC_REALM']}/.well-known/openid-configuration",
+                f"realms/{app.config['OIDC_REALM']}/.well-known/openid-configuration",
             ),
             verify=verify_ssl_cert,
         ).json()

@@ -19,21 +19,19 @@ __version__ = "0.1.2"
 # ======================================================================================================================
 # Functions: Public
 # ======================================================================================================================
-def create_app(
-    flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, str]
-) -> Flask:
+def create_app(flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: str) -> Flask:
     """Create Flask application.
 
     Args:
         flask_env: Specify the environment to use when launching the flask app. Available environments:
             'prod': Configured for use in a production environment.
-            'dev': Configured for use in a development/staging environment.
+            'stage': Configured for use in a development/staging environment.
             'local': Configured for use with a local Flask server.
             'testing': Configured for use in unit testing.
         api_title: The title (name) of the API to display in the OpenAPI documentation.
         api_version: The semantic version for the OpenAPI client.
         openapi_client_name: The package name to use for generated OpenAPI clients.
-        kwargs: Additional settings to add to the configuration object.
+        kwargs: Additional settings to add to the configuration object or overrides for unprotected settings.
 
     Returns:
         Fully configured Flask application.
@@ -44,7 +42,7 @@ def create_app(
     """
 
     app = Flask(__name__)
-    CORS(app, expose_headers=["x-pagination", "etag"])  # TODO: this is very dangerous and needs to be addressed! [271]
+    CORS(app, expose_headers=["x-pagination", "etag"])  # TODO: this needs to be configurable! [271]
 
     flask_environment_configurator(app, flask_env, api_title, api_version, openapi_client_name, **kwargs)
 

@@ -40,7 +40,7 @@ Setup Python Development Environment
 
 4. Verify that environment is ready for development::
 
-    $ make test-all
+    $ make test-tox
 
 Configuring Environment Variables
 ---------------------------------

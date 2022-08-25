@@ -4,23 +4,20 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import flask
 import pytest
 from flask import Flask
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock
-from pytest_mock import MockerFixture
+from flask_ligand.default_settings import TestingConfig as ConfigForTesting  # Renamed because of pytest warning
 
 # noinspection PyProtectedMember
 from flask_ligand.default_settings import (
     _DefaultConfig,
     ProdConfig,
-    DevConfig,
+    StagingConfig,
     FlaskLocalConfig,
     ENVIRONMENTS,
     flask_environment_configurator,
 )
-from flask_ligand.default_settings import TestingConfig as ConfigForTesting  # Renamed because of pytest warning
 
 
 # ======================================================================================================================
@@ -28,6 +25,8 @@ from flask_ligand.default_settings import TestingConfig as ConfigForTesting  # R
 # ======================================================================================================================
 if TYPE_CHECKING:
     from typing import Any
+    from unittest.mock import MagicMock
+    from pytest_mock import MockerFixture
     from pytest_flask_ligand import FlaskLigandTestHelpers
 
 
@@ -61,6 +60,7 @@ class TestDefaultConfig(object):
             "OPENAPI_GEN_SERVER_URL": "http://openapi.gen.server.url",
             "SERVICE_PUBLIC_URL": "http://service.public.url",
             "SERVICE_PRIVATE_URL": "http://service.private.url",
+            "OIDC_ISSUER_URL": "http://oidc.issuer.url",
             "OIDC_REALM": "oidc_realm",
             "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
         }
@@ -89,6 +89,7 @@ class TestDefaultConfig(object):
             "SQLALCHEMY_TRACK_MODIFICATIONS": False,
             "SQLALCHEMY_DATABASE_URI": mocked_env["SQLALCHEMY_DATABASE_URI"],
             "VERIFY_SSL_CERT": True,
+            "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
             "OIDC_REALM": mocked_env["OIDC_REALM"],
             "JWT_TOKEN_LOCATION": "headers",
             "JWT_HEADER_NAME": "Authorization",
@@ -200,8 +201,7 @@ class TestProdConfig(object):
 
         config_exp: dict[str, Any] = {
             "JWT_ALGORITHM": "RS256",
-            "JWT_DECODE_AUDIENCE": "account",
-            "JWT_IDENTITY_CLAIM": "email",
+            "JWT_DECODE_AUDIENCE": None,
             "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
         }
 
@@ -265,7 +265,7 @@ class TestDevConfig(object):
 
         config_exp: dict[str, Any] = {"VERIFY_SSL_CERT": False}
 
-        config_actual = DevConfig(
+        config_actual = StagingConfig(
             default_config_args["api_title"],
             default_config_args["api_version"],
             default_config_args["openapi_client_name"],
@@ -278,7 +278,7 @@ class TestDevConfig(object):
 
         config_setting_override_exp: dict[str, Any] = {"VERIFY_SSL_CERT": True}
 
-        config_actual = DevConfig(
+        config_actual = StagingConfig(
             default_config_args["api_title"],
             default_config_args["api_version"],
             default_config_args["openapi_client_name"],
@@ -292,7 +292,7 @@ class TestDevConfig(object):
 
         config_additional_setting_exp: dict[str, Any] = {"A_NEW_SETTING": "a new setting value"}
 
-        config_actual = DevConfig(
+        config_actual = StagingConfig(
             default_config_args["api_title"],
             default_config_args["api_version"],
             default_config_args["openapi_client_name"],
@@ -376,6 +376,7 @@ class TestNegativeFlaskLocalConfig(object):
             default_config_args["openapi_client_name"],
         )
 
+        # noinspection HttpUrlsUsage
         assert config_actual["OPENAPI_GEN_SERVER_URL"] == "http://api.openapi-generator.tech"
         assert config_actual["SERVICE_PUBLIC_URL"] == "http://localhost:5000"
         assert config_actual["SERVICE_PRIVATE_URL"] == "http://localhost:5000"
@@ -405,7 +406,6 @@ class TestTestingConfig(object):
             "SERVICE_PUBLIC_URL": mocked_env["SERVICE_PUBLIC_URL"],
             "SERVICE_PRIVATE_URL": mocked_env["SERVICE_PRIVATE_URL"],
             "API_SPEC_OPTIONS": {"servers": [{"url": mocked_env["SERVICE_PUBLIC_URL"], "description": "Public URL"}]},
-            "TESTING": True,
             "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
             "VERIFY_SSL_CERT": False,
             "JWT_SECRET_KEY": "super-duper-secret",
@@ -479,15 +479,15 @@ class TestFlaskEnvironmentConfigurator(object):
 
     @pytest.mark.parametrize(
         "env_name,env_config_class",
-        [("prod", ProdConfig), ("dev", DevConfig), ("local", FlaskLocalConfig), ("testing", ConfigForTesting)],
+        [("prod", ProdConfig), ("dev", StagingConfig), ("local", FlaskLocalConfig), ("testing", ConfigForTesting)],
     )
     def test_configure_environment(
         self,
         default_config_args: dict[str, Any],
-        unconfigured_flask_app: flask.Flask,
+        unconfigured_flask_app: Flask,
         mocker: MockerFixture,
         env_name: str,
-        env_config_class: ProdConfig | DevConfig | FlaskLocalConfig | ConfigForTesting,
+        env_config_class: ProdConfig | StagingConfig | FlaskLocalConfig | ConfigForTesting,
     ) -> None:
         """Verify the configurator builds the correct config settings for each defined environment."""
 

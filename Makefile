@@ -50,9 +50,34 @@ check-pre-commit: ## verify that git pre-commit hooks are setup
 check-dirty: check-pre-commit ## verify that git is clean and ready to merge
 	@git diff --quiet || (echo 'Git staging is dirty!'; exit 1)
 
+.PHONY: check-integration
+check-integration: ## verify that the Docker environment for integration testing is running (~120sec timeout)
+	@rm -f /tmp/ligand.resp; \
+	until [ -s /tmp/ligand.resp ] || (( count++ >= 8 )); do \
+  	touch -f /tmp/ligand.resp; \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -o /tmp/ligand.resp -s -X GET --url \
+	http://localhost:8080/realms/flask-ligand/.well-known/openid-configuration 2>&1 1>/dev/null; \
+	sleep 5; \
+	done; \
+	if [ ! -s /tmp/ligand.resp ]; then echo 'Integration testing environment is not running!' && exit 1; fi
+
 .PHONY: setup-pre-commit
 setup-pre-commit: check-venv ## setup git pre-commit hooks
 	@pre-commit install
+
+.PHONY: setup-integration
+setup-integration: ## setup the Docker environment for integration testing
+	@docker compose up -d
+
+.PHONY: teardown-integration
+teardown-integration: ## teardown the Docker environment for integration testing
+	@docker compose down
+
+.PHONY: gen-local-env-file
+gen-local-env-file: setup-integration check-integration ## generate an '.env' file for accessing the integration environment
+	@echo -e "OIDC_ISSUER_URL=http://localhost:8080\n"\
+	"OIDC_REALM=flask-ligand\n"\
+	"SQLALCHEMY_DATABASE_URI=postgresql+pg8000://admin:password@localhost:5432/app" > '.env'
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-mypy-cache clean-pip-cache clean-test  ## remove all build, test, coverage, artifacts and wipe virtualenv
@@ -88,6 +113,10 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache/
 
+.PHONY: clean-integration
+clean-integration: teardown-integration ## destroy the PostgreSQL database used for integration testing
+	sudo rm -rf docker/db-data/
+
 .PHONY: clean-venv
 clean-venv: check-venv ## remove all packages from current virtual environment
 	@source virtualenvwrapper.sh && wipeenv || echo "Skipping wipe of environment"
@@ -106,15 +135,22 @@ format: ## format code using black
 
 .PHONY: test
 test: ## run tests quickly with the default Python
-	@pytest tests
+	@pytest -p no:warnings tests/unit
+
+.PHONY: test-integration
+test-integration: setup-integration check-integration ## run integration tests
+	@pytest -p no:warnings tests/integration
+
+.PHONY: test-tox
+test-tox: ## run unit tests, linting, formatting and type checking on every Python version with tox
+	@tox -p
 
 .PHONY: test-all
-test-all: ## run tests, linting, formatting and type checking on every Python version with tox
-	@tox -p
+test-all: test-tox test-integration ## run unit tests, integration tests, linting, formatting and type checking
 
 .PHONY: coverage-term
 coverage-term: ## check code coverage with a simple terminal report
-	@coverage run --source flask_ligand -m pytest
+	@coverage run --source flask_ligand -m pytest -p no:warnings tests/unit
 	@coverage report -m
 
 .PHONY: coverage-html
@@ -145,8 +181,16 @@ develop: clean ## install necessary packages to setup a dev environment
 .PHONY: develop-venv
 develop-venv: clean-venv develop ## setup a dev environment after wiping the virtual environment
 
+.PHONY: run
+run:  ## run the app in a Flask server (requires an auth service)
+	@FLASK_ENV='local' flask run
+
+.PHONY: run-debug
+run-debug:  ## run the app in a Flask server (requires an auth service) with debug mode enabled
+	@FLASK_ENV='local' FLASK_DEBUG='1' flask run
+
 .PHONY: bump-version
-bump-version: check-dirty test-all ## determine the new version number from commits, create release commit, and create a tag.
+bump-version: check-dirty test-tox ## determine the new version number from commits, create release commit, and create a tag.
 	@semantic-release version
 
 .PHONY: build
