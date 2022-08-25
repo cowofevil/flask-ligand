@@ -3,6 +3,13 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.1.3 (2022-08-25)
+### :robot:
+* [507:robot:] Configure Database Provider and URI ([`7e3d0c7`](https://github.com/cowofevil/flask-ligand/commit/7e3d0c7e1ce231893be80b6fd78802f0f589c347))
+
+### Other
+* [FIX] Enable SQLite Memory Database URI for Local Environment ([`fd5de8a`](https://github.com/cowofevil/flask-ligand/commit/fd5de8a4e7ad60368caa4e5c4604a944ab54c3dd))
+
 ## v0.1.2 (2022-08-18)
 ### :robot:
 * [504:robot:] Fix Configuration Setting Issue and Update Docs ([`c3aea6c`](https://github.com/cowofevil/flask-ligand/commit/c3aea6c9f40b9f1bd2dd3da96f551733985c0332))
