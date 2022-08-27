@@ -40,6 +40,10 @@ The 'prod' environment is meant to run the microservice in a production environm
      - *Not set* (must be provided)
      - *Yes*
      - The private URL for this service. (Also used for generating OpenAPI clients)
+   * - ``ALLOWED_ROLES``
+     - *Not set* (must be provided)
+     - *Yes*
+     - A comma separated list of user roles that are allowed for endpoint protection. (e.g. 'user,admin')
    * - ``OIDC_ISSUER_URL``
      - *Not set* (must be provided)
      - *Yes*
@@ -179,6 +183,10 @@ table below contains only the settings that are different from the ``prod`` envi
      - ``http://localhost:5000``
      - *Yes*
      - The private URL for this service. (Also used for generating OpenAPI clients)
+   * - ``ALLOWED_ROLES``
+     - ``user,admin``
+     - *Yes*
+     - A comma separated list of user roles that are allowed for endpoint protection. (e.g. 'user,admin')
    * - ``VERIFY_SSL_CERT``
      - ``False``
      - *No*

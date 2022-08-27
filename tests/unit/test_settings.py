@@ -57,12 +57,13 @@ class TestDefaultConfig(object):
         """Verify that the correct default config settings are created for all inherited environments."""
 
         mocked_env = {
-            "OPENAPI_GEN_SERVER_URL": "http://openapi.gen.server.url",
             "SERVICE_PUBLIC_URL": "http://service.public.url",
             "SERVICE_PRIVATE_URL": "http://service.private.url",
+            "ALLOWED_ROLES": "user,admin",
             "OIDC_ISSUER_URL": "http://oidc.issuer.url",
             "OIDC_REALM": "oidc_realm",
             "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "OPENAPI_GEN_SERVER_URL": "http://openapi.gen.server.url",
         }
 
         mocker.patch.dict("os.environ", mocked_env)
@@ -76,26 +77,27 @@ class TestDefaultConfig(object):
             "API_TITLE": default_config_args["api_title"],
             "API_VERSION": default_config_args["api_version"],
             "OPENAPI_CLIENT_NAME": default_config_args["openapi_client_name"],
+            "SERVICE_PUBLIC_URL": mocked_env["SERVICE_PUBLIC_URL"],
+            "SERVICE_PRIVATE_URL": mocked_env["SERVICE_PRIVATE_URL"],
+            "ALLOWED_ROLES": mocked_env["ALLOWED_ROLES"].split(","),
+            "SQLALCHEMY_DATABASE_URI": mocked_env["SQLALCHEMY_DATABASE_URI"],
+            "SQLALCHEMY_TRACK_MODIFICATIONS": False,
+            "JSON_SORT_KEYS": False,
+            "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
+            "OIDC_REALM": mocked_env["OIDC_REALM"],
+            "VERIFY_SSL_CERT": True,
+            "JWT_TOKEN_LOCATION": "headers",
+            "JWT_HEADER_NAME": "Authorization",
+            "JWT_HEADER_TYPE": "Bearer",
+            "JWT_ERROR_MESSAGE_KEY": "message",
+            "JWT_PUBLIC_KEY": "",
             "OPENAPI_GEN_SERVER_URL": mocked_env["OPENAPI_GEN_SERVER_URL"],
             "OPENAPI_VERSION": "3.0.3",
             "OPENAPI_URL_PREFIX": "/",
             "OPENAPI_JSON_PATH": "/openapi/api-spec.json",
             "OPENAPI_SWAGGER_UI_PATH": "/apidocs",
             "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
-            "SERVICE_PUBLIC_URL": mocked_env["SERVICE_PUBLIC_URL"],
-            "SERVICE_PRIVATE_URL": mocked_env["SERVICE_PRIVATE_URL"],
             "API_SPEC_OPTIONS": {"servers": [{"url": mocked_env["SERVICE_PUBLIC_URL"], "description": "Public URL"}]},
-            "JSON_SORT_KEYS": False,
-            "SQLALCHEMY_TRACK_MODIFICATIONS": False,
-            "SQLALCHEMY_DATABASE_URI": mocked_env["SQLALCHEMY_DATABASE_URI"],
-            "VERIFY_SSL_CERT": True,
-            "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
-            "OIDC_REALM": mocked_env["OIDC_REALM"],
-            "JWT_TOKEN_LOCATION": "headers",
-            "JWT_HEADER_NAME": "Authorization",
-            "JWT_HEADER_TYPE": "Bearer",
-            "JWT_ERROR_MESSAGE_KEY": "message",
-            "JWT_PUBLIC_KEY": "",
         }
 
         config_actual = _DefaultConfig(
@@ -148,11 +150,13 @@ class TestNegativeDefaultConfig(object):
             default_config_args["openapi_client_name"],
         )
 
-        for env_var in [
-            "OPENAPI_GEN_SERVER_URL",
+        assert config_actual["ALLOWED_ROLES"] == [""]
+
+        for env_var in (
             "SERVICE_PUBLIC_URL",
             "SERVICE_PRIVATE_URL",
-        ]:
+            "OPENAPI_GEN_SERVER_URL",
+        ):
             assert config_actual[env_var] is None
 
     @pytest.mark.parametrize("protected_setting", ["API_TITLE", "API_VERSION", "OPENAPI_CLIENT_NAME"])
@@ -195,14 +199,13 @@ class TestProdConfig(object):
     ) -> None:
         """Verify that the correct config settings are created for the 'prod' environment."""
 
-        mocked_env = {"OIDC_ISSUER_URL": "http://oidc.issuer.url"}
+        mocked_env = {"JWT_DECODE_AUDIENCE": "account"}
 
         mocker.patch.dict("os.environ", mocked_env)
 
         config_exp: dict[str, Any] = {
             "JWT_ALGORITHM": "RS256",
-            "JWT_DECODE_AUDIENCE": None,
-            "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
+            "JWT_DECODE_AUDIENCE": mocked_env["JWT_DECODE_AUDIENCE"],
         }
 
         config_actual = ProdConfig(
@@ -216,7 +219,7 @@ class TestProdConfig(object):
     def test_override_setting(self, default_config_args, helpers):
         """Verify that an unprotected default setting can be overridden."""
 
-        config_setting_override_exp: dict[str, Any] = {"OIDC_ISSUER_URL": "override_setting"}
+        config_setting_override_exp: dict[str, Any] = {"JWT_ALGORITHM": "RS512"}
 
         config_actual = ProdConfig(
             default_config_args["api_title"],
@@ -254,11 +257,11 @@ class TestNegativeProdConfig(object):
             default_config_args["openapi_client_name"],
         )
 
-        assert config_actual["OIDC_ISSUER_URL"] is None
+        assert config_actual["JWT_DECODE_AUDIENCE"] is None
 
 
-class TestDevConfig(object):
-    """Test cases for the 'DevConfig' class."""
+class TestStagingConfig(object):
+    """Test cases for the 'StagingConfig' class."""
 
     def test_happy_path(self, default_config_args, helpers):
         """Verify that the correct config settings are created for the 'dev' environment."""
@@ -305,26 +308,17 @@ class TestDevConfig(object):
 class TestFlaskLocalConfig(object):
     """Test cases for the 'FlaskLocalConfig' class."""
 
-    def test_happy_path(
-        self, default_config_args: dict[str, Any], mocker: MockerFixture, helpers: FlaskLigandTestHelpers
-    ) -> None:
-        """Verify that the correct config settings are created for the 'prod' environment."""
+    def test_happy_path(self, default_config_args: dict[str, Any], helpers: FlaskLigandTestHelpers) -> None:
+        """Verify that the correct config settings are created for the 'local' environment."""
 
-        mocked_env = {
-            "OPENAPI_GEN_SERVER_URL": "http://openapi.gen.server.url",
-            "SERVICE_PUBLIC_URL": "http://service.public.url",
-            "SERVICE_PRIVATE_URL": "http://service.private.url",
-            "OIDC_ISSUER_URL": "http://oidc.issuer.url",
-        }
-
-        mocker.patch.dict("os.environ", mocked_env)
-
+        # noinspection HttpUrlsUsage
         config_exp: dict[str, Any] = {
-            "OPENAPI_GEN_SERVER_URL": mocked_env["OPENAPI_GEN_SERVER_URL"],
-            "SERVICE_PUBLIC_URL": mocked_env["SERVICE_PUBLIC_URL"],
-            "SERVICE_PRIVATE_URL": mocked_env["SERVICE_PRIVATE_URL"],
-            "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
-            "API_SPEC_OPTIONS": {"servers": [{"url": mocked_env["SERVICE_PUBLIC_URL"], "description": "Public URL"}]},
+            "SERVICE_PUBLIC_URL": "http://localhost:5000",
+            "SERVICE_PRIVATE_URL": "http://localhost:5000",
+            "ALLOWED_ROLES": ["user", "admin"],
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "OPENAPI_GEN_SERVER_URL": "http://api.openapi-generator.tech",
+            "API_SPEC_OPTIONS": {"servers": [{"url": "http://localhost:5000", "description": "Public URL"}]},
         }
 
         config_actual = FlaskLocalConfig(
@@ -338,7 +332,7 @@ class TestFlaskLocalConfig(object):
     def test_override_setting(self, default_config_args, helpers):
         """Verify that an unprotected default setting can be overridden."""
 
-        config_setting_override_exp: dict[str, Any] = {"OPENAPI_GEN_SERVER_URL": "override_setting"}
+        config_setting_override_exp: dict[str, Any] = {"API_SPEC_OPTIONS": "something_different"}
 
         config_actual = FlaskLocalConfig(
             default_config_args["api_title"],
@@ -362,55 +356,26 @@ class TestFlaskLocalConfig(object):
         )
 
         assert helpers.is_sub_dict(config_additional_setting_exp, config_actual)
-
-
-class TestNegativeFlaskLocalConfig(object):
-    """Negative test cases for the 'FlaskLocalConfig' class."""
-
-    def test_required_env_var_not_set(self, default_config_args):
-        """Verify that unset required environment variable(s) have no default value."""
-
-        config_actual = FlaskLocalConfig(
-            default_config_args["api_title"],
-            default_config_args["api_version"],
-            default_config_args["openapi_client_name"],
-        )
-
-        # noinspection HttpUrlsUsage
-        assert config_actual["OPENAPI_GEN_SERVER_URL"] == "http://api.openapi-generator.tech"
-        assert config_actual["SERVICE_PUBLIC_URL"] == "http://localhost:5000"
-        assert config_actual["SERVICE_PRIVATE_URL"] == "http://localhost:5000"
-        assert config_actual["OIDC_ISSUER_URL"] is None
-        assert config_actual["API_SPEC_OPTIONS"] == {
-            "servers": [{"url": "http://localhost:5000", "description": "Public URL"}]
-        }
 
 
 class TestTestingConfig(object):
     """Test cases for the 'TestingConfig' class."""
 
-    def test_happy_path(
-        self, default_config_args: dict[str, Any], mocker: MockerFixture, helpers: FlaskLigandTestHelpers
-    ) -> None:
-        """Verify that the correct config settings are created for the 'prod' environment."""
-
-        mocked_env = {
-            "SERVICE_PUBLIC_URL": "http://service.public.url",
-            "SERVICE_PRIVATE_URL": "http://service.private.url",
-        }
-
-        mocker.patch.dict("os.environ", mocked_env)
+    def test_happy_path(self, default_config_args: dict[str, Any], helpers: FlaskLigandTestHelpers) -> None:
+        """Verify that the correct config settings are created for the 'testing' environment."""
 
         config_exp: dict[str, Any] = {
-            "OPENAPI_GEN_SERVER_URL": "http://openapi.fake.address",
-            "SERVICE_PUBLIC_URL": mocked_env["SERVICE_PUBLIC_URL"],
-            "SERVICE_PRIVATE_URL": mocked_env["SERVICE_PRIVATE_URL"],
-            "API_SPEC_OPTIONS": {"servers": [{"url": mocked_env["SERVICE_PUBLIC_URL"], "description": "Public URL"}]},
-            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
-            "VERIFY_SSL_CERT": False,
-            "JWT_SECRET_KEY": "super-duper-secret",
-            "JWT_ACCESS_TOKEN_EXPIRES": 300,
+            "SERVICE_PUBLIC_URL": "http://public.url",
+            "SERVICE_PRIVATE_URL": "http://private.url",
+            "ALLOWED_ROLES": ["user", "admin"],
             "OIDC_ISSUER_URL": "TESTING",
+            "OIDC_REALM": "TESTING",
+            "VERIFY_SSL_CERT": False,
+            "JWT_ACCESS_TOKEN_EXPIRES": 300,
+            "JWT_SECRET_KEY": "super-duper-secret",
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "OPENAPI_GEN_SERVER_URL": "http://openapi.fake.address",
+            "API_SPEC_OPTIONS": {"servers": [{"url": "http://public.url", "description": "Public URL"}]},
         }
 
         config_actual = ConfigForTesting(
@@ -424,7 +389,7 @@ class TestTestingConfig(object):
     def test_override_setting(self, default_config_args, helpers):
         """Verify that an unprotected default setting can be overridden."""
 
-        config_setting_override_exp: dict[str, Any] = {"SQLALCHEMY_DATABASE_URI": "override_setting"}
+        config_setting_override_exp: dict[str, Any] = {"JWT_ACCESS_TOKEN_EXPIRES": 200}
 
         config_actual = ConfigForTesting(
             default_config_args["api_title"],
@@ -448,25 +413,6 @@ class TestTestingConfig(object):
         )
 
         assert helpers.is_sub_dict(config_additional_setting_exp, config_actual)
-
-
-class TestNegativeTestingConfig(object):
-    """Negative test cases for the 'TestingConfig' class."""
-
-    def test_required_env_var_not_set(self, default_config_args):
-        """Verify that unset required environment variable(s) have no default value."""
-
-        config_actual = ConfigForTesting(
-            default_config_args["api_title"],
-            default_config_args["api_version"],
-            default_config_args["openapi_client_name"],
-        )
-
-        assert config_actual["SERVICE_PUBLIC_URL"] == "http://public.url"
-        assert config_actual["SERVICE_PRIVATE_URL"] == "http://private.url"
-        assert config_actual["API_SPEC_OPTIONS"] == {
-            "servers": [{"url": "http://public.url", "description": "Public URL"}]
-        }
 
 
 class TestFlaskEnvironmentConfigurator(object):

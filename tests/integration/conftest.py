@@ -13,8 +13,8 @@ from flask_ligand import create_app
 from flask.testing import FlaskClient
 from marshmallow_sqlalchemy import auto_field
 from flask_ligand.extensions.database import DB
+from flask_ligand.extensions.jwt import jwt_role_required
 from flask_ligand.extensions.api import Blueprint, AutoSchema
-from flask_ligand.extensions.jwt import jwt_role_required, DefaultRolesEnum
 
 pytest_plugins = ["flask_ligand"]
 
@@ -63,7 +63,7 @@ class IntegrationTestSchema(AutoSchema):
 class IntegrationTestView(MethodView):
     @BLP.etag
     @BLP.response(200, IntegrationTestSchema(many=True))
-    @jwt_role_required(role=DefaultRolesEnum.user)
+    @jwt_role_required(role="user")
     def get(self):
 
         items: list[IntegrationTestModel] = IntegrationTestModel.query.all()

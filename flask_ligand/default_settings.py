@@ -5,7 +5,6 @@
 # ======================================================================================================================
 from __future__ import annotations
 import os
-import flask
 from typing import TYPE_CHECKING
 
 
@@ -14,6 +13,7 @@ from typing import TYPE_CHECKING
 # ======================================================================================================================
 if TYPE_CHECKING:
     from typing import Any
+    from flask import Flask
 
 
 # ======================================================================================================================
@@ -34,19 +34,14 @@ class _DefaultConfig(dict):  # type: ignore
                 uppercase.
         """
 
-        open_api_default_settings: dict[str, Any] = {
-            "OPENAPI_GEN_SERVER_URL": os.getenv("OPENAPI_GEN_SERVER_URL"),
-            "OPENAPI_VERSION": os.getenv("OPENAPI_VERSION", "3.0.3"),
-            "OPENAPI_URL_PREFIX": "/",
-            "OPENAPI_JSON_PATH": "/openapi/api-spec.json",
-            "OPENAPI_SWAGGER_UI_PATH": os.getenv("OPENAPI_SWAGGER_UI_PATH", "/apidocs"),
-            "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
-            "API_SPEC_OPTIONS": {"servers": [{"url": os.getenv("SERVICE_PUBLIC_URL"), "description": "Public URL"}]},
-        }
-
-        basic_default_settings: dict[str, Any] = {
+        # Settings are specific to this library
+        ligand_default_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL"),
+            "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES", "").split(","),
+        }
+
+        db_default_settings: dict[str, Any] = {
             "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI"),
             "SQLALCHEMY_TRACK_MODIFICATIONS": False,
             "JSON_SORT_KEYS": False,
@@ -63,14 +58,25 @@ class _DefaultConfig(dict):  # type: ignore
             "JWT_PUBLIC_KEY": "",
         }
 
+        open_api_default_settings: dict[str, Any] = {
+            "OPENAPI_GEN_SERVER_URL": os.getenv("OPENAPI_GEN_SERVER_URL"),
+            "OPENAPI_VERSION": os.getenv("OPENAPI_VERSION", "3.0.3"),
+            "OPENAPI_URL_PREFIX": "/",
+            "OPENAPI_JSON_PATH": "/openapi/api-spec.json",
+            "OPENAPI_SWAGGER_UI_PATH": os.getenv("OPENAPI_SWAGGER_UI_PATH", "/apidocs"),
+            "OPENAPI_SWAGGER_UI_URL": "https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
+            "API_SPEC_OPTIONS": {"servers": [{"url": os.getenv("SERVICE_PUBLIC_URL"), "description": "Public URL"}]},
+        }
+
         super().__init__(
             {
                 "API_TITLE": api_title,
                 "API_VERSION": api_version,
                 "OPENAPI_CLIENT_NAME": openapi_client_name,
-                **open_api_default_settings,
-                **basic_default_settings,
+                **ligand_default_settings,
+                **db_default_settings,
                 **auth_default_settings,
+                **open_api_default_settings,
             }
         )
 
@@ -153,6 +159,7 @@ class FlaskLocalConfig(StagingConfig):
         flask_local_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://localhost:5000"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL", "http://localhost:5000"),
+            "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES", "user,admin").split(","),
             "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///:memory:"),
             "OPENAPI_GEN_SERVER_URL": os.getenv("OPENAPI_GEN_SERVER_URL", "http://api.openapi-generator.tech"),
             "API_SPEC_OPTIONS": {
@@ -185,8 +192,9 @@ class TestingConfig(_DefaultConfig):
         testing_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://public.url"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL", "http://private.url"),
-            "OIDC_REALM": "TESTING",
+            "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES", "user,admin").split(","),
             "OIDC_ISSUER_URL": "TESTING",
+            "OIDC_REALM": "TESTING",
             "VERIFY_SSL_CERT": False,
             "JWT_ACCESS_TOKEN_EXPIRES": 300,
             "JWT_SECRET_KEY": "super-duper-secret",
@@ -217,7 +225,7 @@ ENVIRONMENTS = {
 # Functions: Public
 # ======================================================================================================================
 def flask_environment_configurator(
-    app: flask.Flask,
+    app: Flask,
     environment: str,
     api_title: str,
     api_version: str,
