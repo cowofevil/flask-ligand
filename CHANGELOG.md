@@ -3,6 +3,13 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.2.0 (2022-08-27)
+### :sparkles:
+* [510:sparkles:] Configurable Roles for RBAC Verification ([`d8e80a4`](https://github.com/cowofevil/flask-ligand/commit/d8e80a428875958a9af7e6774c8cfa2a370dab94))
+
+### Other
+* :arrow_up: Update types-setuptools requirement from ~=63.4 to ~=65.1 ([`7c8ef3a`](https://github.com/cowofevil/flask-ligand/commit/7c8ef3a6f19bf1f752d25f92ced9f22c67a24986))
+
 ## v0.1.3 (2022-08-25)
 ### :robot:
 * [507:robot:] Configure Database Provider and URI ([`7e3d0c7`](https://github.com/cowofevil/flask-ligand/commit/7e3d0c7e1ce231893be80b6fd78802f0f589c347))
