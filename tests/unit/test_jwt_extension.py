@@ -10,8 +10,8 @@ from flask.views import MethodView
 from flask.testing import FlaskClient
 from marshmallow_sqlalchemy import auto_field
 from flask_ligand.extensions.database import DB
+from flask_ligand.extensions.jwt import jwt_role_required
 from flask_ligand.extensions.api import Blueprint, AutoSchema
-from flask_ligand.extensions.jwt import jwt_role_required, DefaultRolesEnum
 
 
 # ======================================================================================================================
@@ -25,18 +25,15 @@ if TYPE_CHECKING:
 # ======================================================================================================================
 # Globals
 # ======================================================================================================================
-JWT_TEST_URL: str = "/jwttest/"
+JWT_TEST_URL = "/jwttest/"
 BLP = Blueprint(
     "JWT TEST",
     __name__,
     url_prefix=JWT_TEST_URL.rstrip("/"),
     description="JWT TEST",
 )
-USER_ROLES = [DefaultRolesEnum.user.value]
-ADMIN_ROLES = [
-    DefaultRolesEnum.user.value,
-    DefaultRolesEnum.admin.value,
-]
+USER_ROLES = ["user"]
+ADMIN_ROLES = ["user", "admin"]
 
 
 # ======================================================================================================================
@@ -63,7 +60,7 @@ class JwtTestSchema(AutoSchema):
 class JwtTestView(MethodView):
     @BLP.etag
     @BLP.response(200, JwtTestSchema(many=True))
-    @jwt_role_required(role=DefaultRolesEnum.user)
+    @jwt_role_required(role="user")
     def get(self):
 
         items: list[JwtTestModel] = JwtTestModel.query.all()
@@ -79,6 +76,18 @@ class JwtTestView(MethodView):
         DB.session.commit()
 
         return item
+
+
+@BLP.route("/broken/")
+class JwtBrokenView(MethodView):
+    @BLP.etag
+    @BLP.response(200, JwtTestSchema(many=True))
+    @jwt_role_required(role="broken")
+    def get(self):
+
+        items: list[JwtTestModel] = JwtTestModel.query.all()
+
+        return items
 
 
 # ======================================================================================================================
@@ -157,3 +166,18 @@ class TestNegativeJwtExtension(object):
         with primed_test_client.get(jwt_test_url, headers=access_token_headers) as ret:
             assert ret.status_code == 403
             assert ret.json["message"] == "This endpoint requires the user to have the 'user' role!"
+
+    def test_role_not_allowed(self, primed_test_client, jwt_test_url, access_token_headers):
+        """
+        Verify that the correct exception is raised when trying to access an endpoint that is decorated with a role
+        that is not allowed.
+
+        Note: This test does a trick with parameterization to override the implicitly imported "default_roles"
+        fixture. See this documentation for more details:
+
+        https://docs.pytest.org/en/6.2.x/fixture.html#override-a-fixture-with-direct-test-parametrization
+        """
+
+        with primed_test_client.get(f"{jwt_test_url}broken/", headers=access_token_headers) as ret:
+            assert ret.status_code == 500
+            assert ret.json["message"] == "Endpoint required role is not an allowed role!"

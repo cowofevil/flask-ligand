@@ -5,9 +5,9 @@
 # ======================================================================================================================
 from __future__ import annotations
 import json
-from enum import Enum
 from requests import get
 from functools import wraps
+from flask import current_app
 from typing import TYPE_CHECKING
 from urljoin import url_path_join
 from dataclasses import dataclass
@@ -32,16 +32,6 @@ JWT = JWTManager()
 
 
 # ======================================================================================================================
-# Enums: Public
-# ======================================================================================================================
-class DefaultRolesEnum(Enum):
-    """The roles available to use for endpoint protection."""
-
-    user = "user"
-    admin = "admin"
-
-
-# ======================================================================================================================
 # Classes: Public
 # ======================================================================================================================
 @dataclass
@@ -55,7 +45,7 @@ class User:
 # ======================================================================================================================
 # Decorators: Public
 # ======================================================================================================================
-def jwt_role_required(role: DefaultRolesEnum):  # type: ignore
+def jwt_role_required(role: str):  # type: ignore
     """A decorator for restricting access to an endpoint based on role membership.
 
     Note: This decorator style was chosen because of: https://stackoverflow.com/a/42581103
@@ -70,10 +60,13 @@ def jwt_role_required(role: DefaultRolesEnum):  # type: ignore
             # standard flask_jwt_extended token verifications
             verify_jwt_in_request()
 
+            if role not in current_app.config["ALLOWED_ROLES"]:
+                abort(500, message="Endpoint required role is not an allowed role!")
+
             # custom role membership verification
             user: User = get_current_user()
-            if role.value not in user.roles:
-                abort(403, message=f"This endpoint requires the user to have the '{role.value}' role!")
+            if role not in user.roles:
+                abort(403, message=f"This endpoint requires the user to have the '{role}' role!")
 
             return fn(*args, **kwargs)
 

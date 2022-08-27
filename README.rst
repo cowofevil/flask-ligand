@@ -67,6 +67,9 @@ available built-in Flask environments)
    * - ``SERVICE_PRIVATE_URL``
      - ``http://localhost:5000``
      - The private URL for this service. (Also used for generating OpenAPI clients)
+   * - ``ALLOWED_ROLES``
+     - ``user,admin``
+     - A comma separated list of user roles that are allowed for endpoint protection. (e.g. 'user,admin')
    * - ``OIDC_ISSUER_URL``
      - *Not set* (must be provided)
      - The OpenID Connect IAM URL to use for authentication.
