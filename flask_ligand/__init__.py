@@ -6,8 +6,16 @@
 from __future__ import annotations
 from flask import Flask
 from flask_cors import CORS
+from typing import TYPE_CHECKING
 from flask_ligand import extensions, views
 from flask_ligand.default_settings import flask_environment_configurator
+
+
+# ======================================================================================================================
+# Type Checking
+# ======================================================================================================================
+if TYPE_CHECKING:  # pragma: no cover
+    from typing import Any
 
 
 # ======================================================================================================================
@@ -19,7 +27,7 @@ __version__ = "0.2.0"
 # ======================================================================================================================
 # Functions: Public
 # ======================================================================================================================
-def create_app(flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: str) -> Flask:
+def create_app(flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: Any) -> Flask:
     """Create Flask application.
 
     Args:

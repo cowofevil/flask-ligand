@@ -6,6 +6,7 @@ import pytest
 from typing import TYPE_CHECKING
 from flask_ligand import create_app
 from flask_ligand.extensions.jwt import JWT
+from flask_ligand.extensions.database import DB
 from flask_jwt_extended import create_access_token
 
 pytest_plugins = ["flask_ligand"]
@@ -38,12 +39,17 @@ def basic_flask_app(jwt_init_app: Callable[[Flask], None], open_api_client_name:
     # Prevent JWT from retrieving public key from OIDC issuer URL
     mocker.patch("flask_ligand.extensions.jwt.init_app", side_effect=jwt_init_app)
 
-    return create_app(
+    app = create_app(
         flask_env="testing",
         api_title="Flask Ligand Unit Testing Service",
         api_version="1.0.1",
         openapi_client_name=open_api_client_name,
     )
+
+    with app.app_context():
+        DB.create_all()
+
+    return app
 
 
 @pytest.fixture(scope="function")

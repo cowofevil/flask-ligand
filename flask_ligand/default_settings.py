@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Any
     from flask import Flask
 
@@ -44,6 +44,8 @@ class _DefaultConfig(dict):  # type: ignore
         db_default_settings: dict[str, Any] = {
             "SQLALCHEMY_DATABASE_URI": os.getenv("SQLALCHEMY_DATABASE_URI"),
             "SQLALCHEMY_TRACK_MODIFICATIONS": False,
+            "DB_AUTO_UPGRADE": False,
+            "DB_MIGRATION_DIR": "migrations",
             "JSON_SORT_KEYS": False,
         }
 

@@ -20,7 +20,7 @@ from flask_jwt_extended import verify_jwt_in_request, get_current_user, JWTManag
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from flask import Flask
     from typing import Callable, Any
 
