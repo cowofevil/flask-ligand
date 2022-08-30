@@ -5,8 +5,8 @@
 # ======================================================================================================================
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate, upgrade
 from sqlalchemy_utils import force_auto_coercion
 from flask_ligand.extensions.api import BaseQuery
 

@@ -98,7 +98,7 @@ def user_lookup_callback(_jwt_header: dict[str, Any], jwt_data: dict[str, Any]) 
 # ======================================================================================================================
 # Functions: Public
 # ======================================================================================================================
-def init_app(app: Flask) -> None:
+def init_app(app: Flask) -> None:  # pragma: no cover (Covered by integration tests)
     """Initialize JWT."""
 
     if app.config["OIDC_ISSUER_URL"] is None:
