@@ -11,7 +11,7 @@ from flask_ligand.views import openapi
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from flask_ligand.extensions.api import Api
 
 

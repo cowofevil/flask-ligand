@@ -12,7 +12,7 @@ from flask_ligand.extensions import database, jwt
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from flask import Flask
 
 

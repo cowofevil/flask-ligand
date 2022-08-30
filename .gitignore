@@ -1,6 +1,7 @@
 # Project Specific
 flask_ligand/app.db
 docker/db-data/
+tests/integration/migrations/
 
 # PyCharm / JetBrains project stuff
 .idea/

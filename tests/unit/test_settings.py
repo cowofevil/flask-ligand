@@ -82,6 +82,8 @@ class TestDefaultConfig(object):
             "ALLOWED_ROLES": mocked_env["ALLOWED_ROLES"].split(","),
             "SQLALCHEMY_DATABASE_URI": mocked_env["SQLALCHEMY_DATABASE_URI"],
             "SQLALCHEMY_TRACK_MODIFICATIONS": False,
+            "DB_AUTO_UPGRADE": False,
+            "DB_MIGRATION_DIR": "migrations",
             "JSON_SORT_KEYS": False,
             "OIDC_ISSUER_URL": mocked_env["OIDC_ISSUER_URL"],
             "OIDC_REALM": mocked_env["OIDC_REALM"],

@@ -24,7 +24,7 @@ from flask_smorest import Api as ApiOrig, Blueprint as BlueprintOrig, Page
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from typing import Optional, Any
 
 

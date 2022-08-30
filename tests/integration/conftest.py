@@ -10,6 +10,7 @@ from dotenv import dotenv_values
 from typing import TYPE_CHECKING
 from flask.views import MethodView
 from flask_ligand import create_app
+from flask_migrate import downgrade
 from flask.testing import FlaskClient
 from marshmallow_sqlalchemy import auto_field
 from flask_ligand.extensions.database import DB
@@ -30,7 +31,8 @@ if TYPE_CHECKING:
 # ======================================================================================================================
 # Globals
 # ======================================================================================================================
-INTEGRATION_TEST_URL: str = "/integration-test/"
+INTEGRATION_TEST_URL = "/integration-test/"
+MIGRATION_DIRECTORY = "tests/integration/migrations"
 BLP = Blueprint(
     "INTEGRATION TEST",
     __name__,
@@ -89,6 +91,13 @@ def integration_test_url() -> str:
     """The URL for testing the 'IntegrationTestView' endpoint."""
 
     return INTEGRATION_TEST_URL
+
+
+@pytest.fixture(scope="session")
+def migration_directory() -> str:
+    """The path to the migrations folder used by Flask-Migrate."""
+
+    return MIGRATION_DIRECTORY
 
 
 @pytest.fixture(scope="function")
@@ -161,7 +170,11 @@ def access_token_headers_no_roles(int_testing_env_vars: dict[str, Optional[str]]
 
 
 @pytest.fixture(scope="function")
-def basic_flask_app(open_api_client_name: str, int_testing_env_vars: dict[str, Optional[str]]) -> Flask:
+def basic_flask_app(
+    open_api_client_name: str,
+    migration_directory: str,
+    int_testing_env_vars: dict[str, Optional[str]],
+) -> Flask:
     """A basic Flask app ready to be used for testing."""
 
     db_uri = (
@@ -177,6 +190,8 @@ def basic_flask_app(open_api_client_name: str, int_testing_env_vars: dict[str, O
         "OIDC_ISSUER_URL": f"http://{int_testing_env_vars['KC_HOSTNAME']}:{int_testing_env_vars['KC_PORT']}",
         "OIDC_REALM": f"{int_testing_env_vars['KC_REALM']}",
         "SQLALCHEMY_DATABASE_URI": db_uri,
+        "DB_AUTO_UPGRADE": True,
+        "DB_MIGRATION_DIR": migration_directory,
     }
 
     return create_app(
@@ -189,7 +204,7 @@ def basic_flask_app(open_api_client_name: str, int_testing_env_vars: dict[str, O
 
 
 @pytest.fixture(scope="function")
-def app_test_client(basic_flask_app: Flask) -> FlaskClient:
+def app_test_client(basic_flask_app: Flask, migration_directory: str) -> FlaskClient:
     """Flask app test client with 'IntegrationTestView' pre-configured."""
 
     basic_flask_app.register_blueprint(BLP)
@@ -198,7 +213,7 @@ def app_test_client(basic_flask_app: Flask) -> FlaskClient:
 
     # Teardown
     with basic_flask_app.app_context():
-        DB.drop_all()
+        downgrade(directory=migration_directory)
 
 
 @pytest.fixture(scope="function")

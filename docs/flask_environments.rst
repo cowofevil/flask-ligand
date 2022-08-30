@@ -103,6 +103,17 @@ The 'prod' environment is meant to run the microservice in a production environm
      - If set to ``True``, Flask-SQLAlchemy will track modifications of objects and emit signals. The default is None,
        which enables tracking but issues a warning that it will be disabled by default in the future. This requires
        extra memory and should be disabled if not needed. (See `flask-sqlalchemy`_ for more information)
+   * - ``DB_AUTO_UPGRADE``
+     - ``False``
+     - *No*
+     - If set to ``True``, the microservice will automatically run ``flask db upgrade`` upon start-up which will
+       create/alter all tables in the the configured database. **USE WITH CAUTION!!** Only suggested to use in testing
+       or experimentation with the given microservice. (See `Flask-Migrate`_ for more information)
+   * - ``DB_MIGRATION_DIR``
+     - ``migrations``
+     - *No*
+     - The directory containing the migration scripts for performing database upgrades and downgrades. (See
+       `Flask-Migrate`_ for more information)
    * - ``JSON_SORT_KEYS``
      - ``False``
      - *No*
@@ -272,3 +283,4 @@ are different from the ``prod`` environment settings.
 .. _smorest/apispec: https://flask-smorest.readthedocs.io/en/latest/openapi.html?highlight=API_SPEC_OPTIONS#populate-the-root-document-object
 .. _flask: https://flask.palletsprojects.com/en/2.2.x/config/
 .. _flask-jwt-extended: https://flask-jwt-extended.readthedocs.io/en/stable/options/
+.. _Flask-Migrate: https://flask-migrate.readthedocs.io/en/latest/index.html#command-reference
