@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2022-08-30)
+### :sparkles:
+* [516:sparkles:] Support Database Migrations ([`b8c062b`](https://github.com/cowofevil/flask-ligand/commit/b8c062b925ea6f83c083a90398e5ee41ca03344e))
+
 ## v0.2.0 (2022-08-27)
 ### :sparkles:
 * [510:sparkles:] Configurable Roles for RBAC Verification ([`d8e80a4`](https://github.com/cowofevil/flask-ligand/commit/d8e80a428875958a9af7e6774c8cfa2a370dab94))
