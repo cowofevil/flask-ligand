@@ -1,4 +1,3 @@
-===========================
 Built-in Flask Environments
 ===========================
 
@@ -16,8 +15,6 @@ code by passing the overrides to the ``create_app`` as kwargs. The only restrict
 ``API_VERSION`` and ``OPENAPI_CLIENT_NAME`` client settings cannot be overridden via the kwargs.
 
 (**Note**: this project does support the use of '.env' files for loading environment variables)
-
-.. contents:: Table of Contents
 
 prod
 ----
@@ -102,7 +99,8 @@ The 'prod' environment is meant to run the microservice in a production environm
      - *No*
      - If set to ``True``, Flask-SQLAlchemy will track modifications of objects and emit signals. The default is None,
        which enables tracking but issues a warning that it will be disabled by default in the future. This requires
-       extra memory and should be disabled if not needed. (See `flask-sqlalchemy`_ for more information)
+       extra memory and should be disabled if not needed. (See :doc:`Flask-SQLAlchemy <flask-sqlalchemy:config>` for
+       more information)
    * - ``DB_AUTO_UPGRADE``
      - ``False``
      - *No*
@@ -277,7 +275,6 @@ are different from the ``prod`` environment settings.
      - *No*
      - Additional root document attributes. (See `smorest/apispec`_ for more information)
 
-.. _flask-sqlalchemy: https://flask-sqlalchemy.palletsprojects.com/en/2.x/config
 .. _database_configuration.rst: docs/database_configuration.rst
 .. _smorest/OpenAPI: https://flask-smorest.readthedocs.io/en/latest/openapi.html#serve-the-openapi-documentation
 .. _smorest/apispec: https://flask-smorest.readthedocs.io/en/latest/openapi.html?highlight=API_SPEC_OPTIONS#populate-the-root-document-object

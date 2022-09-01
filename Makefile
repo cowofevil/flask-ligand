@@ -73,6 +73,10 @@ setup-integration: ## setup the Docker environment for integration testing
 teardown-integration: ## teardown the Docker environment for integration testing
 	@docker compose down
 
+.PHONY: gen-docs
+gen-docs: install ## generate html docs using Sphinx
+	@cd docs && make html
+
 .PHONY: gen-local-env-file
 gen-local-env-file: setup-integration check-integration ## generate an '.env' file for accessing the integration environment
 	@echo -e "OIDC_ISSUER_URL=http://localhost:8080\n"\
@@ -80,22 +84,26 @@ gen-local-env-file: setup-integration check-integration ## generate an '.env' fi
 	"SQLALCHEMY_DATABASE_URI=postgresql+pg8000://admin:password@localhost:5432/app" > '.env'
 
 .PHONY: clean
-clean: clean-build clean-pyc clean-mypy-cache clean-pip-cache clean-test  ## remove all build, test, coverage, artifacts and wipe virtualenv
+clean: clean-build clean-docs clean-pyc clean-mypy-cache clean-pip-cache clean-test  ## remove all build, test, coverage, artifacts and wipe virtualenv
 
 .PHONY: clean-build
 clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -fr {} +
+	find . -wholename './docker' -prune -o -name '*.egg-info' -exec rm -fr {} + -print
+	find . -wholename './docker' -prune -o -name '*.egg' -exec rm -fr {} + -print
+
+.PHONY: clean-docs
+clean-docs: ## remove documentation artifacts
+	rm -fr docs/_build/
 
 .PHONY: clean-pyc
 clean-pyc: ## remove Python file artifacts
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
+	find . -wholename './docker' -prune -o -name '*.pyc' -exec rm -f {} +
+	find . -wholename './docker' -prune -o -name '*.pyo' -exec rm -f {} +
+	find . -wholename './docker' -prune -o -name '*~' -exec rm -f {} +
+	find . -wholename './docker' -prune -o -name '__pycache__' -exec rm -fr {} +
 
 .PHONY: clean-mypy-cache
 clean-mypy-cache: ## clean the mypy cache
@@ -176,7 +184,7 @@ install-venv: clean-venv install ## install the package after wiping the virtual
 
 .PHONY: develop
 develop: clean ## install necessary packages to setup a dev environment
-	@pip3 install -r requirements.txt -r requirements-dev.txt
+	@pip3 install -r requirements.txt -r requirements-dev.txt -r docs/requirements.txt
 
 .PHONY: develop-venv
 develop-venv: clean-venv develop ## setup a dev environment after wiping the virtual environment
