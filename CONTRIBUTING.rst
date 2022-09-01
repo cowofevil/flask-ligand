@@ -8,47 +8,13 @@ given.
 The `Github forking workflow`_ is used for submitting proposals for change to this repo. The following sections will
 give a brief overview of how this repo utilizes the workflow for managing community contributions.
 
-------------
-Get Started!
-------------
+Setup Development Environment
+=============================
 
-Ready to contribute? Here's how to set up ``flask-ligand`` for local development using the handy built-in
-``make`` tasks.
-
-Prerequisites
--------------
-
-- Python 3.10+
-- virtualenvwrapper_
-
-Getting Help with Make Tasks
-============================
-
-Execute the following command to get a full list of ``make`` targets::
-
-    $ make help
-
-Setup Python Development Environment
-====================================
-
-1. Create a Python virtual environment::
-
-    $ mkvirtualenv -p py310 flask-ligand
-
-2. Setup develop environment::
-
-    $ make develop-venv
-
-3. Setup git pre-commit hooks::
-
-    $ make setup-pre-commit
-
-4. Verify that environment is ready for development::
-
-    $ make test-tox
+Refer the the `Developer Quick Start Guide`_ documentation for more details on setting up a development environment.
 
 Setup Fork & Local Feature Branch
----------------------------------
+=================================
 
 First step is to `fork this repo`_!
 
@@ -67,9 +33,8 @@ Once a fork has been created, follow these steps to make a local clone and creat
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
------------------------
 Pull Request Guidelines
------------------------
+=======================
 
 Run All the Tests
 -----------------
@@ -138,8 +103,8 @@ Before you submit a pull request, check that it meets these guidelines:
 3. Check GitHub Actions to make sure that all tests pass for all supported Python versions before requesting a PR
    review.
 
-.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 .. _Github forking workflow: https://docs.github.com/en/get-started/quickstart/github-flow
+.. _Developer Quick Start Guide: docs/developer_guide.rst
 .. _fork this repo: https://docs.github.com/en/get-started/quickstart/fork-a-repo
 .. _python-semantic-release: https://python-semantic-release.readthedocs.io/en/latest/#
 .. _emoji commit parser: https://python-semantic-release.readthedocs.io/en/latest/configuration.html#commit-parser

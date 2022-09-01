@@ -34,3 +34,5 @@ repos:
     rev: v6.0.0
     hooks:
     -   id: rstcheck
+        additional_dependencies: [sphinx]
+        exclude: "docs/authors.rst|docs/changelog.rst|docs/license.rst"
