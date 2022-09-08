@@ -93,6 +93,13 @@ The body of the commit message should give a succinct description of what is bei
 
     The thing feature was broken in the last release because of a typo.
 
+
+**DOCUMENTATION UPDATES REQUIRE A SEMANTIC VERSION!!!**
+
+Regardless of how minor a documentation change might be that in no way affects the code base, it still requires that
+a semantic version be attached to the commit! Otherwise the "Read the Docs" build will fail and not publish the
+documentation!
+
 Create the Pull Request on GitHub
 ---------------------------------
 
