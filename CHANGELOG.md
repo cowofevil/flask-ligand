@@ -3,6 +3,15 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.3.1 (2022-09-08)
+### :robot:
+* [FIX:robot:] Add Note about Building RTD Correctly ([`e27d050`](https://github.com/cowofevil/flask-ligand/commit/e27d050e9888353e8aa7635eff59c58237c4f176))
+
+### Other
+* [501] Add readthedocs Documentation ([`a907fdc`](https://github.com/cowofevil/flask-ligand/commit/a907fdcbc28e1bcf60b71500679f3c6c8044af5c))
+* [FIX] Add Migrations Directory for Integration Tests ([`3310971`](https://github.com/cowofevil/flask-ligand/commit/3310971baa7574a28f35fd9af60d17d8bb8369ad))
+* [CHORE] Increase Code Coverage Accuracy ([`3597db7`](https://github.com/cowofevil/flask-ligand/commit/3597db7f932ef2c93f3d263e1df557d52d9097aa))
+
 ## v0.3.0 (2022-08-30)
 ### :sparkles:
 * [516:sparkles:] Support Database Migrations ([`b8c062b`](https://github.com/cowofevil/flask-ligand/commit/b8c062b925ea6f83c083a90398e5ee41ca03344e))
