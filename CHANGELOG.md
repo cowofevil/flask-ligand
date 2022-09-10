@@ -3,6 +3,15 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.3.2 (2022-09-10)
+### :robot:
+* [FIX:robot:] Change Type Definition for BEARER_AUTH ([`1c10a1b`](https://github.com/cowofevil/flask-ligand/commit/1c10a1b7349cce80b72252fbed67f864c426c38b))
+
+### Other
+* :arrow_up: Update black requirement from ~=22.6 to ~=22.8 ([`38c5e43`](https://github.com/cowofevil/flask-ligand/commit/38c5e4355d42c12909314e7f4145e6d0bb40107b))
+* :arrow_up: Update types-setuptools requirement from ~=65.1 to ~=65.3 ([`e34790b`](https://github.com/cowofevil/flask-ligand/commit/e34790ba04c1f77e40c239b1c40cd84d0603cf0d))
+* :arrow_up: Update python-dotenv requirement from ~=0.20 to ~=0.21 ([`1de2b4d`](https://github.com/cowofevil/flask-ligand/commit/1de2b4d7ca85dfba0231c0692c4b3537f2011e47))
+
 ## v0.3.1 (2022-09-08)
 ### :robot:
 * [FIX:robot:] Add Note about Building RTD Correctly ([`e27d050`](https://github.com/cowofevil/flask-ligand/commit/e27d050e9888353e8aa7635eff59c58237c4f176))
