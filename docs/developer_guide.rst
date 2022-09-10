@@ -10,7 +10,7 @@ Prerequisites
 
 - Python 3.10+
 - virtualenvwrapper_
-- Docker_
+- Docker_ (with `Compose V2`_)
 
 Make Targets
 ------------
@@ -87,6 +87,7 @@ editors.
 
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 .. _Docker: https://www.docker.com/products/docker-desktop/
+.. _Compose V2: https://docs.master.dockerproject.org/compose/#compose-v2-and-the-new-docker-compose-command
 .. _flask_environments.rst: docs/flask_environments.rst
 .. _database_configuration.rst: docs/database_configuration.rst
 .. _Python Black: https://black.readthedocs.io/en/stable/

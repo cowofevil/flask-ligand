@@ -20,19 +20,21 @@ if TYPE_CHECKING:  # pragma: no cover
 # Classes: Private
 # ======================================================================================================================
 class _DefaultConfig(dict):  # type: ignore
+    """
+    The default Flask settings for all environments.
+
+    Args:
+        api_title: The title (name) of the API to display in the OpenAPI documentation.
+        api_version: The semantic version for the OpenAPI client.
+        openapi_client_name: The package name to use for generated OpenAPI clients.
+        kwargs: Additional settings to add to the configuration.
+
+    Raises:
+        RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
+            uppercase.
+    """
+
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-        """The default Flask settings for all environments.
-
-        Args:
-            api_title: The title (name) of the API to display in the OpenAPI documentation.
-            api_version: The semantic version for the OpenAPI client.
-            openapi_client_name: The package name to use for generated OpenAPI clients.
-            kwargs: Additional settings to add to the configuration.
-
-        Raises:
-            RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
-                uppercase.
-        """
 
         # Settings are specific to this library
         ligand_default_settings: dict[str, Any] = {
@@ -96,19 +98,21 @@ class _DefaultConfig(dict):  # type: ignore
 # Classes: Public
 # ======================================================================================================================
 class ProdConfig(_DefaultConfig):
+    """
+    Configuration for production environments.
+
+    Args:
+        api_title: The title (name) of the API to display in the OpenAPI documentation.
+        api_version: The semantic version for the OpenAPI client.
+        openapi_client_name: The package name to use for generated OpenAPI clients.
+        kwargs: Additional settings to add to the configuration.
+
+    Raises:
+        RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
+            uppercase.
+    """
+
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-        """Configuration for production environments.
-
-        Args:
-            api_title: The title (name) of the API to display in the OpenAPI documentation.
-            api_version: The semantic version for the OpenAPI client.
-            openapi_client_name: The package name to use for generated OpenAPI clients.
-            kwargs: Additional settings to add to the configuration.
-
-        Raises:
-            RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
-                uppercase.
-        """
 
         prod_settings: dict[str, Any] = {
             "JWT_ALGORITHM": "RS256",
@@ -121,19 +125,21 @@ class ProdConfig(_DefaultConfig):
 
 
 class StagingConfig(ProdConfig):
+    """
+    Configuration for development/staging environments.
+
+    Args:
+        api_title: The title (name) of the API to display in the OpenAPI documentation.
+        api_version: The semantic version for the OpenAPI client.
+        openapi_client_name: The package name to use for generated OpenAPI clients.
+        kwargs: Additional settings to add to the configuration.
+
+    Raises:
+        RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
+            uppercase.
+    """
+
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-        """Configuration for development/staging environments.
-
-        Args:
-            api_title: The title (name) of the API to display in the OpenAPI documentation.
-            api_version: The semantic version for the OpenAPI client.
-            openapi_client_name: The package name to use for generated OpenAPI clients.
-            kwargs: Additional settings to add to the configuration.
-
-        Raises:
-            RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
-                uppercase.
-        """
 
         dev_settings: dict[str, Any] = {"VERIFY_SSL_CERT": False}
 
@@ -143,19 +149,21 @@ class StagingConfig(ProdConfig):
 
 
 class FlaskLocalConfig(StagingConfig):
+    """
+    Configuration used for running a local Flask server.
+
+    Args:
+        api_title: The title (name) of the API to display in the OpenAPI documentation.
+        api_version: The semantic version for the OpenAPI client.
+        openapi_client_name: The package name to use for generated OpenAPI clients.
+        kwargs: Additional settings to add to the configuration.
+
+    Raises:
+        RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
+            uppercase.
+    """
+
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-        """Configuration used for running a local Flask server.
-
-        Args:
-            api_title: The title (name) of the API to display in the OpenAPI documentation.
-            api_version: The semantic version for the OpenAPI client.
-            openapi_client_name: The package name to use for generated OpenAPI clients.
-            kwargs: Additional settings to add to the configuration.
-
-        Raises:
-            RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
-                uppercase.
-        """
 
         # noinspection HttpUrlsUsage
         flask_local_settings: dict[str, Any] = {
@@ -177,19 +185,21 @@ class FlaskLocalConfig(StagingConfig):
 
 
 class TestingConfig(_DefaultConfig):
+    """
+    Configuration used for unit testing.
+
+    Args:
+        api_title: The title (name) of the API to display in the OpenAPI documentation.
+        api_version: The semantic version for the OpenAPI client.
+        openapi_client_name: The package name to use for generated OpenAPI clients.
+        kwargs: Additional settings to add to the configuration.
+
+    Raises:
+        RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
+            uppercase.
+    """
+
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-        """Configuration used for unit testing.
-
-        Args:
-            api_title: The title (name) of the API to display in the OpenAPI documentation.
-            api_version: The semantic version for the OpenAPI client.
-            openapi_client_name: The package name to use for generated OpenAPI clients.
-            kwargs: Additional settings to add to the configuration.
-
-        Raises:
-            RuntimeError: Attempted to override a protected setting or specified an additional setting that was not all
-                uppercase.
-        """
 
         testing_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://public.url"),
@@ -239,10 +249,14 @@ def flask_environment_configurator(
     Args:
         app: The root Flask app to configure with the given extension.
         environment: The target environment to create a Flask configuration object for. Available environments:
-            'prod': Configured for use in a production environment.
-            'stage': Configured for use in a development/staging environment.
-            'local': Configured for use with a local Flask server.
-            'testing': Configured for use in unit testing.
+
+            ``prod``: Configured for use in a production environment.
+
+            ``stage``: Configured for use in a development/staging environment.
+
+            ``local``: Configured for use with a local Flask server.
+
+            ``testing``: Configured for use in unit testing.
         api_title: The title (name) of the API to display in the OpenAPI documentation.
         api_version: The semantic version for the OpenAPI client.
         openapi_client_name: The package name to use for generated OpenAPI clients.

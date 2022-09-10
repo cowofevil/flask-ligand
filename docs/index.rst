@@ -8,6 +8,7 @@ Release v\ |version| (:ref:`Changelog <changelog>`)
 
 .. include:: ../README.rst
    :start-after: excerpt-start
+   :end-before: excerpt-end
 
 Why not Use FastAPI Instead?
 ----------------------------
@@ -26,34 +27,38 @@ library brings together the best extensions that the :doc:`Flask <flask:index>` 
 creating a greenfield microservice then this library lets you tap into a wide range of other
 :doc:`Flask extensions <flask:extensions>` that will help you solve your problem(s) faster.
 
+Guides
+======
+
+.. toctree::
+    :maxdepth: 3
+
+    quickstart
+    configuration
+    development
+
 Powered By
 ==========
 
 This library is powered by the following awesome projects:
 
 - :doc:`flask-smorest <flask-smorest:index>`
-
     - :doc:`apispec <apispec:index>`
     - :doc:`marshmallow <marshmallow:index>`
     - :doc:`webargs <webargs:index>`
-
 - :doc:`flask-sqlalchemy <flask-sqlalchemy:index>`
 - :doc:`flask-jwt-extended <flask-jwt-extended:index>`
 - :doc:`flask-cors <flask-cors:index>`
 - :doc:`flask-migrate <flask-migrate:index>`
 - :doc:`marshmallow-sqlalchemy <marshmallow-sqlalchemy:index>`
-
     - :sqlalchemy:`SQLAlchemy <index.html>`
-
 - :doc:`sqlalchemy-utils <sqlalchemy-utils:index>`
 
 .. toctree::
     :hidden:
     :maxdepth: 3
 
-    quickstart
-    configuration
-    development
+    api_reference
 
 .. toctree::
     :hidden:

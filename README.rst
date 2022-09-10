@@ -16,14 +16,6 @@ Install
 
     $ pip install flask-ligand
 
-Resources
-=========
-
-- `Documentation`_
-- `Changelog`_
-- `Contributing`_
-- `License`_
-
 Why Use this Library?
 =====================
 
@@ -39,13 +31,10 @@ functionality out-of-the-box:
 - Provide automatic `SwaggerUI`_ docs for quickly developing and testing your `Flask`_ application without the need
   of external tools like curl, Postman or Hoppscotch
 - `Generate OpenAPI clients`_ for a variety of languages
-
     - Endpoints for generating Python and Typescript clients already included!
-
 - Protect endpoints with JWT security with a `OpenID Connect`_ IAM like `Auth0`_ or `Keycloak`_
-
     - Optionally control access to endpoints using `RBAC`_
-
+- Quickly enable `pagination`_ and `ETag`_ support for your endpoints
 - Easily manage database migrations using Alembic through the fantastic Flask-Migrate library and command-line tools
 
 .. _`Flask`: https://flask.palletsprojects.com/en/2.2.x/
@@ -57,10 +46,8 @@ functionality out-of-the-box:
 .. _`Keycloak`: https://www.keycloak.org/
 .. _`RBAC`: https://en.wikipedia.org/wiki/Role-based_access_control
 .. _`OpenID Connect`: https://openid.net/connect/
-.. _`Documentation`: https://flask-ligand.readthedocs.io/en/stable/
-.. _`Changelog`: ./CHANGELOG.md
-.. _`Contributing`: ./CONTRIBUTING.rst
-.. _`License`: ./LICENSE
+.. _`pagination`: https://flask-smorest.readthedocs.io/en/latest/pagination.html
+.. _`ETag`: https://flask-smorest.readthedocs.io/en/latest/etag.html
 
 .. |docs-status| image:: https://img.shields.io/readthedocs/flask-ligand/stable?logo=readthedocs
    :target: https://flask-ligand.readthedocs.io/en/stable/
@@ -77,3 +64,18 @@ functionality out-of-the-box:
 .. |pre-commit-status| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
    :alt: pre-commit
+
+.. excerpt-end
+
+Resources
+=========
+
+- `Documentation`_
+- `Changelog`_
+- `Contributing`_
+- `License`_
+
+.. _`Documentation`: https://flask-ligand.readthedocs.io/en/stable/
+.. _`Changelog`: ./CHANGELOG.md
+.. _`Contributing`: ./CONTRIBUTING.rst
+.. _`License`: ./LICENSE

@@ -22,7 +22,7 @@ prod
 The 'prod' environment is meant to run the microservice in a production environment.
 
 .. list-table:: **Environment Settings**
-   :widths: 25 35 10 50
+   :widths: 25 15 10 50
    :header-rows: 1
 
    * - Setting

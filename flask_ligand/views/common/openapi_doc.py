@@ -16,4 +16,4 @@ if TYPE_CHECKING:  # pragma: no cover
 # ======================================================================================================================
 # Globals
 # ======================================================================================================================
-BEARER_AUTH: Any = [{"bearerAuth": []}]  # Enable bearer authentication for Swagger-UI docs
+BEARER_AUTH: Any = [{"bearerAuth": []}]  #: Enable bearer authentication for Swagger-UI docs

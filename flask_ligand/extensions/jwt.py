@@ -37,7 +37,13 @@ JWT = JWTManager()
 # ======================================================================================================================
 @dataclass
 class User:
-    """A simple class representing pertinent user information."""
+    """
+    A simple class representing pertinent user information.
+
+    Args:
+        id: The UUID of the user.
+        roles: A list of roles that the user has been assigned.
+    """
 
     id: str
     roles: list[str]
