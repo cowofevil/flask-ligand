@@ -37,7 +37,7 @@ ISO_8601_DATETIME_FMT = "%Y-%m-%dT%H:%M:%SZ"  # This is acceptable in ISO 8601 a
 # Functions: Public
 # ======================================================================================================================
 def abort(http_status: HTTPStatus, message: Optional[str] = None) -> None:
-    """Raise a HTTPException for the given http_status_code. Attach any keyword arguments to the exception for later
+    """Raise a HTTPException for the given ``http_status``. Attach any keyword arguments to the exception for later
     processing.
 
     Args:
@@ -63,7 +63,10 @@ def abort(http_status: HTTPStatus, message: Optional[str] = None) -> None:
 # Classes: Public
 # ======================================================================================================================
 class Blueprint(BlueprintOrig):
-    """Blueprint override"""
+    """
+    :class:`Blueprint <flask_smorest.Blueprint>` override example. See comments below on how to create a custom
+    converter for your schemas.
+    """
 
 
 # Define custom converter to schema function
@@ -72,7 +75,18 @@ class Blueprint(BlueprintOrig):
 
 
 class Api(ApiOrig):
-    """Api override"""
+    """
+    Extension of the :class:`flask_smorest.Api <flask_smorest.Api>` main class which provides helpers to build a
+    REST API using Flask.
+
+    Using this extension will automatically enable an "Authorize" button to the SwaggerUI docs.
+
+    Args:
+        app: Flask application
+        spec_kwargs: kwargs to pass to internal APISpec instance.
+            The ``spec_kwargs`` dictionary is passed as kwargs to the internal APISpec instance. **flask-smorest**
+            adds a few parameters to the original parameters documented in :class:`apispec.APISpec <apispec.APISpec>`
+    """
 
     def __init__(self, app: Optional[flask.Flask] = None, *, spec_kwargs: Optional[dict[str, Any]] = None):
         super().__init__(app, spec_kwargs=spec_kwargs)
@@ -82,7 +96,10 @@ class Api(ApiOrig):
 
 
 class Schema(ma.Schema):
-    """Schema override"""
+    """
+    Extend :class:`Schema <marshmallow.Schema>` to automatically exclude unknown fields and enforce ordering of
+    fields in the :swagger-ui:`SwaggerUI documentation <>`.
+    """
 
     class Meta(ma.Schema.Meta):
         unknown = ma.EXCLUDE
@@ -90,7 +107,12 @@ class Schema(ma.Schema):
 
 
 class AutoSchema(SQLAlchemyAutoSchema):
-    """SQLAlchemyAutoSchema override"""
+    """
+    Extend :class:`SQLAlchemyAutoSchema <marshmallow_sqlalchemy.SQLAlchemyAutoSchema>` to include the
+    foreign key, automatically raise an exception when unknown fields are specified, enforce ordering of fields
+    in the :swagger-ui:`SwaggerUI and enforce the use of ISO-8601 for datetime fields.
+    documentation <>`.
+    """
 
     class Meta(SQLAlchemyAutoSchema.Meta):
         include_fk = True
@@ -99,8 +121,6 @@ class AutoSchema(SQLAlchemyAutoSchema):
         datetimeformat = ISO_8601_DATETIME_FMT
 
     def update(self, obj: Any, data: Any) -> None:
-        """Update object nullifying missing data"""
-
         loadable_fields = [k for k, v in self.fields.items() if not v.dump_only]
 
         for name in loadable_fields:
@@ -113,16 +133,18 @@ class AutoSchema(SQLAlchemyAutoSchema):
 
 
 class SQLCursorPage(Page):
-    """SQL cursor pager"""
+    """:doc:`SQL cursor pager used for paginated endpoints. <flask-smorest:pagination>`"""
 
-    # https://flask-smorest.readthedocs.io/en/latest/pagination.html
     @property
     def item_count(self) -> int:
         return self.collection.count()  # type: ignore
 
 
 class BaseQuery(BaseQueryOrig):  # type: ignore
-    """Enable customized REST JSON error messages for 'get_or_404' and 'first_or_404' methods."""
+    """
+    Enable customized REST JSON error messages for 'get_or_404' and 'first_or_404' methods for
+    :class:`BaseQuery <flask_sqlalchemy.BaseQuery>`.
+    """
 
     def get_or_404(self, ident: object, description: Optional[str] = None) -> Any:
         """Like `get` but aborts with 404 if not found instead of returning ``None``.

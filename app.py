@@ -1,4 +1,4 @@
-"""Flask app flask_ligand service entrypoint. (Use this Flask app testing/debugging purposes only!)"""
+"""Flask app flask_ligand service entrypoint. (Use this Flask app for testing/debugging purposes only!)"""
 
 # ======================================================================================================================
 # Imports
@@ -13,7 +13,7 @@ import flask_ligand
 # ======================================================================================================================
 try:
     app = flask_ligand.create_app(
-        getenv("FLASK_ENV", "prod"), "Service Library", flask_ligand.__version__, "flask-ligand-client"
+        __name__, getenv("FLASK_ENV", "prod"), "Service Library", flask_ligand.__version__, "flask-ligand-client"
     )
 except RuntimeError as e:
     print(f"Service initialization failure!\nReason: {e}")

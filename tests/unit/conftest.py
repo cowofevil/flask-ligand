@@ -39,7 +39,8 @@ def basic_flask_app(jwt_init_app: Callable[[Flask], None], open_api_client_name:
     # Prevent JWT from retrieving public key from OIDC issuer URL
     mocker.patch("flask_ligand.extensions.jwt.init_app", side_effect=jwt_init_app)
 
-    app = create_app(
+    app, _ = create_app(
+        flask_app_name="flask_ligand_unit_testing",
         flask_env="testing",
         api_title="Flask Ligand Unit Testing Service",
         api_version="1.0.1",

@@ -41,7 +41,7 @@ class OpenApiTypescriptAxios(MethodView):
         """
         Generate a 'typescript-axios' OpenAPI client for this service.
 
-        NOTE: The link provided is only good for one download before it expires!
+        **NOTE**: The link provided is only good for one download before it expires!
 
         See for more details: https://openapi-generator.tech/docs/generators
         """
@@ -73,7 +73,7 @@ class OpenApiPython(MethodView):
         """
         Generate a 'python' OpenAPI client for this service.
 
-        NOTE: The link provided is only good for one download before it expires!
+        **NOTE**: The link provided is only good for one download before it expires!
 
         See for more details: https://openapi-generator.tech/docs/generators
         """

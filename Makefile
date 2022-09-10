@@ -184,7 +184,8 @@ install-venv: clean-venv install ## install the package after wiping the virtual
 
 .PHONY: develop
 develop: clean ## install necessary packages to setup a dev environment
-	@pip3 install -r requirements.txt -r requirements-dev.txt -r docs/requirements.txt
+	@pip3 install -r requirements.txt -r requirements-dev.txt -r docs/requirements.txt && \
+	pip3 uninstall flask-ligand -y
 
 .PHONY: develop-venv
 develop-venv: clean-venv develop ## setup a dev environment after wiping the virtual environment

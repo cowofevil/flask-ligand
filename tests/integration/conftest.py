@@ -25,7 +25,8 @@ pytest_plugins = ["flask_ligand"]
 # ======================================================================================================================
 if TYPE_CHECKING:
     from flask import Flask
-    from typing import Any, Optional
+    from flask_ligand.extensions.api import Api
+    from typing import Any, Optional, Tuple, Generator
 
 
 # ======================================================================================================================
@@ -138,8 +139,8 @@ def access_token_headers(int_testing_env_vars: dict[str, Optional[str]]) -> dict
     headers = {"content-type": "application/x-www-form-urlencoded"}
     payload = (
         f"grant_type=client_credentials&"
-        f"client_id={int_testing_env_vars['KC_CLIENT_ID']}&"
-        f"client_secret={int_testing_env_vars['KC_CLIENT_SECRET']}"
+        f"client_id={int_testing_env_vars['KC_ADMIN_CLIENT_ID']}&"
+        f"client_secret={int_testing_env_vars['KC_ADMIN_CLIENT_SECRET']}"
     )
 
     access_token = post(token_url, data=payload, headers=headers, verify=False).json()["access_token"]
@@ -160,8 +161,8 @@ def access_token_headers_no_roles(int_testing_env_vars: dict[str, Optional[str]]
     headers = {"content-type": "application/x-www-form-urlencoded"}
     payload = (
         f"grant_type=client_credentials&"
-        f"client_id={int_testing_env_vars['KC_CLIENT_ID_NO_ROLES']}&"
-        f"client_secret={int_testing_env_vars['KC_CLIENT_SECRET']}"
+        f"client_id={int_testing_env_vars['KC_NO_ROLES_CLIENT_ID']}&"
+        f"client_secret={int_testing_env_vars['KC_NO_ROLES_CLIENT_SECRET']}"
     )
 
     access_token = post(token_url, data=payload, headers=headers, verify=False).json()["access_token"]
@@ -174,7 +175,7 @@ def basic_flask_app(
     open_api_client_name: str,
     migration_directory: str,
     int_testing_env_vars: dict[str, Optional[str]],
-) -> Flask:
+) -> Tuple[Flask, Api]:
     """A basic Flask app ready to be used for testing."""
 
     db_uri = (
@@ -195,6 +196,7 @@ def basic_flask_app(
     }
 
     return create_app(
+        flask_app_name="flask_ligand_integration_testing",
         flask_env="local",
         api_title="Flask Ligand Integration Testing Service",
         api_version="1.0.1",
@@ -204,15 +206,16 @@ def basic_flask_app(
 
 
 @pytest.fixture(scope="function")
-def app_test_client(basic_flask_app: Flask, migration_directory: str) -> FlaskClient:
+def app_test_client(basic_flask_app: Tuple[Flask, Api], migration_directory: str) -> Generator[FlaskClient, None, None]:
     """Flask app test client with 'IntegrationTestView' pre-configured."""
+    app, api = basic_flask_app
 
-    basic_flask_app.register_blueprint(BLP)
+    api.register_blueprint(BLP)
 
-    yield basic_flask_app.test_client()
+    yield app.test_client()
 
     # Teardown
-    with basic_flask_app.app_context():
+    with app.app_context():
         downgrade(directory=migration_directory)
 
 

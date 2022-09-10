@@ -18,6 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 import flask_ligand
+import flask_ligand_example  # noqa: F401
 
 project = "flask-ligand"
 copyright = "2022, Ryan Gard and contributors"
@@ -28,13 +29,18 @@ version = release = flask_ligand.__version__
 # -- General configuration ---------------------------------------------------
 
 extensions = [
+    "code_include.extension",
     "hoverxref.extension",
     "myst_parser",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
     "sphinx.ext.extlinks",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
+    "sphinx_autodoc_typehints",  # https://github.com/tox-dev/sphinx-autodoc-typehints/issues/15
     "sphinx.ext.viewcode",
+    "sphinx_tabs.tabs",
+    "sphinx-prompt",
+    "sphinx_toolbox.collapse",
     "sphinx_issues",
 ]
 
@@ -54,18 +60,23 @@ myst_enable_extensions = [
     "tasklist",
 ]
 
-extlinks = {"sqlalchemy": ("https://docs.sqlalchemy.org/en/14/%s", None)}
+extlinks = {
+    "sqlalchemy": ("https://docs.sqlalchemy.org/en/14/%s", None),
+    "swagger-ui": ("https://swagger.io/tools/swagger-ui/%s", None),
+}
 
 intersphinx_mapping = {
     "apispec": ("https://apispec.readthedocs.io/en/latest/", None),
     "flask": ("https://flask.palletsprojects.com/en/latest/", None),
     "flask-cors": ("https://flask-cors.readthedocs.io/en/latest/", None),
     "flask-jwt-extended": ("https://flask-jwt-extended.readthedocs.io/en/stable/", None),
+    "flask-ligand": ("https://flask-ligand.readthedocs.io/en/latest/", None),
     "flask-migrate": ("https://flask-migrate.readthedocs.io/en/latest/", None),
     "flask-smorest": ("https://flask-smorest.readthedocs.io/en/latest/", None),
     "flask-sqlalchemy": ("https://flask-sqlalchemy.palletsprojects.com/en/2.x/", None),
     "marshmallow": ("https://marshmallow.readthedocs.io/en/stable/", None),
     "marshmallow-sqlalchemy": ("https://marshmallow-sqlalchemy.readthedocs.io/en/latest/", None),
+    "python": ("https://docs.python.org/3/", None),
     "quart": ("https://quart.palletsprojects.com/en/latest/", None),
     "sqlalchemy-utils": ("https://sqlalchemy-utils.readthedocs.io/en/latest/", None),
     "webargs": ("https://webargs.readthedocs.io/en/latest/", None),
@@ -116,6 +127,8 @@ html_theme_options = {
     "github_repo": "flask-ligand",
     "github_banner": True,
     "github_button": False,
+    "page_width": "65%",
+    "sidebar_width": "15rem",
     "code_font_size": "0.8em",
     "extra_nav_links": {
         "flask-ligand@PyPI": "https://pypi.python.org/pypi/flask-ligand",
@@ -132,7 +145,7 @@ html_sidebars = {
     "**": ["about.html", "navigation.html", "searchbox.html"],
 }
 
-# -- Configuration for hoverxref extension -------------------------------------------------
+# -- Configuration for 'hoverxref' extension -------------------------------------------------
 
 hoverxref_auto_ref = False
 hoverxref_domains = ["py"]
@@ -155,12 +168,18 @@ hoverxref_intersphinx = [
     "flask",
     "flask-cors",
     "flask-jwt-extended",
+    "flask-ligand",
     "flask-migrate",
     "flask-smorest",
     "flask-sqlalchemy",
     "marshmallow",
     "marshmallow-sqlalchemy",
+    "python",
     "quart",
     "sqlalchemy-utils",
     "webargs",
 ]
+
+# -- Configuration for 'autodoc' extension -------------------------------------------------
+
+autodoc_typehints = "description"

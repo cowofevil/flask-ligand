@@ -1,4 +1,8 @@
+flask-ligand-example~=0.1
 myst-parser[linkify]~=0.18
 sphinx~=5.1
-sphinx-issues~=3.0
+sphinx-autodoc-typehints~=1.19
+sphinx-code-include~=1.1
 sphinx-hoverxref~=1.1
+sphinx-issues~=3.0
+sphinx-toolbox~=3.2
