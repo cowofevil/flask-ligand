@@ -4,10 +4,11 @@
 # Imports
 # ======================================================================================================================
 import pytest
+from http import HTTPStatus
 from flask_ligand.extensions.api import abort
 
 # noinspection PyPackageRequirements
-from werkzeug.exceptions import default_exceptions, HTTPException
+from werkzeug.exceptions import HTTPException
 
 
 # ======================================================================================================================
@@ -21,10 +22,10 @@ class TestAbort(object):
 
         with app_test_client.application.app_context():
             with pytest.raises(HTTPException) as e:
-                abort(404)
+                abort(HTTPStatus(404))
 
         # noinspection PyUnresolvedReferences
-        assert e.value.response.json["message"] == default_exceptions[404].description  # type: ignore
+        assert e.value.response.json["message"] == HTTPStatus(404).phrase  # type: ignore
 
     def test_abort_with_custom_message(self, app_test_client):
         """Verify that abort will return a user specified message."""
@@ -33,7 +34,7 @@ class TestAbort(object):
 
         with app_test_client.application.app_context():
             with pytest.raises(HTTPException) as e:
-                abort(404, message=message_exp)
+                abort(HTTPStatus(404), message=message_exp)
 
         # noinspection PyUnresolvedReferences
         assert e.value.response.json["message"] == message_exp  # type: ignore
@@ -46,14 +47,10 @@ class TestNegativeAbort(object):
         """Verify that the correct exception is raised when an invalid HTTP status code is specified."""
 
         invalid_http_status_code = 42
-        error_message_exp = f"no exception for {invalid_http_status_code}"
 
         with app_test_client.application.app_context():
-            with pytest.raises(HTTPException) as e:
-                abort(invalid_http_status_code)
-
-        # noinspection PyUnresolvedReferences
-        assert e.value.response.json["message"] == error_message_exp  # type: ignore
+            with pytest.raises(ValueError):
+                abort(HTTPStatus(invalid_http_status_code))
 
     def test_abort_with_invalid_status_code_and_custom_message(self, app_test_client):
         """Verify that the correct exception is raised when an invalid HTTP status code is specified along with a
@@ -61,11 +58,7 @@ class TestNegativeAbort(object):
         """
 
         invalid_http_status_code = 42
-        error_message_exp = f"no exception for {invalid_http_status_code}"
 
         with app_test_client.application.app_context():
-            with pytest.raises(HTTPException) as e:
-                abort(invalid_http_status_code, message="Oh no!")
-
-        # noinspection PyUnresolvedReferences
-        assert e.value.response.json["message"] == error_message_exp  # type: ignore
+            with pytest.raises(ValueError):
+                abort(HTTPStatus(invalid_http_status_code), message="Oh no!")

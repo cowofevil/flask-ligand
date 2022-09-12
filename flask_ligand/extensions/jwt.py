@@ -6,6 +6,7 @@
 from __future__ import annotations
 import json
 from requests import get
+from http import HTTPStatus
 from functools import wraps
 from flask import current_app
 from typing import TYPE_CHECKING
@@ -61,12 +62,12 @@ def jwt_role_required(role: str):  # type: ignore
             verify_jwt_in_request()
 
             if role not in current_app.config["ALLOWED_ROLES"]:
-                abort(500, message="Endpoint required role is not an allowed role!")
+                abort(HTTPStatus(500), message="Endpoint required role is not an allowed role!")
 
             # custom role membership verification
             user: User = get_current_user()
             if role not in user.roles:
-                abort(403, message=f"This endpoint requires the user to have the '{role}' role!")
+                abort(HTTPStatus(403), message=f"This endpoint requires the user to have the '{role}' role!")
 
             return fn(*args, **kwargs)
 

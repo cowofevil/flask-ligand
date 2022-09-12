@@ -7,6 +7,7 @@ from __future__ import annotations
 from json import dumps
 from flask import Flask
 from requests import post
+from http import HTTPStatus
 from typing import TYPE_CHECKING
 from urljoin import url_path_join
 from requests.exceptions import RequestException
@@ -67,6 +68,6 @@ def get_openapi_client_dl_link(  # type: ignore
         ).json()
     except RequestException:
         abort(
-            500,
+            HTTPStatus(500),
             message=f"The request to the '{open_api_gen_server_url}' server failed!",
         )

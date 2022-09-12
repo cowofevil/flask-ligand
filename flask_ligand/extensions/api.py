@@ -11,11 +11,10 @@ import flask
 
 # noinspection PyPackageRequirements
 import marshmallow as ma
-
+from http import HTTPStatus
 from typing import TYPE_CHECKING
 
 # noinspection PyPackageRequirements
-from werkzeug.exceptions import default_exceptions
 from flask_sqlalchemy import BaseQuery as BaseQueryOrig
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_smorest import Api as ApiOrig, Blueprint as BlueprintOrig, Page
@@ -37,25 +36,27 @@ ISO_8601_DATETIME_FMT = "%Y-%m-%dT%H:%M:%SZ"  # This is acceptable in ISO 8601 a
 # ======================================================================================================================
 # Functions: Public
 # ======================================================================================================================
-def abort(http_status_code: int, message: Optional[str] = None) -> None:
+def abort(http_status: HTTPStatus, message: Optional[str] = None) -> None:
     """Raise a HTTPException for the given http_status_code. Attach any keyword arguments to the exception for later
     processing.
 
     Args:
-        http_status_code: Status code will be looked up in the list of exceptions and will raise that exception.
-        message: Custom message to return within the body or a default message will be returned instead.
+        http_status: A valid HTTPStatus enum which will be used for reporting the HTTP response status and code.
+        message: Custom message to return within the body or a default HTTP status message will be returned instead.
     """
 
-    try:
-        message = (
-            message
-            if message and http_status_code in default_exceptions.keys()
-            else default_exceptions[http_status_code].description
-        )
-    except KeyError:
-        message = f"no exception for {http_status_code}"
+    message = message if message else http_status.phrase
 
-    flask.abort(flask.make_response(flask.jsonify(message=message), http_status_code))
+    flask.abort(
+        flask.make_response(
+            flask.jsonify(
+                code=http_status.value,
+                status=http_status.name,
+                message=message,
+            ),
+            http_status,
+        )
+    )
 
 
 # ======================================================================================================================
@@ -134,7 +135,7 @@ class BaseQuery(BaseQueryOrig):  # type: ignore
 
         rv = self.get(ident)
         if rv is None:
-            abort(404, message=description)
+            abort(HTTPStatus(404), message=description)
         return rv
 
     def first_or_404(self, description: Optional[str] = None) -> Any:
@@ -146,5 +147,5 @@ class BaseQuery(BaseQueryOrig):  # type: ignore
 
         rv = self.first()
         if rv is None:
-            abort(404, message=description)
+            abort(HTTPStatus(404), message=description)
         return rv
