@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.3.3 (2022-09-12)
+### :robot:
+* [FIX:robot:] Add the Missing Error Schema Fields ([`a4366e9`](https://github.com/cowofevil/flask-ligand/commit/a4366e9df0badebd1cf050390a1eb69ea3798fcb))
+
 ## v0.3.2 (2022-09-10)
 ### :robot:
 * [FIX:robot:] Change Type Definition for BEARER_AUTH ([`1c10a1b`](https://github.com/cowofevil/flask-ligand/commit/1c10a1b7349cce80b72252fbed67f864c426c38b))
