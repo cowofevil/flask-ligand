@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2022-09-20)
+### :sparkles:
+* [538:sparkles:] Update Docs with Quickstart Guide ([`d99fed6`](https://github.com/cowofevil/flask-ligand/commit/d99fed65e10316cd24a986a47714523c40e4e72d))
+
 ## v0.3.4 (2022-09-13)
 ### :robot:
 * [FIX:robot:] Add Missing Type Definition Marker ([`a84dfd6`](https://github.com/cowofevil/flask-ligand/commit/a84dfd6e39e4fcdfd99b8cfd7ef40293f745fa2e))
