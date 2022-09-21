@@ -96,6 +96,100 @@ Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error respons
 Create the App
 --------------
 
+Connect the models, schemas and views together by calling :func:`create_app <flask_ligand.create_app>` followed by
+registering the Blueprints for the views.
+
+.. code-include :: :func:`flask_ligand_example.create_app`
+
+.. collapse:: Click for full example...
+
+    .. code-include :: :func:`flask_ligand_example`
+
+Run the App
+-----------
+
+To run the app in a :doc:`Flask server <flask:quickstart>` simply create an ``app.py`` (and corresponding ``.flaskenv``
+file) that calls the example projects :func:`create_app <flask_ligand_example.create_app>` and specifies the
+`Flask environment settings <configuration.html#built-in-flask-environments>`_ it should launch with.
+
+.. code-block:: python
+
+    try:
+        app = flask_ligand_example.create_app(
+            getenv("FLASK_ENV", "prod"),
+            "Flask Ligand Example",
+            flask_ligand_example.__version__,
+            "flask-ligand-example-client",
+        )
+    except RuntimeError as e:
+        print(f"Service initialization failure!\nReason: {e}")
+        exit(1)
+
+.. collapse:: Click for full example...
+
+    .. code-block:: python
+
+        """Flask app flask_ligand_example service entrypoint."""
+
+        # ==============================================================================================================
+        # Imports
+        # ==============================================================================================================
+        from sys import exit
+        from os import getenv
+        import flask_ligand_example
+
+
+        # ==============================================================================================================
+        # Globals
+        # ==============================================================================================================
+        try:
+            app = flask_ligand_example.create_app(
+                getenv("FLASK_ENV", "prod"),
+                "Flask Ligand Example",
+                flask_ligand_example.__version__,
+                "flask-ligand-example-client",
+            )
+        except RuntimeError as e:
+            print(f"Service initialization failure!\nReason: {e}")
+            exit(1)
+
+Explore the App
+===============
+
+.. important:: Once again reminding you that the `example project`_ contains all the code referenced in this guide.
+
+The `example project`_ has all the bells and whistles enabled for the ``flask-ligand`` library which can be explored by
+using the included :swagger-ui:`SwaggerUI documentation <>`. Follow the instructions below to start start running a
+local Flask server to serve the :swagger-ui:`SwaggerUI documentation <>`.
+
+1. Generate a '.env' file to configure Flask server to use the included Docker environment::
+
+    $ make gen-local-env-file
+
+2. Initialize the database::
+
+    $ make setup-db
+
+3. Generate a JWT access token with admin rights for accessing the included example project endpoints::
+
+    $ make gen-admin-access-token
+
+4. Start the local Flask server::
+
+    $ make run
+
+5. Open a browser and navigate to 'http://localhost:5000/apidocs'.
+6. Click the 'Authorize' button and paste in the JWT access token you created previously.
+
+Now go ahead and start playing around with the API!
+
+Access Keycloak Admin Console
+-----------------------------
+
+If you would like to make changes to the `Keycloak`_ IAM clients to explore authentication then you can access the
+admin console by navigating to 'http://localhost:8080/admin/master/console/'. The admin credentials can be found in the
+'docker/env_files/integration.env/' file.
 
 .. _`example project`: https://github.com/cowofevil/flask-ligand-example
 .. _`JWT access token`: https://auth0.com/blog/id-token-access-token-what-is-the-difference/
+.. _`Keycloak`: https://www.keycloak.org/
