@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.4.1 (2022-09-21)
+### :robot:
+* [541:robot:] Finish Quickstart Guide ([`bdf76bd`](https://github.com/cowofevil/flask-ligand/commit/bdf76bdb5843a3027dc7cbf9c547fc07f84c2554))
+
 ## v0.4.0 (2022-09-20)
 ### :sparkles:
 * [538:sparkles:] Update Docs with Quickstart Guide ([`d99fed6`](https://github.com/cowofevil/flask-ligand/commit/d99fed65e10316cd24a986a47714523c40e4e72d))
