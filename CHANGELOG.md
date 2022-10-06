@@ -3,6 +3,16 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.5.0 (2022-10-06)
+### Feature
+* [500:sparkles:] Add Auth0 Support ([`0b5af21`](https://github.com/cowofevil/flask-ligand/commit/0b5af21985f5a890151e96d14d234cab8113b0b1))
+
+### Other
+* :arrow_up: Update tox requirement from ~=3.25 to ~=3.26 ([`0d025ea`](https://github.com/cowofevil/flask-ligand/commit/0d025ea50cc5b1eec790745c365bae38a0c25be1))
+* :arrow_up: Update ipython requirement from ~=8.4 to ~=8.5 ([`4c98ed4`](https://github.com/cowofevil/flask-ligand/commit/4c98ed4a92dbd52da4cfee04173ca4b89e969898))
+* :arrow_up: Update pipdeptree requirement from ~=2.2 to ~=2.3 ([`e4001b3`](https://github.com/cowofevil/flask-ligand/commit/e4001b31d208ca8b012f5c608e28b2eb4d5a1e3c))
+* :arrow_up: Update pyjwt requirement from ~=2.4 to ~=2.5 ([`2a53e7d`](https://github.com/cowofevil/flask-ligand/commit/2a53e7db2dcbc98634b7edaae6b9d319d2b39863))
+
 ## v0.4.1 (2022-09-21)
 ### :robot:
 * [541:robot:] Finish Quickstart Guide ([`bdf76bd`](https://github.com/cowofevil/flask-ligand/commit/bdf76bdb5843a3027dc7cbf9c547fc07f84c2554))
