@@ -48,7 +48,8 @@ The 'prod' environment is meant to run the microservice in a production environm
    * - ``OIDC_REALM``
      - *Not set* (must be provided)
      - *Yes*
-     - The OpenID Connect IAM realm to use for authentication.
+     - The OpenID Connect IAM realm to use for authentication. If set to an **empty string** then it is assumed that
+       the OIDC issuer is Auth0 configured without realm support.
    * - ``VERIFY_SSL_CERT``
      - ``True``
      - *No*

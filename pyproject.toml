@@ -25,6 +25,7 @@ warn_return_any = true
 module = "tests.*"
 disallow_untyped_defs = false
 disallow_untyped_calls = false
+disallow_incomplete_defs = false
 warn_return_any = false
 
 [[tool.mypy.overrides]]
@@ -40,3 +41,4 @@ branch = "main"
 version_pattern = "setup.cfg:version = {version}"
 version_variable = "flask_ligand/__init__.py:__version__"
 commit_parser = "semantic_release.history.emoji_parser"
+use_textual_changelog_sections = true

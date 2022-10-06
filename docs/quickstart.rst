@@ -1,4 +1,4 @@
-.. rstcheck: ignore-roles=sqlalchemy,swagger-ui
+.. rstcheck: ignore-roles=sqlalchemy,swagger-ui,auth0
 .. rstcheck: ignore-directives=code-include,collapse
 
 ==========
@@ -78,7 +78,8 @@ Use :class:`MethodView <flask.views.MethodView>` classes to organize resources, 
 :meth:`Blueprint.response <flask_smorest.Blueprint.response>` to specify request/response (de)serialization and data
 validation.
 
-Selectively secure endpoint REST verbs to require a valid `JWT access token`_ containing certain roles by using the
+Selectively secure endpoint REST verbs to require a valid
+:auth0:`JWT access token <blog/id-token-access-token-what-is-the-difference/>` containing certain roles by using the
 :func:`jwt_role_required decorator <flask_ligand.extensions.jwt.jwt_role_required>`. Provide a convenient "Authorize"
 button in the :swagger-ui:`SwaggerUI documentation <>` by providing the  to the
 :meth:`Blueprint.arguments <Blueprint.arguments>`
@@ -190,6 +191,14 @@ If you would like to make changes to the `Keycloak`_ IAM clients to explore auth
 admin console by navigating to 'http://localhost:8080/admin/master/console/'. The admin credentials can be found in the
 'docker/env_files/integration.env/' file.
 
+Flask-Migrate Auto-generation
+=============================
+
+For :doc:`Flask-Migrate <flask-migrate:index>` to work well when auto-generating migration scripts it is critical that
+the ``script.py.mako`` template in the ``migrations`` folder include an import for ``sqlalchemy_utils``. The
+`example project`_ already has the template updated, but if you are using the ``flask-ligand`` library without
+copying the `example project`_, then it is necessary you make the appropriate update to the ``script.py.mako`` template
+before using :doc:`Flask-Migrate <flask-migrate:index>`.
+
 .. _`example project`: https://github.com/cowofevil/flask-ligand-example
-.. _`JWT access token`: https://auth0.com/blog/id-token-access-token-what-is-the-difference/
 .. _`Keycloak`: https://www.keycloak.org/

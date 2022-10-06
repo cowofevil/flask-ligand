@@ -35,7 +35,7 @@ functionality out-of-the-box:
 - Protect endpoints with JWT security with a `OpenID Connect`_ IAM like `Auth0`_ or `Keycloak`_
     - Optionally control access to endpoints using `RBAC`_
 - Quickly enable `pagination`_ and `ETag`_ support for your endpoints
-- Easily manage database migrations using Alembic through the fantastic Flask-Migrate library and command-line tools
+- Easily manage database migrations using Alembic through the fantastic `Flask-Migrate`_ library and command-line tools
 
 .. _`Flask`: https://flask.palletsprojects.com/en/2.2.x/
 .. _`Flask extensions`: https://flask.palletsprojects.com/en/2.2.x/extensions/
@@ -48,6 +48,7 @@ functionality out-of-the-box:
 .. _`OpenID Connect`: https://openid.net/connect/
 .. _`pagination`: https://flask-smorest.readthedocs.io/en/latest/pagination.html
 .. _`ETag`: https://flask-smorest.readthedocs.io/en/latest/etag.html
+.. _`Flask-Migrate`: https://flask-migrate.readthedocs.io/en/latest/
 
 .. |docs-status| image:: https://img.shields.io/readthedocs/flask-ligand/stable?logo=readthedocs
    :target: https://flask-ligand.readthedocs.io/en/stable/
