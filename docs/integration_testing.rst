@@ -1,3 +1,5 @@
+.. rstcheck: ignore-roles=swagger-ui
+
 Integration Testing
 ===================
 
@@ -22,7 +24,6 @@ Once the ``.env`` file has been generated you can start a local Flask server by 
 
     $ make run
 
-Simple navigate to http:://localhost:5000/apidocs to access the local environment via `SwaggerUI`_.
+Simple navigate to http:://localhost:5000/apidocs to access the local environment via :swagger-ui:`SwaggerUI <>`.
 
 .. _Docker: https://www.docker.com/products/docker-desktop/
-.. _SwaggerUI: https://swagger.io/tools/swagger-ui/

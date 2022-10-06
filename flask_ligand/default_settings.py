@@ -40,7 +40,9 @@ class _DefaultConfig(dict):  # type: ignore
         ligand_default_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL"),
-            "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES", "").split(","),
+            "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES").split(",")  # type: ignore
+            if os.getenv("ALLOWED_ROLES") is not None
+            else None,
         }
 
         db_default_settings: dict[str, Any] = {
@@ -92,6 +94,22 @@ class _DefaultConfig(dict):  # type: ignore
                     raise RuntimeError(f"The '{key}' setting is not allowed to be overridden!")
             else:
                 raise RuntimeError(f"The setting name '{key}' must be uppercase!")
+
+        required_settings: dict[str, Any] = {
+            "SERVICE_PUBLIC_URL": self["SERVICE_PUBLIC_URL"],
+            "SERVICE_PRIVATE_URL": self["SERVICE_PRIVATE_URL"],
+            "ALLOWED_ROLES": self["ALLOWED_ROLES"],
+            "OIDC_ISSUER_URL": self["OIDC_ISSUER_URL"],
+            "OIDC_REALM": self["OIDC_REALM"],
+            "SQLALCHEMY_DATABASE_URI": self["SQLALCHEMY_DATABASE_URI"],
+            "OPENAPI_GEN_SERVER_URL": self["OPENAPI_GEN_SERVER_URL"],
+        }
+
+        for key in required_settings:
+            if required_settings[key] is None:
+                raise RuntimeError(
+                    f"The '{key}' environment variable must be set when running in this Flask environment!"
+                )
 
 
 # ======================================================================================================================

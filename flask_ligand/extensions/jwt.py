@@ -108,22 +108,20 @@ def user_lookup_callback(_jwt_header: dict[str, Any], jwt_data: dict[str, Any]) 
 def init_app(app: Flask) -> None:  # pragma: no cover (Covered by integration tests)
     """Initialize JWT."""
 
-    if app.config["OIDC_ISSUER_URL"] is None:
-        raise RuntimeError(
-            'The "OIDC_ISSUER_URL" environment variable must be set when running with the in this Flask environment!'
+    # If OIDC_REALM is set to an empty string then assume Auth0 is being used without realm support.
+    oidc_config_url = (
+        url_path_join(
+            app.config["OIDC_ISSUER_URL"], f"realms/{app.config['OIDC_REALM']}", ".well-known/openid-configuration"
         )
+        if len(app.config["OIDC_REALM"]) > 0
+        else url_path_join(app.config["OIDC_ISSUER_URL"], ".well-known/openid-configuration")
+    )
 
     verify_ssl_cert = app.config["VERIFY_SSL_CERT"]
 
     try:
         # Retrieve master openid-configuration endpoint from issuer realm
-        oidc_config = get(
-            url_path_join(
-                app.config["OIDC_ISSUER_URL"],
-                f"realms/{app.config['OIDC_REALM']}/.well-known/openid-configuration",
-            ),
-            verify=verify_ssl_cert,
-        ).json()
+        oidc_config = get(oidc_config_url, verify=verify_ssl_cert).json()
 
         # Retrieve data from jwks_uri endpoint
         oidc_jwks_uri = get(oidc_config["jwks_uri"], verify=verify_ssl_cert).json()

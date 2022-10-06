@@ -63,6 +63,7 @@ myst_enable_extensions = [
 extlinks = {
     "sqlalchemy": ("https://docs.sqlalchemy.org/en/14/%s", None),
     "swagger-ui": ("https://swagger.io/tools/swagger-ui/%s", None),
+    "auth0": ("https://auth0.com/%s", None),
 }
 
 intersphinx_mapping = {

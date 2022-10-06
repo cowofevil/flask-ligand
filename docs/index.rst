@@ -36,6 +36,7 @@ Guides
     quickstart
     configuration
     development
+    auth0
 
 Powered By
 ==========
