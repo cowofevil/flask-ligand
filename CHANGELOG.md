@@ -3,6 +3,19 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.6.0 (2022-10-07)
+### Feature
+* [511:sparkles:] Fix OIDC IAM Provider Configuration ([`9a885c0`](https://github.com/cowofevil/flask-ligand/commit/9a885c0717014825320a1b85b4bee9614f5ad742))
+
+### Other
+* :arrow_up: Update types-setuptools requirement from ~=65.3 to ~=65.4 ([`f6384b2`](https://github.com/cowofevil/flask-ligand/commit/f6384b26a2a1e23a1987d21905bddd02e853297e))
+* :arrow_up: Update coverage[toml] requirement from ~=6.4 to ~=6.5 ([`da2f475`](https://github.com/cowofevil/flask-ligand/commit/da2f4753944ce4d6f77b6b78efe61394075e45b3))
+* :arrow_up: Update pytest-mock requirement from ~=3.8 to ~=3.10 ([`59bb112`](https://github.com/cowofevil/flask-ligand/commit/59bb112f1d2ac0f983aa48f61dc5ca5af26ebefc))
+* :arrow_up: Update pytest-cov requirement from ~=3.0 to ~=4.0 ([`b0c162d`](https://github.com/cowofevil/flask-ligand/commit/b0c162d064617b7ec244ae3b3587105d7179fd27))
+* :arrow_up: Update mypy requirement from ~=0.971 to ~=0.982 ([`1bbd25f`](https://github.com/cowofevil/flask-ligand/commit/1bbd25f2d950e444160d0b0b84c044744a70fefa))
+* :arrow_up: Update sphinx requirement from ~=5.1 to ~=5.2 ([`7e1b11e`](https://github.com/cowofevil/flask-ligand/commit/7e1b11e5e34fb33abb0353cee73fb1b371f653a3))
+* [pre-commit.ci] pre-commit autoupdate ([`1b470b7`](https://github.com/cowofevil/flask-ligand/commit/1b470b7c465ec09769877a41185a55328f00427c))
+
 ## v0.5.0 (2022-10-06)
 ### Feature
 * [500:sparkles:] Add Auth0 Support ([`0b5af21`](https://github.com/cowofevil/flask-ligand/commit/0b5af21985f5a890151e96d14d234cab8113b0b1))
