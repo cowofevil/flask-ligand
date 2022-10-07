@@ -63,12 +63,9 @@ available built-in Flask environments)
    * - ``ALLOWED_ROLES``
      - ``user,admin``
      - A comma separated list of user roles that are allowed for endpoint protection. (e.g. 'user,admin')
-   * - ``OIDC_ISSUER_URL``
+   * - ``OIDC_DISCOVERY_URL``
      - *Not set* (must be provided)
-     - The OpenID Connect IAM URL to use for authentication.
-   * - ``OIDC_REALM``
-     - *Not set* (must be provided)
-     - The OpenID Connect IAM realm to use for authentication.
+     - The `OpenID Connect Provider Configuration Request`_ URL.
    * - ``SQLALCHEMY_DATABASE_URI``
      - ``sqlite:///:memory:``
      - The URI for a PostgreSQL database to use for persistent storage. (See `database_configuration.rst`_ for more
@@ -89,9 +86,10 @@ editors.
 .. _Docker: https://www.docker.com/products/docker-desktop/
 .. _Compose V2: https://docs.master.dockerproject.org/compose/#compose-v2-and-the-new-docker-compose-command
 .. _flask_environments.rst: docs/flask_environments.rst
+.. _`OpenID Connect Provider Configuration Request`: https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationRequest
 .. _database_configuration.rst: docs/database_configuration.rst
-.. _Python Black: https://black.readthedocs.io/en/stable/
-.. _editor integration: https://black.readthedocs.io/en/stable/integrations/editors.html
+.. _`Python Black`: https://black.readthedocs.io/en/stable/
+.. _`editor integration`: https://black.readthedocs.io/en/stable/integrations/editors.html
 
 .. excerpt-end
 

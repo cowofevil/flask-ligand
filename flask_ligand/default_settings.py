@@ -54,8 +54,7 @@ class _DefaultConfig(dict):  # type: ignore
         }
 
         auth_default_settings: dict[str, Any] = {
-            "OIDC_ISSUER_URL": os.getenv("OIDC_ISSUER_URL"),
-            "OIDC_REALM": os.getenv("OIDC_REALM"),
+            "OIDC_DISCOVERY_URL": os.getenv("OIDC_DISCOVERY_URL"),
             "VERIFY_SSL_CERT": True,
             "JWT_TOKEN_LOCATION": "headers",
             "JWT_HEADER_NAME": "Authorization",
@@ -99,8 +98,7 @@ class _DefaultConfig(dict):  # type: ignore
             "SERVICE_PUBLIC_URL": self["SERVICE_PUBLIC_URL"],
             "SERVICE_PRIVATE_URL": self["SERVICE_PRIVATE_URL"],
             "ALLOWED_ROLES": self["ALLOWED_ROLES"],
-            "OIDC_ISSUER_URL": self["OIDC_ISSUER_URL"],
-            "OIDC_REALM": self["OIDC_REALM"],
+            "OIDC_DISCOVERY_URL": self["OIDC_DISCOVERY_URL"],
             "SQLALCHEMY_DATABASE_URI": self["SQLALCHEMY_DATABASE_URI"],
             "OPENAPI_GEN_SERVER_URL": self["OPENAPI_GEN_SERVER_URL"],
         }
@@ -223,8 +221,7 @@ class TestingConfig(_DefaultConfig):
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://public.url"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL", "http://private.url"),
             "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES", "user,admin").split(","),
-            "OIDC_ISSUER_URL": "TESTING",
-            "OIDC_REALM": "TESTING",
+            "OIDC_DISCOVERY_URL": "TESTING",
             "VERIFY_SSL_CERT": False,
             "JWT_ACCESS_TOKEN_EXPIRES": 300,
             "JWT_SECRET_KEY": "super-duper-secret",

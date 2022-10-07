@@ -10,7 +10,6 @@ from http import HTTPStatus
 from functools import wraps
 from flask import current_app
 from typing import TYPE_CHECKING
-from urljoin import url_path_join
 from dataclasses import dataclass
 from jwt.algorithms import RSAAlgorithm
 from flask_ligand.extensions.api import abort
@@ -108,25 +107,18 @@ def user_lookup_callback(_jwt_header: dict[str, Any], jwt_data: dict[str, Any]) 
 def init_app(app: Flask) -> None:  # pragma: no cover (Covered by integration tests)
     """Initialize JWT."""
 
-    # If OIDC_REALM is set to an empty string then assume Auth0 is being used without realm support.
-    oidc_config_url = (
-        url_path_join(
-            app.config["OIDC_ISSUER_URL"], f"realms/{app.config['OIDC_REALM']}", ".well-known/openid-configuration"
-        )
-        if len(app.config["OIDC_REALM"]) > 0
-        else url_path_join(app.config["OIDC_ISSUER_URL"], ".well-known/openid-configuration")
-    )
-
     verify_ssl_cert = app.config["VERIFY_SSL_CERT"]
 
     try:
         # Retrieve master openid-configuration endpoint from issuer realm
-        oidc_config = get(oidc_config_url, verify=verify_ssl_cert).json()
+        oidc_config = get(app.config["OIDC_DISCOVERY_URL"], verify=verify_ssl_cert).json()
 
         # Retrieve data from jwks_uri endpoint
         oidc_jwks_uri = get(oidc_config["jwks_uri"], verify=verify_ssl_cert).json()
     except (RequestException, KeyError):
-        raise RuntimeError(f"Failed to retrieve public key from the '{app.config['OIDC_ISSUER_URL']}' OIDC issuer!")
+        raise RuntimeError(
+            f"Failed to retrieve public key from the '{app.config['OIDC_DISCOVERY_URL']}' OIDC Discovery URL!"
+        )
 
     # Retrieve first jwk entry from jwks_uri endpoint and use it to construct the RSA public key
     app.config["JWT_PUBLIC_KEY"] = RSAAlgorithm.from_jwk(json.dumps(oidc_jwks_uri["keys"][0]))  # type: ignore

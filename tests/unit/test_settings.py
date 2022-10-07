@@ -39,8 +39,7 @@ MOCK_REQUIRED_ENV_VARS = OrderedDict(
         "SERVICE_PUBLIC_URL": "http://service.public.url",
         "SERVICE_PRIVATE_URL": "http://service.private.url",
         "ALLOWED_ROLES": "user,admin",
-        "OIDC_ISSUER_URL": "http://oidc.issuer.url",
-        "OIDC_REALM": "oidc_realm",
+        "OIDC_DISCOVERY_URL": "http://oidc.discovery.url/.well-known/openid-configuration",
         "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
         "OPENAPI_GEN_SERVER_URL": "http://openapi.gen.server.url",
     }
@@ -92,8 +91,7 @@ class TestDefaultConfig(object):
             "DB_AUTO_UPGRADE": False,
             "DB_MIGRATION_DIR": "migrations",
             "JSON_SORT_KEYS": False,
-            "OIDC_ISSUER_URL": mocked_req_env_vars["OIDC_ISSUER_URL"],
-            "OIDC_REALM": mocked_req_env_vars["OIDC_REALM"],
+            "OIDC_DISCOVERY_URL": mocked_req_env_vars["OIDC_DISCOVERY_URL"],
             "VERIFY_SSL_CERT": True,
             "JWT_TOKEN_LOCATION": "headers",
             "JWT_HEADER_NAME": "Authorization",
@@ -171,7 +169,6 @@ class TestNegativeDefaultConfig(object):
             (3, {items[0]: items[1] for i, items in enumerate(MOCK_REQUIRED_ENV_VARS.items()) if i != 3}),
             (4, {items[0]: items[1] for i, items in enumerate(MOCK_REQUIRED_ENV_VARS.items()) if i != 4}),
             (5, {items[0]: items[1] for i, items in enumerate(MOCK_REQUIRED_ENV_VARS.items()) if i != 5}),
-            (6, {items[0]: items[1] for i, items in enumerate(MOCK_REQUIRED_ENV_VARS.items()) if i != 6}),
         ],
     )
     def test_required_env_var_not_set(
@@ -396,8 +393,7 @@ class TestFlaskLocalConfig(object):
         """Verify that the correct config settings are created for the 'local' environment."""
 
         mocked_env = {
-            "OIDC_ISSUER_URL": MOCK_REQUIRED_ENV_VARS["OIDC_ISSUER_URL"],
-            "OIDC_REALM": MOCK_REQUIRED_ENV_VARS["OIDC_REALM"],
+            "OIDC_DISCOVERY_URL": MOCK_REQUIRED_ENV_VARS["OIDC_DISCOVERY_URL"],
         }
 
         mocker.patch.dict("os.environ", mocked_env)
@@ -407,8 +403,7 @@ class TestFlaskLocalConfig(object):
             "SERVICE_PUBLIC_URL": "http://localhost:5000",
             "SERVICE_PRIVATE_URL": "http://localhost:5000",
             "ALLOWED_ROLES": ["user", "admin"],
-            "OIDC_ISSUER_URL": MOCK_REQUIRED_ENV_VARS["OIDC_ISSUER_URL"],
-            "OIDC_REALM": MOCK_REQUIRED_ENV_VARS["OIDC_REALM"],
+            "OIDC_DISCOVERY_URL": MOCK_REQUIRED_ENV_VARS["OIDC_DISCOVERY_URL"],
             "VERIFY_SSL_CERT": False,
             "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
             "OPENAPI_GEN_SERVER_URL": "http://api.openapi-generator.tech",
@@ -472,8 +467,7 @@ class TestTestingConfig(object):
             "SERVICE_PUBLIC_URL": "http://public.url",
             "SERVICE_PRIVATE_URL": "http://private.url",
             "ALLOWED_ROLES": ["user", "admin"],
-            "OIDC_ISSUER_URL": "TESTING",
-            "OIDC_REALM": "TESTING",
+            "OIDC_DISCOVERY_URL": "TESTING",
             "VERIFY_SSL_CERT": False,
             "JWT_ACCESS_TOKEN_EXPIRES": 300,
             "JWT_SECRET_KEY": "super-duper-secret",
