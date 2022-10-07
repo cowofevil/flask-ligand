@@ -1,7 +1,7 @@
+.. rstcheck: ignore-roles=sqlalchemy
+
 Database Configuration
 ======================
-
-.. rstcheck: ignore-roles=sqlalchemy
 
 The ``flask-ligand`` library uses the excellent :doc:`Flask-SQLAlchemy <flask-sqlalchemy:index>` project under the hood
 for database management and access. The :doc:`Flask-SQLAlchemy <flask-sqlalchemy:index>` project in turn utilizes the

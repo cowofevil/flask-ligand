@@ -109,10 +109,9 @@ token.
 Configure flask-ligand
 ======================
 
-The ``OIDC_ISSUER_URL`` `environment variable`_ needs to be set to the
-:auth0:`Domain <docs/get-started/applications/application-settings#basic-information>` HTTPS URL for the
-"flask-ligand" Auth0 application. The ``OIDC_REALM`` `environment variable`_ should be set
-to an **empty string** which will configure ``flask-ligand`` to assume Auth0 is being used **without** realm support.
+The ``OIDC_DISCOVERY_URL`` `environment variable`_ needs to be set to the
+:auth0:`OpenID Configuration URL <docs/get-started/applications/application-settings#endpoints>` for the
+"flask-ligand" Auth0 application.
 
 If you would like to quickly test your Auth0 configuration with ``flask-ligand`` then it is recommended to follow the
 `quickstart guide <quickstart.html>`_ to setup the example project. The example project can be quickly configured to
@@ -123,8 +122,7 @@ Here is an Auth0 ``.env`` file configuration that *could* work with the example 
 
 .. code-block:: bash
 
-    OIDC_ISSUER_URL=https://dev-wbgr6rna.us.auth0.com
-    OIDC_REALM=''
+    OIDC_DISCOVERY_URL=https://dev-wbgr6rna.us.auth0.com/.well-known/openid-configuration
     SQLALCHEMY_DATABASE_URI=postgresql+pg8000://admin:password@localhost:5432/app
     OPENAPI_GEN_SERVER_URL=http://localhost:8888
 

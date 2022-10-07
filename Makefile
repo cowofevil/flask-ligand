@@ -69,6 +69,10 @@ setup-pre-commit: check-venv ## setup git pre-commit hooks
 setup-integration: ## setup the Docker environment for integration testing
 	@docker compose up -d
 
+.PHONY: setup-db
+setup-db: ## setup the integration environment database for exploratory testing
+	@flask db upgrade -d tests/integration/migrations
+
 .PHONY: teardown-integration
 teardown-integration: ## teardown the Docker environment for integration testing
 	@docker compose down
@@ -79,9 +83,36 @@ gen-docs: install ## generate html docs using Sphinx
 
 .PHONY: gen-local-env-file
 gen-local-env-file: setup-integration check-integration ## generate an '.env' file for accessing the integration environment
-	@echo -e "OIDC_ISSUER_URL=http://localhost:8080\n"\
-	"OIDC_REALM=flask-ligand\n"\
+	@echo -e "FLASK_ENV=local\n"\
+	"OIDC_DISCOVERY_URL=http://localhost:8080/realms/flask-ligand/.well-known/openid-configuration\n"\
 	"SQLALCHEMY_DATABASE_URI=postgresql+pg8000://admin:password@localhost:5432/app" > '.env'
+
+.PHONY: gen-admin-access-token
+gen-admin-access-token: setup-integration check-integration ## generate an access token with the 'admin' composite role
+	@curl --request POST \
+    --url http://localhost:8080/realms/flask-ligand/protocol/openid-connect/token \
+    --header 'content-type: application/x-www-form-urlencoded' \
+    --data grant_type=client_credentials \
+    --data client_id=client-creds-admin \
+    --data client_secret=eddVDIP8mIywJjZZfB35z4kBnqvaNkVt
+
+.PHONY: gen-user-access-token
+gen-user-access-token: setup-integration check-integration ## generate an access token with the 'user' role
+	@curl --request POST \
+    --url http://localhost:8080/realms/flask-ligand/protocol/openid-connect/token \
+    --header 'content-type: application/x-www-form-urlencoded' \
+    --data grant_type=client_credentials \
+    --data client_id=client-creds-user \
+    --data client_secret=WBNMrunToNlrifCWgmUesQlkKRI7vuI7
+
+.PHONY: gen-no-roles-access-token
+gen-no-roles-access-token: setup-integration check-integration ## generate an access token that has no associated roles
+	@curl --request POST \
+    --url http://localhost:8080/realms/flask-ligand/protocol/openid-connect/token \
+    --header 'content-type: application/x-www-form-urlencoded' \
+    --data grant_type=client_credentials \
+    --data client_id=client-creds-no-roles \
+    --data client_secret=9kWafigUSgpBxX4SRODlSYWmpjLex7ly
 
 .PHONY: clean
 clean: clean-build clean-docs clean-pyc clean-mypy-cache clean-pip-cache clean-test  ## remove all build, test, coverage, artifacts and wipe virtualenv
@@ -192,11 +223,11 @@ develop-venv: clean-venv develop ## setup a dev environment after wiping the vir
 
 .PHONY: run
 run:  ## run the app in a Flask server (requires an auth service)
-	@FLASK_ENV='local' flask run
+	@flask run
 
 .PHONY: run-debug
 run-debug:  ## run the app in a Flask server (requires an auth service) with debug mode enabled
-	@FLASK_ENV='local' FLASK_DEBUG='1' flask run
+	@FLASK_DEBUG='1' flask run
 
 .PHONY: bump-version
 bump-version: check-dirty test-tox ## determine the new version number from commits, create release commit, and create a tag.

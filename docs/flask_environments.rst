@@ -41,19 +41,14 @@ The 'prod' environment is meant to run the microservice in a production environm
      - *Not set* (must be provided)
      - *Yes*
      - A comma separated list of user roles that are allowed for endpoint protection. (e.g. 'user,admin')
-   * - ``OIDC_ISSUER_URL``
+   * - ``OIDC_DISCOVERY_URL``
      - *Not set* (must be provided)
      - *Yes*
-     - The OpenID Connect IAM URL to use for authentication.
-   * - ``OIDC_REALM``
-     - *Not set* (must be provided)
-     - *Yes*
-     - The OpenID Connect IAM realm to use for authentication. If set to an **empty string** then it is assumed that
-       the OIDC issuer is Auth0 configured without realm support.
+     - The `OpenID Connect Provider Configuration Request`_ URL.
    * - ``VERIFY_SSL_CERT``
      - ``True``
      - *No*
-     - Verify the SSL/TLS certificate of the ``OIDC_ISSUER_URL``.
+     - Verify the SSL/TLS certificate of the ``OIDC_DISCOVERY_URL``.
    * - ``JWT_ALGORITHM``
      - ``RS256``
      - *No*
@@ -88,7 +83,7 @@ The 'prod' environment is meant to run the microservice in a production environm
      - *Empty string*
      - *No*
      - The secret key used to decode JWTs when using an asymmetric signing algorithm (such as RS* or ES*). This setting
-       should remain empty to allow ``flask-ligand`` to automatically set the public key from the ``OIDC_ISSUER_URL``
+       should remain empty to allow ``flask-ligand`` to automatically set the public key from the ``OIDC_DISCOVERY_URL``
        upon microservice startup. Muck with it at your own peril! (See `flask-jwt-extended`_ for more information)
    * - ``SQLALCHEMY_DATABASE_URI``
      - *Not set* (must be provided)
@@ -169,7 +164,7 @@ only the settings that are different from the ``prod`` environment settings.
    * - ``VERIFY_SSL_CERT``
      - ``False``
      - *No*
-     - Verify the SSL/TLS certificate of the ``OIDC_ISSUER_URL``.
+     - Verify the SSL/TLS certificate of the ``OIDC_DISCOVERY_URL``.
 
 local
 -----
@@ -200,7 +195,7 @@ table below contains only the settings that are different from the ``prod`` envi
    * - ``VERIFY_SSL_CERT``
      - ``False``
      - *No*
-     - Verify the SSL/TLS certificate of the ``OIDC_ISSUER_URL``.
+     - Verify the SSL/TLS certificate of the ``OIDC_DISCOVERY_URL``.
    * - ``SQLALCHEMY_DATABASE_URI``
      - ``sqlite:///:memory:``
      - *Yes*
@@ -238,18 +233,14 @@ are different from the ``prod`` environment settings.
      - ``http://private.url``
      - *Yes*
      - The private URL for this service. (Also used for generating OpenAPI clients)
-   * - ``OIDC_ISSUER_URL``
-     - ``TESTING``
+   * - ``OIDC_DISCOVERY_URL``
+     - *Not set* (must be provided)
      - *Yes*
-     - The OpenID Connect IAM URL to use for authentication.
-   * - ``OIDC_REALM``
-     - ``TESTING``
-     - *Yes*
-     - The OpenID Connect IAM realm to use for authentication.
+     - The `OpenID Connect Provider Configuration Request`_ URL.
    * - ``VERIFY_SSL_CERT``
      - ``False``
      - *No*
-     - Verify the SSL/TLS certificate of the ``OIDC_ISSUER_URL``.
+     - Verify the SSL/TLS certificate of the ``OIDC_DISCOVERY_URL``.
    * - ``JWT_ACCESS_TOKEN_EXPIRES``
      - ``300``
      - *No*
@@ -282,3 +273,4 @@ are different from the ``prod`` environment settings.
 .. _flask: https://flask.palletsprojects.com/en/2.2.x/config/
 .. _flask-jwt-extended: https://flask-jwt-extended.readthedocs.io/en/stable/options/
 .. _Flask-Migrate: https://flask-migrate.readthedocs.io/en/latest/index.html#command-reference
+.. _`OpenID Connect Provider Configuration Request`: https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationRequest
