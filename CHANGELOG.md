@@ -3,6 +3,16 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.6.1 (2022-10-17)
+### Fix
+* [543:robot:] Update Dependencies ([`7d27c5d`](https://github.com/cowofevil/flask-ligand/commit/7d27c5d67cd77a1610da7bd36c2cdccf3464b3fb))
+
+### Other
+* [pre-commit.ci] pre-commit autoupdate ([`36935af`](https://github.com/cowofevil/flask-ligand/commit/36935af517fa78557c4c899fa9701b4b828d9cbe))
+* :arrow_up: Update black requirement from ~=22.8 to ~=22.10 ([`b8e8692`](https://github.com/cowofevil/flask-ligand/commit/b8e869281febfd2fd03deddb27dbaf295f66d32f))
+* :arrow_up: Update flask-ligand-example requirement from ~=0.2 to ~=0.4 ([`7b032a2`](https://github.com/cowofevil/flask-ligand/commit/7b032a28932799119a997a454823720d76d2527c))
+* [FIX] Fix Integration Test Suite Setup ([`908b20a`](https://github.com/cowofevil/flask-ligand/commit/908b20a5f07c4197743f446d1539d1605ebc1191))
+
 ## v0.6.0 (2022-10-07)
 ### Feature
 * [511:sparkles:] Fix OIDC IAM Provider Configuration ([`9a885c0`](https://github.com/cowofevil/flask-ligand/commit/9a885c0717014825320a1b85b4bee9614f5ad742))
