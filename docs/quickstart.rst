@@ -36,28 +36,131 @@ database and also act as the basis for a schema for defining the acceptable inpu
 utilize :doc:`sqlalchemy-utils <sqlalchemy-utils:data_types>` to implement much stricter data typing than what is
 available out-of-the-box for :sqlalchemy:`SQLAlchemy <index.html>`.
 
-.. code-include :: :func:`flask_ligand_example.models.PetModel`
+.. code-block:: python
 
+    class PetModel(DB.Model):  # type: ignore
+        """Pet model class."""
+
+        __tablename__ = "pet"
+
+        id = DB.Column(UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
+        name = DB.Column(DB.String(length=NAME_MAX_LENGTH), nullable=False)
+        description = DB.Column(DB.Text(), nullable=False)
+        created_at = DB.Column(DB.DateTime, default=DB.func.current_timestamp(), nullable=False)
+        updated_at = DB.Column(
+            DB.DateTime, default=DB.func.current_timestamp(), onupdate=DB.func.current_timestamp(), nullable=False
+        )
 .. collapse:: Click for full example...
 
-    .. code-include :: :func:`flask_ligand_example.models`
+    .. code-block:: python
+
+        """Models"""
+
+        # ======================================================================================================================
+        # Imports
+        # ======================================================================================================================
+        import uuid
+        from flask_ligand.extensions.database import DB
+        from sqlalchemy_utils.types.uuid import UUIDType
+
+
+        # ======================================================================================================================
+        # Globals
+        # ======================================================================================================================
+        NAME_MAX_LENGTH: int = 255
+
+
+        # ======================================================================================================================
+        # Classes: Public
+        # ======================================================================================================================
+        class PetModel(DB.Model):  # type: ignore
+            """Pet model class."""
+
+            __tablename__ = "pet"
+
+            id = DB.Column(UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
+            name = DB.Column(DB.String(length=NAME_MAX_LENGTH), nullable=False)
+            description = DB.Column(DB.Text(), nullable=False)
+            created_at = DB.Column(DB.DateTime, default=DB.func.current_timestamp(), nullable=False)
+            updated_at = DB.Column(
+                DB.DateTime, default=DB.func.current_timestamp(), onupdate=DB.func.current_timestamp(), nullable=False
+            )
+
 
 Schemas
 -------
 
 Define an :class:`AutoSchema <flask_ligand.extensions.api.AutoSchema>` to expose the model.
 
-.. code-include :: :func:`flask_ligand_example.schemas.PetSchema`
+.. code-block:: python
+
+    class PetSchema(AutoSchema):
+        """Automatically generate schema from the 'Pet' model."""
+
+        class Meta(AutoSchema.Meta):
+            model = PetModel
+
+        id = auto_field(dump_only=True)
+        name = auto_field(required=True, validate=NAME_VALIDATOR)
+        description = auto_field(required=False, validate=DESCRIPTION_VALIDATOR, load_default="")
+        created_at = auto_field(dump_only=True)
+        updated_at = auto_field(dump_only=True)
 
 Define a :class:`Schema <flask_ligand.extensions.api.Schema>` to validate the query arguments for a subset of fields
 defined in the above :class:`AutoSchema <flask_ligand.extensions.api.AutoSchema>` for a
 :class:`Flask View <flask.views.MethodView>` that will be created later.
 
-.. code-include :: :func:`flask_ligand_example.schemas.PetQueryArgsSchema`
+.. code-block:: python
+
+    class PetQueryArgsSchema(Schema):
+        """A schema for filtering Pets."""
+
+        name = field_for(PetModel, "name", required=False, validate=NAME_VALIDATOR)
+        description = field_for(PetModel, "description", required=False, validate=DESCRIPTION_VALIDATOR)
 
 .. collapse:: Click for full example...
 
-    .. code-include :: :func:`flask_ligand_example.schemas`
+    .. code-block:: python
+
+        """Schemas for models and view queries."""
+
+        # ======================================================================================================================
+        # Imports
+        # ======================================================================================================================
+        from marshmallow.validate import Length
+        from marshmallow_sqlalchemy import auto_field, field_for
+        from flask_ligand.extensions.api import AutoSchema, Schema
+        from flask_ligand_example.models import PetModel, NAME_MAX_LENGTH
+
+
+        # ======================================================================================================================
+        # Globals
+        # ======================================================================================================================
+        NAME_VALIDATOR: Length = Length(min=1, max=NAME_MAX_LENGTH)
+        DESCRIPTION_VALIDATOR: Length = Length(max=4096)
+
+
+        # ======================================================================================================================
+        # Classes: Public
+        # ======================================================================================================================
+        class PetSchema(AutoSchema):
+            """Automatically generate schema from the 'Pet' model."""
+
+            class Meta(AutoSchema.Meta):
+                model = PetModel
+
+            id = auto_field(dump_only=True)
+            name = auto_field(required=True, validate=NAME_VALIDATOR)
+            description = auto_field(required=False, validate=DESCRIPTION_VALIDATOR, load_default="")
+            created_at = auto_field(dump_only=True)
+            updated_at = auto_field(dump_only=True)
+
+
+        class PetQueryArgsSchema(Schema):
+            """A schema for filtering Pets."""
+
+            name = field_for(PetModel, "name", required=False, validate=NAME_VALIDATOR)
+            description = field_for(PetModel, "description", required=False, validate=DESCRIPTION_VALIDATOR)
 
 Endpoints
 ---------
@@ -84,15 +187,189 @@ Selectively secure endpoint REST verbs to require a valid
 button in the :swagger-ui:`SwaggerUI documentation <>` by providing the  to the
 :meth:`Blueprint.arguments <Blueprint.arguments>`
 
-.. code-include :: :func:`flask_ligand_example.views.pet.Pets`
+.. code-block:: python
+
+    @BLP.route("/")
+    class Pets(MethodView):
+        @BLP.etag
+        @BLP.arguments(PetQueryArgsSchema, location="query")
+        @BLP.response(200, PetSchema(many=True))
+        @BLP.paginate(SQLCursorPage)  # noqa
+        def get(self, args: dict[str, Any]) -> list[PetModel]:
+            """Get all pets or filter for a subset of pets."""
+
+            items: list[PetModel] = PetModel.query.filter_by(**args)
+
+            return items
+
+        @BLP.etag
+        @BLP.arguments(PetSchema)
+        @BLP.response(201, PetSchema)
+        @BLP.doc(security=BEARER_AUTH)
+        @jwt_role_required(role="user")
+        def post(self, new_item: dict[str, Any]) -> PetModel:
+            """Add a new pet."""
+
+            _we_love_pets(new_item["description"])
+
+            item = PetModel(**new_item)
+            DB.session.add(item)
+            DB.session.commit()
+
+            return item
 
 Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error response.
 
-.. code-include :: :func:`flask_ligand_example.views.pet._we_love_pets`
+.. code-block:: python
+
+    def _we_love_pets(description: str) -> None:
+        """
+        Verify that the description doesn't include pet hate.
+
+        Args:
+            description: The pet description to validate.
+
+        Raises:
+            werkzeug.exceptions.HTTPException
+        """
+
+        if "hate" in description:
+            abort(HTTPStatus(400), "No pet hatred allowed!")
 
 .. collapse:: Click for full example...
 
-    .. code-include :: :func:`flask_ligand_example.views.pet`
+    .. code-block:: python
+
+        """Pet endpoints."""
+
+        # ======================================================================================================================
+        # Imports
+        # ======================================================================================================================
+        from __future__ import annotations
+        from http import HTTPStatus
+        from typing import TYPE_CHECKING
+        from flask.views import MethodView
+        from flask_ligand_example.models import PetModel
+        from flask_ligand.extensions.database import DB
+        from flask_ligand.views.common.openapi_doc import BEARER_AUTH
+        from flask_ligand.extensions.jwt import jwt_role_required, abort
+        from flask_ligand.extensions.api import Blueprint, SQLCursorPage
+        from flask_ligand_example.schemas import PetSchema, PetQueryArgsSchema
+
+
+        # ======================================================================================================================
+        # Type Checking
+        # ======================================================================================================================
+        if TYPE_CHECKING:  # pragma: no cover
+            from uuid import UUID
+            from typing import Any
+
+
+        # ======================================================================================================================
+        # Globals
+        # ======================================================================================================================
+        INVALID_PET_ID = "The specified pet ID does not exist or has an invalid format!"
+        BLP = Blueprint(
+            "Pets",
+            __name__,
+            url_prefix="/pets",
+            description="Information about all the pets you love!",
+        )
+
+
+        # ======================================================================================================================
+        # Functions: Private
+        # ======================================================================================================================
+        def _we_love_pets(description: str) -> None:
+            """
+            Verify that the description doesn't include pet hate.
+
+            Args:
+                description: The pet description to validate.
+
+            Raises:
+                werkzeug.exceptions.HTTPException
+            """
+
+            if "hate" in description:
+                abort(HTTPStatus(400), "No pet hatred allowed!")
+
+
+        # ======================================================================================================================
+        # Classes: Public
+        # ======================================================================================================================
+        @BLP.route("/")
+        class Pets(MethodView):
+            @BLP.etag
+            @BLP.arguments(PetQueryArgsSchema, location="query")
+            @BLP.response(200, PetSchema(many=True))
+            @BLP.paginate(SQLCursorPage)  # noqa
+            def get(self, args: dict[str, Any]) -> list[PetModel]:
+                """Get all pets or filter for a subset of pets."""
+
+                items: list[PetModel] = PetModel.query.filter_by(**args)
+
+                return items
+
+            @BLP.etag
+            @BLP.arguments(PetSchema)
+            @BLP.response(201, PetSchema)
+            @BLP.doc(security=BEARER_AUTH)
+            @jwt_role_required(role="user")
+            def post(self, new_item: dict[str, Any]) -> PetModel:
+                """Add a new pet."""
+
+                _we_love_pets(new_item["description"])
+
+                item = PetModel(**new_item)
+                DB.session.add(item)
+                DB.session.commit()
+
+                return item
+
+
+        @BLP.route("/<uuid:item_id>")
+        class PetsById(MethodView):
+            @BLP.etag
+            @BLP.response(200, PetSchema)
+            def get(self, item_id: UUID) -> PetModel:
+                """Get a pet by ID."""
+
+                item: PetModel = PetModel.query.get_or_404(item_id, description=INVALID_PET_ID)
+
+                return item
+
+            @BLP.etag
+            @BLP.arguments(PetSchema)
+            @BLP.response(200, PetSchema)
+            @BLP.doc(security=BEARER_AUTH)
+            @jwt_role_required(role="user")
+            def put(self, new_item: dict[str, Any], item_id: UUID) -> PetModel:
+                """Update an existing pet."""
+
+                item: PetModel = PetModel.query.get_or_404(item_id, description=INVALID_PET_ID)
+
+                _we_love_pets(new_item["description"])
+
+                BLP.check_etag(item, PetSchema)
+                PetSchema().update(item, new_item)
+                DB.session.add(item)
+                DB.session.commit()
+
+                return item
+
+            @BLP.etag
+            @BLP.response(204)
+            @BLP.doc(security=BEARER_AUTH)
+            @jwt_role_required(role="admin")
+            def delete(self, item_id: UUID) -> None:
+                """Delete a pet."""
+
+                item: PetModel = PetModel.query.get_or_404(item_id, description=INVALID_PET_ID)
+
+                BLP.check_etag(item, PetSchema)
+                DB.session.delete(item)
+                DB.session.commit()
 
 Create the App
 --------------
@@ -100,11 +377,105 @@ Create the App
 Connect the models, schemas and views together by calling :func:`create_app <flask_ligand.create_app>` followed by
 registering the Blueprints for the views.
 
-.. code-include :: :func:`flask_ligand_example.create_app`
+.. code-block:: python
+
+    def create_app(flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: Any) -> Flask:
+        """
+        Create Flask application.
+
+        Args:
+            flask_env: Specify the environment to use when launching the flask app. Available environments:
+
+                ``prod``: Configured for use in a production environment.
+
+                ``stage``: Configured for use in a development/staging environment.
+
+                ``local``: Configured for use with a local Flask server.
+
+                ``testing``: Configured for use in unit testing.
+            api_title: The title (name) of the API to display in the OpenAPI documentation.
+            api_version: The semantic version for the OpenAPI client.
+            openapi_client_name: The package name to use for generated OpenAPI clients.
+            kwargs: Additional settings to add to the configuration object or overrides for unprotected settings.
+
+        Returns:
+            Fully configured Flask application.
+
+        Raises:
+            RuntimeError: Attempted to override a protected setting, specified an additional setting that was not all
+                uppercase or the specified environment is invalid.
+        """
+
+        app, api = flask_ligand.create_app(__name__, flask_env, api_title, api_version, openapi_client_name, **kwargs)
+
+        views.register_blueprints(api)
+
+        return app
 
 .. collapse:: Click for full example...
 
-    .. code-include :: :func:`flask_ligand_example`
+    .. code-block:: python
+
+        """flask-ligand-example package."""
+
+        # ======================================================================================================================
+        # Imports
+        # ======================================================================================================================
+        from __future__ import annotations
+        import flask_ligand
+        from flask import Flask
+        from typing import TYPE_CHECKING
+        from flask_ligand_example import views
+
+
+        # ======================================================================================================================
+        # Type Checking
+        # ======================================================================================================================
+        if TYPE_CHECKING:  # pragma: no cover
+            from typing import Any
+
+
+        # ======================================================================================================================
+        # Globals
+        # ======================================================================================================================
+        __version__ = "0.4.0"
+
+
+        # ======================================================================================================================
+        # Functions: Public
+        # ======================================================================================================================
+        def create_app(flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: Any) -> Flask:
+            """
+            Create Flask application.
+
+            Args:
+                flask_env: Specify the environment to use when launching the flask app. Available environments:
+
+                    ``prod``: Configured for use in a production environment.
+
+                    ``stage``: Configured for use in a development/staging environment.
+
+                    ``local``: Configured for use with a local Flask server.
+
+                    ``testing``: Configured for use in unit testing.
+                api_title: The title (name) of the API to display in the OpenAPI documentation.
+                api_version: The semantic version for the OpenAPI client.
+                openapi_client_name: The package name to use for generated OpenAPI clients.
+                kwargs: Additional settings to add to the configuration object or overrides for unprotected settings.
+
+            Returns:
+                Fully configured Flask application.
+
+            Raises:
+                RuntimeError: Attempted to override a protected setting, specified an additional setting that was not all
+                    uppercase or the specified environment is invalid.
+            """
+
+            app, api = flask_ligand.create_app(__name__, flask_env, api_title, api_version, openapi_client_name, **kwargs)
+
+            views.register_blueprints(api)
+
+            return app
 
 Run the App
 -----------

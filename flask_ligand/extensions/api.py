@@ -15,7 +15,7 @@ from http import HTTPStatus
 from typing import TYPE_CHECKING
 
 # noinspection PyPackageRequirements
-from flask_sqlalchemy import BaseQuery as BaseQueryOrig
+from flask_sqlalchemy.query import Query as QueryOrig
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_smorest import Api as ApiOrig, Blueprint as BlueprintOrig, Page
 
@@ -140,7 +140,7 @@ class SQLCursorPage(Page):
         return self.collection.count()  # type: ignore
 
 
-class BaseQuery(BaseQueryOrig):  # type: ignore
+class Query(QueryOrig):  # type: ignore
     """
     Enable customized REST JSON error messages for 'get_or_404' and 'first_or_404' methods for
     :class:`BaseQuery <flask_sqlalchemy.BaseQuery>`.
