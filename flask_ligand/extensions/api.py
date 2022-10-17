@@ -143,7 +143,7 @@ class SQLCursorPage(Page):
 class Query(QueryOrig):  # type: ignore
     """
     Enable customized REST JSON error messages for 'get_or_404' and 'first_or_404' methods for
-    :class:`BaseQuery <flask_sqlalchemy.BaseQuery>`.
+    :class:`Query <flask_sqlalchemy.query.Query>`.
     """
 
     def get_or_404(self, ident: object, description: Optional[str] = None) -> Any:
