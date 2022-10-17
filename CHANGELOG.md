@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.6.2 (2022-10-17)
+### Fix
+* [543:robot:] Fix the Docs ([`b14184a`](https://github.com/cowofevil/flask-ligand/commit/b14184ad60c2e240d9a597fee6b49ef9a070127e))
+
 ## v0.6.1 (2022-10-17)
 ### Fix
 * [543:robot:] Update Dependencies ([`7d27c5d`](https://github.com/cowofevil/flask-ligand/commit/7d27c5d67cd77a1610da7bd36c2cdccf3464b3fb))
