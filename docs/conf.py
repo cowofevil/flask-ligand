@@ -18,7 +18,6 @@
 # -- Project information -----------------------------------------------------
 
 import flask_ligand
-import flask_ligand_example  # noqa: F401
 
 project = "flask-ligand"
 copyright = "2022, Ryan Gard and contributors"
@@ -29,7 +28,6 @@ version = release = flask_ligand.__version__
 # -- General configuration ---------------------------------------------------
 
 extensions = [
-    "code_include.extension",
     "hoverxref.extension",
     "myst_parser",
     "sphinx.ext.autodoc",

@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 from sqlalchemy_utils import force_auto_coercion
-from flask_ligand.extensions.api import BaseQuery
+from flask_ligand.extensions.api import Query
 
 
 # ======================================================================================================================
@@ -21,7 +21,7 @@ if TYPE_CHECKING:  # pragma: no cover
 # ======================================================================================================================
 # Globals
 # ======================================================================================================================
-DB = SQLAlchemy(query_class=BaseQuery)  # pylint: disable=invalid-name
+DB = SQLAlchemy(query_class=Query)  # pylint: disable=invalid-name
 MIGRATE = Migrate()
 
 
