@@ -49,7 +49,7 @@ Api
 
 |
 
-.. autoclass:: flask_ligand.extensions.api.BaseQuery
+.. autoclass:: flask_ligand.extensions.api.Query
     :members:
 
 |
