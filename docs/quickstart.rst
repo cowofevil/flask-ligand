@@ -190,8 +190,8 @@ button in the :swagger-ui:`SwaggerUI documentation <>` by providing the  to the
 .. code-block:: python
 
     @BLP.route("/")
+    @BLP.etag
     class Pets(MethodView):
-        @BLP.etag
         @BLP.arguments(PetQueryArgsSchema, location="query")
         @BLP.response(200, PetSchema(many=True))
         @BLP.paginate(SQLCursorPage)  # noqa
@@ -202,7 +202,6 @@ button in the :swagger-ui:`SwaggerUI documentation <>` by providing the  to the
 
             return items
 
-        @BLP.etag
         @BLP.arguments(PetSchema)
         @BLP.response(201, PetSchema)
         @BLP.doc(security=BEARER_AUTH)
@@ -299,8 +298,8 @@ Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error respons
         # Classes: Public
         # ======================================================================================================================
         @BLP.route("/")
+        @BLP.etag
         class Pets(MethodView):
-            @BLP.etag
             @BLP.arguments(PetQueryArgsSchema, location="query")
             @BLP.response(200, PetSchema(many=True))
             @BLP.paginate(SQLCursorPage)  # noqa
@@ -311,7 +310,6 @@ Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error respons
 
                 return items
 
-            @BLP.etag
             @BLP.arguments(PetSchema)
             @BLP.response(201, PetSchema)
             @BLP.doc(security=BEARER_AUTH)
@@ -329,8 +327,8 @@ Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error respons
 
 
         @BLP.route("/<uuid:item_id>")
+        @BLP.etag
         class PetsById(MethodView):
-            @BLP.etag
             @BLP.response(200, PetSchema)
             def get(self, item_id: UUID) -> PetModel:
                 """Get a pet by ID."""
@@ -339,7 +337,6 @@ Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error respons
 
                 return item
 
-            @BLP.etag
             @BLP.arguments(PetSchema)
             @BLP.response(200, PetSchema)
             @BLP.doc(security=BEARER_AUTH)
@@ -358,7 +355,6 @@ Use :func:`abort <flask_ligand.extensions.api.abort>` to return an error respons
 
                 return item
 
-            @BLP.etag
             @BLP.response(204)
             @BLP.doc(security=BEARER_AUTH)
             @jwt_role_required(role="admin")

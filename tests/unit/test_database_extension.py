@@ -75,8 +75,8 @@ class DatabaseTestQueryArgsSchema(Schema):
 
 
 @BLP.route("/")
+@BLP.etag
 class DatabaseTestView(MethodView):
-    @BLP.etag
     @BLP.arguments(DatabaseTestQueryArgsSchema, location="query")
     @BLP.response(200, DatabaseTestSchema(many=True))
     @BLP.paginate(SQLCursorPage)  # noqa
@@ -84,7 +84,6 @@ class DatabaseTestView(MethodView):
 
         return DatabaseTestModel.query.filter_by(**args)
 
-    @BLP.etag
     @BLP.arguments(DatabaseTestSchema)
     @BLP.response(201, DatabaseTestSchema)
     def post(self, new_item):
@@ -97,8 +96,8 @@ class DatabaseTestView(MethodView):
 
 
 @BLP.route("/first")
+@BLP.etag
 class DatabaseTestViewFirst(MethodView):
-    @BLP.etag
     @BLP.response(200, DatabaseTestSchema)
     def get(self):
 
@@ -106,14 +105,13 @@ class DatabaseTestViewFirst(MethodView):
 
 
 @BLP.route("/<uuid:item_id>")
+@BLP.etag
 class DatabaseTestViewById(MethodView):
-    @BLP.etag
     @BLP.response(200, DatabaseTestSchema)
     def get(self, item_id):
 
         return DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")
 
-    @BLP.etag
     @BLP.arguments(DatabaseTestSchema)
     @BLP.response(200, DatabaseTestSchema)
     def put(self, new_item, item_id):
