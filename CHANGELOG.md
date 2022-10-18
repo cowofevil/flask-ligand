@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.6.3 (2022-10-18)
+### Fix
+* [543:robot:] Refactor for flask-smorest Etag Changes ([`97ec979`](https://github.com/cowofevil/flask-ligand/commit/97ec9792ded9d81af1e84532e5b606e58b9b36ea))
+
 ## v0.6.2 (2022-10-17)
 ### Fix
 * [543:robot:] Fix the Docs ([`b14184a`](https://github.com/cowofevil/flask-ligand/commit/b14184ad60c2e240d9a597fee6b49ef9a070127e))
