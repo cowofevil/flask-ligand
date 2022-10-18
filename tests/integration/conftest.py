@@ -63,8 +63,8 @@ class IntegrationTestSchema(AutoSchema):
 
 
 @BLP.route("/")
+@BLP.etag
 class IntegrationTestView(MethodView):
-    @BLP.etag
     @BLP.response(200, IntegrationTestSchema(many=True))
     @jwt_role_required(role="user")
     def get(self):
@@ -73,7 +73,6 @@ class IntegrationTestView(MethodView):
 
         return items
 
-    @BLP.etag
     @BLP.arguments(IntegrationTestSchema)
     @BLP.response(201, IntegrationTestSchema)
     def post(self, new_item):

@@ -57,8 +57,8 @@ class JwtTestSchema(AutoSchema):
 
 
 @BLP.route("/")
+@BLP.etag
 class JwtTestView(MethodView):
-    @BLP.etag
     @BLP.response(200, JwtTestSchema(many=True))
     @jwt_role_required(role="user")
     def get(self):
@@ -67,7 +67,6 @@ class JwtTestView(MethodView):
 
         return items
 
-    @BLP.etag
     @BLP.arguments(JwtTestSchema)
     @BLP.response(201, JwtTestSchema)
     def post(self, new_item):
@@ -79,8 +78,8 @@ class JwtTestView(MethodView):
 
 
 @BLP.route("/broken/")
+@BLP.etag
 class JwtBrokenView(MethodView):
-    @BLP.etag
     @BLP.response(200, JwtTestSchema(many=True))
     @jwt_role_required(role="broken")
     def get(self):
