@@ -1,6 +1,6 @@
 myst-parser[linkify]~=0.18
 sphinx~=5.3
 sphinx-autodoc-typehints~=1.19
-sphinx-hoverxref~=1.1
+sphinx-hoverxref~=1.2
 sphinx-issues~=3.0
 sphinx-toolbox~=3.2
