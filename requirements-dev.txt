@@ -2,7 +2,7 @@
 flake8~=5.0
 mypy~=0.982
 pygments~=2.13
-pytest~=7.1
+pytest~=7.2
 twine~=3.8
 # Installation requirements
 black~=22.10
