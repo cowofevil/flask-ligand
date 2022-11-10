@@ -35,6 +35,7 @@ Guides
 
     quickstart
     configuration
+    openapi
     development
     auth0
 

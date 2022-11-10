@@ -1,6 +1,6 @@
 .. module:: flask_ligand
 
-.. rstcheck: ignore-roles=sqlalchemy,swagger-ui
+.. rstcheck: ignore-roles=sqlalchemy,swagger-ui,openapi-gen
 .. rstcheck: ignore-directives=autoclass,autofunction,autodata
 
 =============
@@ -102,9 +102,10 @@ The ``flask_ligand.default_settings`` module defines default settings for the ``
 Views
 =====
 
-The ``flask_ligand.default_settings`` module contains built-in endpoints
-(a.k.a. :class:`Flask View <flask.views.MethodView>`) for `generating OpenAPI clients`_ for TypeScript and Python. Also,
-a global variable is provided that will add an "Authorize" button to the :swagger-ui:`SwaggerUI documentation <>`.
+The ``flask_ligand.views.openapi`` module contains built-in endpoints
+(a.k.a. :class:`Flask View <flask.views.MethodView>`) for :openapi-gen:`generating OpenAPI clients <>` for TypeScript
+and Python. Also, a global variable is provided that will add an "Authorize" button to the
+:swagger-ui:`SwaggerUI documentation <>`.
 
 .. autoclass:: flask_ligand.views.openapi.OpenApiTypescriptAxios
     :members:  get
@@ -120,5 +121,3 @@ a global variable is provided that will add an "Authorize" button to the :swagge
     :no-value:
 
 |
-
-.. _`generating OpenAPI clients`: https://openapi-generator.tech/

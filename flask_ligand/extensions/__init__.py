@@ -19,16 +19,18 @@ if TYPE_CHECKING:  # pragma: no cover
 # ======================================================================================================================
 # Functions: Public
 # ======================================================================================================================
-def create_api(app: Flask) -> Api:
+def create_api(app: Flask, offline: bool = False) -> Api:
     """Initialize the underlying API, extensions and databases.
 
     Args:
         app: The root Flask app to configure with the given extensions.
+        offline: Initialize the app in 'offline' mode for running Flask sub-commands.
     """
 
     flask_ligand_api = Api(app)
 
-    for extension in (database, jwt):
-        extension.init_app(app)  # type: ignore
+    if not offline:
+        for extension in (database, jwt):
+            extension.init_app(app)  # type: ignore
 
     return flask_ligand_api
