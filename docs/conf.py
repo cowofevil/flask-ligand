@@ -63,6 +63,7 @@ extlinks = {
     "swagger-ui": ("https://swagger.io/tools/swagger-ui/%s", None),
     "auth0": ("https://auth0.com/%s", None),
     "oidc": ("https://openid.net/%s", None),
+    "openapi-gen": ("https://openapi-generator.tech/%s", None),
 }
 
 intersphinx_mapping = {

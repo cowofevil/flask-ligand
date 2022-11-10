@@ -245,6 +245,7 @@ ENVIRONMENTS = {
     "stage": StagingConfig,
     "local": FlaskLocalConfig,
     "testing": TestingConfig,
+    "cli": ProdConfig,
 }
 
 
@@ -272,6 +273,8 @@ def flask_environment_configurator(
             ``local``: Configured for use with a local Flask server.
 
             ``testing``: Configured for use in unit testing.
+
+            ``cli``: Configured for use in a production environment without initializing extensions. (Use for CI/CD)
         api_title: The title (name) of the API to display in the OpenAPI documentation.
         api_version: The semantic version for the OpenAPI client.
         openapi_client_name: The package name to use for generated OpenAPI clients.

@@ -7,6 +7,7 @@ from __future__ import annotations
 from flask import Flask
 from flask_cors import CORS
 from typing import TYPE_CHECKING
+from flask_ligand.cli import genclient
 from flask_ligand import extensions, views
 from flask_ligand.default_settings import flask_environment_configurator
 
@@ -29,7 +30,12 @@ __version__ = "0.6.3"
 # Functions: Public
 # ======================================================================================================================
 def create_app(
-    flask_app_name: str, flask_env: str, api_title: str, api_version: str, openapi_client_name: str, **kwargs: Any
+    flask_app_name: str,
+    flask_env: str,
+    api_title: str,
+    api_version: str,
+    openapi_client_name: str,
+    **kwargs: Any,
 ) -> Tuple[Flask, Api]:
     """
     Create Flask application.
@@ -48,6 +54,8 @@ def create_app(
             ``local``: Configured for use with a local Flask server.
 
             ``testing``: Configured for use in unit testing.
+
+            ``cli``: Configured for use in a production environment without initializing extensions. (Use for CI/CD)
         api_title: The title (name) of the API to display in the OpenAPI documentation.
         api_version: The semantic version for the OpenAPI client.
         openapi_client_name: The package name to use for generated OpenAPI clients.
@@ -67,8 +75,10 @@ def create_app(
 
     flask_environment_configurator(app, flask_env, api_title, api_version, openapi_client_name, **kwargs)
 
-    api = extensions.create_api(app)
+    api = extensions.create_api(app, True if flask_env == "cli" else False)
 
     views.register_blueprints(api)
+
+    app.cli.add_command(genclient)
 
     return app, api

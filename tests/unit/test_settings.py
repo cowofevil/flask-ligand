@@ -519,7 +519,7 @@ class TestFlaskEnvironmentConfigurator(object):
     def test_environment_count(self):
         """Verify that the expected number of environments exist. (No more, no less)"""
 
-        assert len(ENVIRONMENTS) == 4
+        assert len(ENVIRONMENTS) == 5
 
     @pytest.mark.parametrize(
         "env_name,env_config_class",

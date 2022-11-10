@@ -43,6 +43,9 @@ def abort(http_status: HTTPStatus, message: Optional[str] = None) -> None:
     Args:
         http_status: A valid HTTPStatus enum which will be used for reporting the HTTP response status and code.
         message: Custom message to return within the body or a default HTTP status message will be returned instead.
+
+    Raises:
+        werkzeug.exceptions.HTTPException: An exception containing the HTTP status code and custom message if supplied.
     """
 
     message = message if message else http_status.phrase

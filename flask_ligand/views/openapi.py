@@ -4,12 +4,11 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import flask_ligand
 from flask import current_app
 from typing import TYPE_CHECKING
 from flask.views import MethodView
 from flask_ligand.extensions.api import Blueprint
-from flask_ligand.controllers import get_openapi_client_dl_link
+from flask_ligand.controllers import gen_python_dl_link, gen_typescript_dl_link
 from flask_ligand.schemas import OpenApiClientDownloadRespSchema, OpenApiClientDownloadQueryArgsSchema
 
 
@@ -18,6 +17,7 @@ from flask_ligand.schemas import OpenApiClientDownloadRespSchema, OpenApiClientD
 # ======================================================================================================================
 if TYPE_CHECKING:  # pragma: no cover
     from typing import Mapping, Any
+
 
 # ======================================================================================================================
 # Globals
@@ -46,23 +46,9 @@ class OpenApiTypescriptAxios(MethodView):
         See for more details: https://openapi-generator.tech/docs/generators
         """
 
-        options = {
-            "npmName": current_app.config["OPENAPI_CLIENT_NAME"],
-            "npmVersion": flask_ligand.__version__,
-            "supportsES6": True,
-            "useSingleRequestParameter": True,
-        }
-
         use_private_url = args.get("use_private_url", True)
 
-        return OpenApiClientDownloadRespSchema().dump(
-            get_openapi_client_dl_link(
-                current_app,
-                use_private_url,
-                "typescript-axios",
-                options,
-            )
-        )
+        return OpenApiClientDownloadRespSchema().dump(gen_typescript_dl_link(current_app, use_private_url))
 
 
 @BLP.route("/python/")
@@ -78,19 +64,6 @@ class OpenApiPython(MethodView):
         See for more details: https://openapi-generator.tech/docs/generators
         """
 
-        options = {
-            "packageName": current_app.config["OPENAPI_CLIENT_NAME"].replace("-", "_"),
-            "projectName": current_app.config["OPENAPI_CLIENT_NAME"],
-            "packageVersion": flask_ligand.__version__,
-        }
-
         use_private_url = args.get("use_private_url", True)
 
-        return OpenApiClientDownloadRespSchema().dump(
-            get_openapi_client_dl_link(
-                current_app,
-                use_private_url,
-                "python",
-                options,
-            )
-        )
+        return OpenApiClientDownloadRespSchema().dump(gen_python_dl_link(current_app, use_private_url))
