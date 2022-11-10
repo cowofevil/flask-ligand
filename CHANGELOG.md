@@ -3,6 +3,23 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.0 (2022-11-10)
+### Feature
+* [536:sparkles:] Generate OpenAPI Clients Offline ([`a341828`](https://github.com/cowofevil/flask-ligand/commit/a3418288ed8e7545dd3487ccd2e0729bc3b29dc8))
+
+### Other
+* :arrow_up: Update mypy requirement from ~=0.982 to ~=0.990 ([`ef885df`](https://github.com/cowofevil/flask-ligand/commit/ef885df4eb2073cf755b31ee5b40ed39677ccb8b))
+* :arrow_up: Update tox requirement from ~=3.26 to ~=3.27 ([`b7d97dd`](https://github.com/cowofevil/flask-ligand/commit/b7d97ddb7856d321e206d7538fd2fa80a033f324))
+* :arrow_up: Update sphinx-hoverxref requirement from ~=1.2 to ~=1.3 ([`512cde0`](https://github.com/cowofevil/flask-ligand/commit/512cde0947cc635625caf13fb7d7a410e95c1a5d))
+* :arrow_up: Update ipython requirement from ~=8.5 to ~=8.6 ([`d28e4f4`](https://github.com/cowofevil/flask-ligand/commit/d28e4f411c08ee675c5ad6182d7691921f2f5b05))
+* :arrow_up: Update pytest requirement from ~=7.1 to ~=7.2 ([`4905651`](https://github.com/cowofevil/flask-ligand/commit/4905651881bcada3a989bcce99c48c84df850714))
+* :arrow_up: Update sphinx-hoverxref requirement from ~=1.1 to ~=1.2 ([`1012f9b`](https://github.com/cowofevil/flask-ligand/commit/1012f9b6b978bdc80e3a1dfcbdc5e60d23adb16e))
+* :arrow_up: Update pyjwt requirement from ~=2.5 to ~=2.6 ([`e25975f`](https://github.com/cowofevil/flask-ligand/commit/e25975fb111c742186ea48d2291bae16aeeb0103))
+* [545] Update to Python 3.11 Final ([`9f88e58`](https://github.com/cowofevil/flask-ligand/commit/9f88e58c52068104a15d8898bf359a760efd8988))
+* [542] Drop Pre-Commit Tox Environment ([`a1315fa`](https://github.com/cowofevil/flask-ligand/commit/a1315fad93782bdfff8b0c38c93f95233ca4fb03))
+* :arrow_up: Update sphinx requirement from ~=5.2 to ~=5.3 ([`ed6ff7c`](https://github.com/cowofevil/flask-ligand/commit/ed6ff7cf4b64590206598ba27794ad4905f24af5))
+* :arrow_up: Update types-setuptools requirement from ~=65.4 to ~=65.5 ([`0e89bd9`](https://github.com/cowofevil/flask-ligand/commit/0e89bd9c8ae3561fa776f530754f4efda22b3c0e))
+
 ## v0.6.3 (2022-10-18)
 ### Fix
 * [543:robot:] Refactor for flask-smorest Etag Changes ([`97ec979`](https://github.com/cowofevil/flask-ligand/commit/97ec9792ded9d81af1e84532e5b606e58b9b36ea))
