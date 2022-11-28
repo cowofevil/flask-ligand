@@ -1,5 +1,5 @@
 # Dependency constraints
-flake8~=5.0
+flake8~=6.0
 mypy~=0.991
 pygments~=2.13
 pytest~=7.2
