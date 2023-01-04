@@ -3,6 +3,22 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.1 (2023-01-04)
+### Fix
+* [558:robot:] Fix Broken GitHub Actions Build Badge ([`ad779b9`](https://github.com/cowofevil/flask-ligand/commit/ad779b9f394604d422895976c37da89533d69573))
+
+### Other
+* :arrow_up: Update tox requirement from ~=3.27 to ~=4.1 ([`c4d0138`](https://github.com/cowofevil/flask-ligand/commit/c4d013836bfef63b78c8b26baba1c18bb32d82f5))
+* :arrow_up: Update black requirement from ~=22.10 to ~=22.12 ([`4f2d522`](https://github.com/cowofevil/flask-ligand/commit/4f2d5228af40c748c48d3f75cc108430db00ef83))
+* :arrow_up: Update types-setuptools requirement from ~=65.5 to ~=65.6 ([`4733343`](https://github.com/cowofevil/flask-ligand/commit/4733343d7e221304e7e43574014a192dcb18fe8b))
+* :arrow_up: Update ipython requirement from ~=8.6 to ~=8.7 ([`188ca1a`](https://github.com/cowofevil/flask-ligand/commit/188ca1a878e1c4aac7f1d7a07cd1e56a493dd046))
+* :arrow_up: Update flake8 requirement from ~=5.0 to ~=6.0 ([`0de75c5`](https://github.com/cowofevil/flask-ligand/commit/0de75c589e7c3d03d0dc7619aa8c3fbc67d87b01))
+* [pre-commit.ci] pre-commit autoupdate ([`dd4ed81`](https://github.com/cowofevil/flask-ligand/commit/dd4ed81b65e0582b71e17a873b4bf1ff55de059a))
+* :arrow_up: Update flask-migrate requirement from ~=3.1 to ~=4.0 ([`caf3f83`](https://github.com/cowofevil/flask-ligand/commit/caf3f832184b58bf3277a3937b06d79186ef5e9d))
+* :arrow_up: Update mypy requirement from ~=0.990 to ~=0.991 ([`0e2b3ad`](https://github.com/cowofevil/flask-ligand/commit/0e2b3ad0cc5eb87f28e9edf9fe1b0f0665017d0c))
+* [pre-commit.ci] pre-commit autoupdate ([`a7ae25e`](https://github.com/cowofevil/flask-ligand/commit/a7ae25e9e74fa6f94aa5fbf08ac028ab376ac230))
+* [FIX] Update Quickstart Guide ([`68859bd`](https://github.com/cowofevil/flask-ligand/commit/68859bddef6a565a7602970899ec2b6dd9443827))
+
 ## v0.7.0 (2022-11-10)
 ### Feature
 * [536:sparkles:] Generate OpenAPI Clients Offline ([`a341828`](https://github.com/cowofevil/flask-ligand/commit/a3418288ed8e7545dd3487ccd2e0729bc3b29dc8))
