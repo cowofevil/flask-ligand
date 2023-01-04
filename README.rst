@@ -53,7 +53,7 @@ functionality out-of-the-box:
 .. |docs-status| image:: https://img.shields.io/readthedocs/flask-ligand/stable?logo=readthedocs
    :target: https://flask-ligand.readthedocs.io/en/stable/
    :alt: Docs
-.. |build-status| image:: https://img.shields.io/github/workflow/status/cowofevil/flask-ligand/Build?logo=github
+.. |build-status| image:: https://img.shields.io/github/actions/workflow/status/cowofevil/flask-ligand/bump_and_publish_release.yml?branch=main&logo=github
    :target: https://github.com/cowofevil/flask-ligand/actions/workflows/bump_and_publish_release.yml
    :alt: Build
 .. |pypi-status| image:: https://img.shields.io/pypi/v/flask-ligand?color=blue&logo=pypi
