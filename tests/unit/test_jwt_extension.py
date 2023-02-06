@@ -62,7 +62,6 @@ class JwtTestView(MethodView):
     @BLP.response(200, JwtTestSchema(many=True))
     @jwt_role_required(role="user")
     def get(self):
-
         items: list[JwtTestModel] = JwtTestModel.query.all()
 
         return items
@@ -83,7 +82,6 @@ class JwtBrokenView(MethodView):
     @BLP.response(200, JwtTestSchema(many=True))
     @jwt_role_required(role="broken")
     def get(self):
-
         items: list[JwtTestModel] = JwtTestModel.query.all()
 
         return items

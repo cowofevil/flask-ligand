@@ -81,13 +81,11 @@ class DatabaseTestView(MethodView):
     @BLP.response(200, DatabaseTestSchema(many=True))
     @BLP.paginate(SQLCursorPage)  # noqa
     def get(self, args):
-
         return DatabaseTestModel.query.filter_by(**args)
 
     @BLP.arguments(DatabaseTestSchema)
     @BLP.response(201, DatabaseTestSchema)
     def post(self, new_item):
-
         item = DatabaseTestModel(**new_item)
         DB.session.add(item)
         DB.session.commit()
@@ -100,7 +98,6 @@ class DatabaseTestView(MethodView):
 class DatabaseTestViewFirst(MethodView):
     @BLP.response(200, DatabaseTestSchema)
     def get(self):
-
         return DatabaseTestModel.query.first_or_404(description="Database is empty!")
 
 
@@ -109,13 +106,11 @@ class DatabaseTestViewFirst(MethodView):
 class DatabaseTestViewById(MethodView):
     @BLP.response(200, DatabaseTestSchema)
     def get(self, item_id):
-
         return DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")
 
     @BLP.arguments(DatabaseTestSchema)
     @BLP.response(200, DatabaseTestSchema)
     def put(self, new_item, item_id):
-
         item = DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")
         BLP.check_etag(item, DatabaseTestSchema)
         DatabaseTestSchema().update(item, new_item)

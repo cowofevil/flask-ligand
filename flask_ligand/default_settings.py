@@ -35,7 +35,6 @@ class _DefaultConfig(dict):  # type: ignore
     """
 
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-
         # Settings are specific to this library
         ligand_default_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL"),
@@ -129,7 +128,6 @@ class ProdConfig(_DefaultConfig):
     """
 
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-
         prod_settings: dict[str, Any] = {
             "JWT_ALGORITHM": "RS256",
             "JWT_DECODE_AUDIENCE": os.getenv("JWT_DECODE_AUDIENCE"),
@@ -156,7 +154,6 @@ class StagingConfig(ProdConfig):
     """
 
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-
         dev_settings: dict[str, Any] = {"VERIFY_SSL_CERT": False}
 
         combined_settings = {**dev_settings, **kwargs}
@@ -180,7 +177,6 @@ class FlaskLocalConfig(StagingConfig):
     """
 
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-
         # noinspection HttpUrlsUsage
         flask_local_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://localhost:5000"),
@@ -216,7 +212,6 @@ class TestingConfig(_DefaultConfig):
     """
 
     def __init__(self, api_title: str, api_version: str, openapi_client_name: str, **kwargs: dict[str, Any]):
-
         testing_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL", "http://public.url"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL", "http://private.url"),

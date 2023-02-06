@@ -68,7 +68,6 @@ class IntegrationTestView(MethodView):
     @BLP.response(200, IntegrationTestSchema(many=True))
     @jwt_role_required(role="user")
     def get(self):
-
         items: list[IntegrationTestModel] = IntegrationTestModel.query.all()
 
         return items
