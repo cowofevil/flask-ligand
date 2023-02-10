@@ -33,7 +33,7 @@ module = "tests.integration.migrations.env"
 ignore_errors = true
 
 [[tool.mypy.overrides]]
-module = ["flask_migrate.*", "pytest_flask_ligand.*", "urljoin.*"]
+module = ["flask_migrate.*", "urljoin.*"]
 ignore_missing_imports = true
 
 [tool.semantic_release]
