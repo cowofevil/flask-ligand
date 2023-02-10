@@ -3,6 +3,15 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.2 (2023-02-10)
+### Fix
+* [560:robot:] Fix Packaging Issues ([`afd0075`](https://github.com/cowofevil/flask-ligand/commit/afd0075e67dd37b7d34048743d9a3d3bb6099641))
+
+### Other
+* [pre-commit.ci] auto fixes from pre-commit.com hooks ([`380e1bc`](https://github.com/cowofevil/flask-ligand/commit/380e1bc138200f18029f19fd5865c0e2e263f4ac))
+* [pre-commit.ci] pre-commit autoupdate ([`c3204a1`](https://github.com/cowofevil/flask-ligand/commit/c3204a11945e9aa212b4bd84d5493a3c8355d7ad))
+* [FIX] Update Deps ([`8267f7c`](https://github.com/cowofevil/flask-ligand/commit/8267f7c1e91fb0b21dc5296f5f3865223b20b311))
+
 ## v0.7.1 (2023-01-04)
 ### Fix
 * [558:robot:] Fix Broken GitHub Actions Build Badge ([`ad779b9`](https://github.com/cowofevil/flask-ligand/commit/ad779b9f394604d422895976c37da89533d69573))
