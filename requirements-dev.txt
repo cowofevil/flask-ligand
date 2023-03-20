@@ -1,6 +1,6 @@
 # Dependency constraints
 flake8~=6.0
-mypy~=1.0
+mypy~=1.1
 pygments~=2.14
 pytest~=7.2
 twine~=3.8
