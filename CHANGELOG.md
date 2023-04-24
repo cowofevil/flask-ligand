@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.5 (2023-04-24)
+### Fix
+* :arrow_up: Update myst-parser[linkify] requirement from ~=0.18 to ~=1.0 ([`e66965b`](https://github.com/cowofevil/flask-ligand/commit/e66965b52a226369b1e816e279b40ef4af1bc574))
+
 ## v0.7.4 (2023-04-24)
 ### Fix
 * :arrow_up: Update mypy requirement from ~=1.0 to ~=1.2 ([`a9f8d63`](https://github.com/cowofevil/flask-ligand/commit/a9f8d6324f162e8fddbae05fb2ada70448f899b7))
