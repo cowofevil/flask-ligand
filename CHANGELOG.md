@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.4 (2023-04-24)
+### Fix
+* :arrow_up: Update mypy requirement from ~=1.0 to ~=1.2 ([`a9f8d63`](https://github.com/cowofevil/flask-ligand/commit/a9f8d6324f162e8fddbae05fb2ada70448f899b7))
+
 ## v0.7.3 (2023-04-24)
 ### Fix
 * :arrow_up: Update python-semantic-release requirement ([`65190bc`](https://github.com/cowofevil/flask-ligand/commit/65190bc8295f4442e7ecd7ab4291d9fffcfede4f))
