@@ -3,6 +3,29 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.3 (2023-04-24)
+### Fix
+* :arrow_up: Update python-semantic-release requirement ([`65190bc`](https://github.com/cowofevil/flask-ligand/commit/65190bc8295f4442e7ecd7ab4291d9fffcfede4f))
+* :arrow_up: Update coverage[toml] requirement from ~=7.1 to ~=7.2 ([`ebcc2df`](https://github.com/cowofevil/flask-ligand/commit/ebcc2dffbb7597bce59ec1943fdbed92f8f0b334))
+* :arrow_up: Update marshmallow-sqlalchemy requirement ([`6035d9e`](https://github.com/cowofevil/flask-ligand/commit/6035d9e5b7a5e399c177014131ec41d8419d55f3))
+* :arrow_up: Update python-dotenv requirement from ~=0.21 to ~=1.0 ([`93e5967`](https://github.com/cowofevil/flask-ligand/commit/93e5967257f5e2b97cb70b6672542bc2ddae9f9d))
+* :arrow_up: Update pre-commit requirement from ~=3.0 to ~=3.1 ([`f9b423a`](https://github.com/cowofevil/flask-ligand/commit/f9b423aa0c90f5e5a4b5cb0d25efe1eea780ceaa))
+* :arrow_up: Update tox requirement from ~=4.1 to ~=4.4 ([`f4f748b`](https://github.com/cowofevil/flask-ligand/commit/f4f748beb29b5749d8f603643772d6cf110e7048))
+* :arrow_up: Update pygments requirement from ~=2.13 to ~=2.14 ([`299411f`](https://github.com/cowofevil/flask-ligand/commit/299411fb85b2f70a5c093fa4d8de4600ee04265e))
+* :arrow_up: Update pipdeptree requirement from ~=2.3 to ~=2.5 ([`2e5e48c`](https://github.com/cowofevil/flask-ligand/commit/2e5e48c601b046a1ce3c33cd2f54877ccb92fadc))
+* :arrow_up: Update sphinx-toolbox requirement from ~=3.2 to ~=3.4 ([`3d51f77`](https://github.com/cowofevil/flask-ligand/commit/3d51f77c078d7c9099aa47287e52c6cb48d320d3))
+* :arrow_up: Update ipython requirement from ~=8.7 to ~=8.11 ([`5c64f0a`](https://github.com/cowofevil/flask-ligand/commit/5c64f0a4d63c77cd459a2026e6f6a6f5ef26b518))
+* :arrow_up: Update sqlalchemy-utils requirement from ~=0.39 to ~=0.40 ([`e78cef9`](https://github.com/cowofevil/flask-ligand/commit/e78cef914fa93b59632af4cc59d3c50058f857d5))
+* :arrow_up: Update black requirement from ~=22.12 to ~=23.1 ([`c269598`](https://github.com/cowofevil/flask-ligand/commit/c269598af164b71a7119e8c404e0da22bf3d6518))
+* :arrow_up: Update coverage[toml] requirement from ~=6.5 to ~=7.1 ([`1592a7e`](https://github.com/cowofevil/flask-ligand/commit/1592a7eb94abe61995c703439275a14fa08feedf))
+* :arrow_up: Update mypy requirement from ~=0.991 to ~=1.0 ([`dae22d7`](https://github.com/cowofevil/flask-ligand/commit/dae22d78f8d52c3f4175e8dfb025c16d32e23619))
+* :arrow_up: Update types-setuptools requirement from ~=65.6 to ~=67.3 ([`af1d7eb`](https://github.com/cowofevil/flask-ligand/commit/af1d7ebc72a532ae0951b3f355cf7b642246eee1))
+
+### Other
+* [pre-commit.ci] pre-commit autoupdate ([`dc4659d`](https://github.com/cowofevil/flask-ligand/commit/dc4659d9cca99992478f54a6a1cfcee3985c2863))
+* [pre-commit.ci] pre-commit autoupdate ([`09d0008`](https://github.com/cowofevil/flask-ligand/commit/09d000802e874855f534c1d901556e35bbefad8b))
+* [pre-commit.ci] pre-commit autoupdate ([`88561b9`](https://github.com/cowofevil/flask-ligand/commit/88561b9e2abaf5d0704189749628e6a8aa46f654))
+
 ## v0.7.2 (2023-02-10)
 ### Fix
 * [560:robot:] Fix Packaging Issues ([`afd0075`](https://github.com/cowofevil/flask-ligand/commit/afd0075e67dd37b7d34048743d9a3d3bb6099641))
