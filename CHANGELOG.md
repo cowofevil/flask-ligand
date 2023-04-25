@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.6 (2023-04-25)
+### Fix
+* :arrow_up: Update types-setuptools requirement from ~=67.3 to ~=67.7 ([`6b22486`](https://github.com/cowofevil/flask-ligand/commit/6b2248622dc6ce62ee8f1b1511c357cd7b2ce243))
+
 ## v0.7.5 (2023-04-24)
 ### Fix
 * :arrow_up: Update myst-parser[linkify] requirement from ~=0.18 to ~=1.0 ([`e66965b`](https://github.com/cowofevil/flask-ligand/commit/e66965b52a226369b1e816e279b40ef4af1bc574))
