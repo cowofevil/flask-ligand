@@ -3,6 +3,11 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.8 (2023-04-25)
+### Fix
+* :arrow_up: Update sphinx-autodoc-typehints requirement ([`b318780`](https://github.com/cowofevil/flask-ligand/commit/b3187807256a9f8360d83e48833acd63851285a4))
+* :arrow_up: Update pipdeptree requirement from ~=2.5 to ~=2.7 ([`7b0498d`](https://github.com/cowofevil/flask-ligand/commit/7b0498d542dc604c0a1406276dc682b46bae448a))
+
 ## v0.7.7 (2023-04-25)
 ### Fix
 * :arrow_up: Update pre-commit requirement from ~=3.1 to ~=3.2 ([`9af6711`](https://github.com/cowofevil/flask-ligand/commit/9af6711b872990b1f2abaa5efd2c4997d40e35fb))
