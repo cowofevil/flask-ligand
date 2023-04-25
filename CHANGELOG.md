@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.7.7 (2023-04-25)
+### Fix
+* :arrow_up: Update pre-commit requirement from ~=3.1 to ~=3.2 ([`9af6711`](https://github.com/cowofevil/flask-ligand/commit/9af6711b872990b1f2abaa5efd2c4997d40e35fb))
+
 ## v0.7.6 (2023-04-25)
 ### Fix
 * :arrow_up: Update types-setuptools requirement from ~=67.3 to ~=67.7 ([`6b22486`](https://github.com/cowofevil/flask-ligand/commit/6b2248622dc6ce62ee8f1b1511c357cd7b2ce243))
