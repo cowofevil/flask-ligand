@@ -3,6 +3,13 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.8.0 (2023-05-17)
+### Feature
+* [FIX:sparkles:] Update mypy Deps ([`d6bce6e`](https://github.com/cowofevil/flask-ligand/commit/d6bce6ee5758fa02b15ddeb73f3b42f7fc792612))
+
+### Other
+* [FIX:robot:] Update Deps ([`4d1a1e5`](https://github.com/cowofevil/flask-ligand/commit/4d1a1e5760c8708ee2b9bf1c29a82d904d0212a0))
+
 ## v0.7.8 (2023-04-25)
 ### Fix
 * :arrow_up: Update sphinx-autodoc-typehints requirement ([`b318780`](https://github.com/cowofevil/flask-ligand/commit/b3187807256a9f8360d83e48833acd63851285a4))
