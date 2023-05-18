@@ -1,7 +1,7 @@
 # Dependency constraints
 flask~=2.2
 PyJWT~=2.6
-sqlalchemy~=2.0
+sqlalchemy~=1.4
 cryptography>=36.0.2
 # Installation requirements
 flask-cors~=3.0
