@@ -3,6 +3,10 @@ Changelog
 
 <!--next-version-placeholder-->
 
+## v0.8.1 (2023-05-18)
+### Fix
+* [FIX:bug:] Revert Back to SQLAlchemy 1.4 ([`e8cdf1a`](https://github.com/cowofevil/flask-ligand/commit/e8cdf1adf67a9c51360485a0c6641f021aed6315))
+
 ## v0.8.0 (2023-05-17)
 ### Feature
 * [FIX:sparkles:] Update mypy Deps ([`d6bce6e`](https://github.com/cowofevil/flask-ligand/commit/d6bce6ee5758fa02b15ddeb73f3b42f7fc792612))
