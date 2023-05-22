@@ -12,6 +12,6 @@ flask-sqlalchemy~=3.0
 gunicorn~=20.1
 marshmallow-sqlalchemy~=0.29
 python-dotenv~=1.0
-requests~=2.30
+requests~=2.31
 sqlalchemy-utils~=0.40
 urljoin==1.0.0
