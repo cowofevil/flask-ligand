@@ -16,7 +16,6 @@ from flask_ligand.extensions.api import abort
 from requests.exceptions import RequestException
 from flask_jwt_extended import verify_jwt_in_request, get_current_user, JWTManager
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

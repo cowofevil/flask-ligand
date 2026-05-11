@@ -19,7 +19,6 @@ from flask_sqlalchemy.query import Query as QueryOrig
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_smorest import Api as ApiOrig, Blueprint as BlueprintOrig, Page
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

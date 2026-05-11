@@ -11,7 +11,6 @@ from flask_ligand.cli import genclient
 from flask_ligand import extensions, views
 from flask_ligand.default_settings import flask_environment_configurator
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

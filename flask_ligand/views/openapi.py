@@ -11,7 +11,6 @@ from flask_ligand.extensions.api import Blueprint
 from flask_ligand.controllers import gen_python_dl_link, gen_typescript_dl_link
 from flask_ligand.schemas import OpenApiClientDownloadRespSchema, OpenApiClientDownloadQueryArgsSchema
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

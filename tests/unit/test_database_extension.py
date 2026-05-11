@@ -22,7 +22,6 @@ from sqlalchemy_utils.types.uuid import UUIDType
 from flask_ligand.extensions.database import DB
 from flask_ligand.extensions.api import Blueprint, SQLCursorPage, Schema, AutoSchema
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

@@ -13,7 +13,6 @@ from flask_ligand.extensions.database import DB
 from flask_ligand.extensions.jwt import jwt_role_required
 from flask_ligand.extensions.api import Blueprint, AutoSchema
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

@@ -14,7 +14,6 @@ from urljoin import url_path_join
 from flask_ligand.extensions.api import abort
 from requests.exceptions import RequestException
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================

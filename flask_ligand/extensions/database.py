@@ -10,7 +10,6 @@ from flask_migrate import Migrate, upgrade
 from sqlalchemy_utils import force_auto_coercion
 from flask_ligand.extensions.api import Query
 
-
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
