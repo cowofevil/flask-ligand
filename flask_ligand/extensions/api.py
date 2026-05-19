@@ -7,24 +7,27 @@ Override base classes here to allow painless customization in the future.
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
+
+from http import HTTPStatus
+from typing import TYPE_CHECKING
+
 import flask
 
 # noinspection PyPackageRequirements
 import marshmallow as ma
-from http import HTTPStatus
-from typing import TYPE_CHECKING
+from flask_smorest import Api as ApiOrig
+from flask_smorest import Blueprint as BlueprintOrig
+from flask_smorest import Page
 
 # noinspection PyPackageRequirements
 from flask_sqlalchemy.query import Query as QueryOrig
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from flask_smorest import Api as ApiOrig, Blueprint as BlueprintOrig, Page
-
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Optional, Any
+    from typing import Any, Optional
 
 
 # ======================================================================================================================

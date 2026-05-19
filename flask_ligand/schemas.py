@@ -5,6 +5,7 @@
 # ======================================================================================================================
 # noinspection PyPackageRequirements
 from marshmallow import fields
+
 from flask_ligand.extensions.api import Schema
 
 

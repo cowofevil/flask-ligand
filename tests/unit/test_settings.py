@@ -4,22 +4,27 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
+
+from collections import OrderedDict
+from typing import TYPE_CHECKING
+
 import pytest
 from flask import Flask
-from typing import TYPE_CHECKING
-from collections import OrderedDict
-from flask_ligand.default_settings import TestingConfig as ConfigForTesting  # Renamed because of pytest warning
 
 # noinspection PyProtectedMember
 from flask_ligand.default_settings import (
-    _DefaultConfig,
+    ENVIRONMENTS,
+    FlaskLocalConfig,
     ProdConfig,
     StagingConfig,
-    FlaskLocalConfig,
-    ENVIRONMENTS,
+)
+from flask_ligand.default_settings import (
+    TestingConfig as ConfigForTesting,  # Renamed because of pytest warning
+)
+from flask_ligand.default_settings import (
+    _DefaultConfig,
     flask_environment_configurator,
 )
-
 
 # ======================================================================================================================
 # Type Checking
@@ -27,8 +32,9 @@ from flask_ligand.default_settings import (
 if TYPE_CHECKING:
     from typing import Any
     from unittest.mock import MagicMock
-    from pytest_mock import MockerFixture
+
     from pytest_flask_ligand import FlaskLigandTestHelpers
+    from pytest_mock import MockerFixture
 
 
 # ======================================================================================================================
@@ -123,7 +129,7 @@ class TestDefaultConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that an unprotected default setting can be overridden."""
 
         config_setting_override_exp: dict[str, Any] = {"OPENAPI_VERSION": "override_setting"}
@@ -142,7 +148,7 @@ class TestDefaultConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that additional settings can be specified."""
 
         config_additional_setting_exp: dict[str, Any] = {"A_NEW_SETTING": "a new setting value"}
@@ -177,7 +183,7 @@ class TestNegativeDefaultConfig(object):
         mocker: MockerFixture,
         mocked_env_var_index: int,
         mocked_env_vars: OrderedDict[str, Any],
-    ):
+    ) -> None:
         """Verify that unset required environment variable(s) have appropriate default values or 'None'."""
 
         mocker.patch.dict("os.environ", mocked_env_vars)
@@ -218,7 +224,7 @@ class TestNegativeDefaultConfig(object):
         self,
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
-    ):
+    ) -> None:
         """Verify that attempting to add an all lowercase setting will raise the appropriate exception."""
 
         setting_name_exp: dict[str, Any] = {"lower_case_setting": "is_not_allowed"}
@@ -268,7 +274,7 @@ class TestProdConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that an unprotected default setting can be overridden."""
 
         config_setting_override_exp: dict[str, Any] = {"JWT_ALGORITHM": "RS512"}
@@ -287,7 +293,7 @@ class TestProdConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that additional settings can be specified."""
 
         config_additional_setting_exp: dict[str, Any] = {"A_NEW_SETTING": "a new setting value"}
@@ -309,7 +315,7 @@ class TestNegativeProdConfig(object):
         self,
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
-    ):
+    ) -> None:
         """Verify that unset required environment variable(s) have no default value."""
 
         config_actual = ProdConfig(
@@ -329,7 +335,7 @@ class TestStagingConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that the correct config settings are created for the 'dev' environment."""
 
         config_exp: dict[str, Any] = {"VERIFY_SSL_CERT": False}
@@ -347,7 +353,7 @@ class TestStagingConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that an unprotected default setting can be overridden."""
 
         config_setting_override_exp: dict[str, Any] = {"VERIFY_SSL_CERT": True}
@@ -366,7 +372,7 @@ class TestStagingConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that additional settings can be specified."""
 
         config_additional_setting_exp: dict[str, Any] = {"A_NEW_SETTING": "a new setting value"}
@@ -423,7 +429,7 @@ class TestFlaskLocalConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that an unprotected default setting can be overridden."""
 
         config_setting_override_exp: dict[str, Any] = {"API_SPEC_OPTIONS": "something_different"}
@@ -442,7 +448,7 @@ class TestFlaskLocalConfig(object):
         default_config_args: dict[str, Any],
         mocked_req_env_vars: OrderedDict[str, Any],
         helpers: FlaskLigandTestHelpers,
-    ):
+    ) -> None:
         """Verify that additional settings can be specified."""
 
         config_additional_setting_exp: dict[str, Any] = {"A_NEW_SETTING": "a new setting value"}
@@ -484,7 +490,7 @@ class TestTestingConfig(object):
 
         assert helpers.is_sub_dict(config_exp, config_actual)
 
-    def test_override_setting(self, default_config_args: dict[str, Any], helpers: FlaskLigandTestHelpers):
+    def test_override_setting(self, default_config_args: dict[str, Any], helpers: FlaskLigandTestHelpers) -> None:
         """Verify that an unprotected default setting can be overridden."""
 
         config_setting_override_exp: dict[str, Any] = {"JWT_ACCESS_TOKEN_EXPIRES": 200}
@@ -498,7 +504,7 @@ class TestTestingConfig(object):
 
         assert helpers.is_sub_dict(config_setting_override_exp, config_actual)
 
-    def test_additional_setting(self, default_config_args: dict[str, Any], helpers: FlaskLigandTestHelpers):
+    def test_additional_setting(self, default_config_args: dict[str, Any], helpers: FlaskLigandTestHelpers) -> None:
         """Verify that additional settings can be specified."""
 
         config_additional_setting_exp: dict[str, Any] = {"A_NEW_SETTING": "a new setting value"}
@@ -547,7 +553,9 @@ class TestFlaskEnvironmentConfigurator(object):
 class TestNegativeFlaskEnvironmentConfigurator(object):
     """Negative test cases for the 'flask_environment_configurator' function."""
 
-    def test_specify_invalid_environment_name(self, default_config_args: dict[str, Any], unconfigured_flask_app):
+    def test_specify_invalid_environment_name(
+        self, default_config_args: dict[str, Any], unconfigured_flask_app: Flask
+    ) -> None:
         """Verify that specifying an invalid environment name will raise the expected exception."""
 
         invalid_env_name = "bad!"

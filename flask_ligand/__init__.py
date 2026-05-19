@@ -4,19 +4,22 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from flask import Flask
 from flask_cors import CORS
-from typing import TYPE_CHECKING
-from flask_ligand.cli import genclient
-from flask_ligand import extensions, views
-from flask_ligand.default_settings import flask_environment_configurator
 
+from flask_ligand import extensions, views
+from flask_ligand.cli import genclient
+from flask_ligand.default_settings import flask_environment_configurator
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:  # pragma: no cover
     from typing import Any, Tuple
+
     from flask_ligand.extensions.api import Api
 
 

@@ -2,31 +2,33 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import pytest
+
 from os import walk
 from os.path import join
-from requests import post
-from dotenv import dotenv_values
 from typing import TYPE_CHECKING
-from flask.views import MethodView
-from flask_ligand import create_app
-from flask_migrate import downgrade
+
+import pytest
+from dotenv import dotenv_values
 from flask.testing import FlaskClient
+from flask.views import MethodView
+from flask_migrate import downgrade
 from marshmallow_sqlalchemy import auto_field
+from requests import post
+
+from flask_ligand import create_app
+from flask_ligand.extensions.api import AutoSchema, Blueprint
 from flask_ligand.extensions.database import DB
 from flask_ligand.extensions.jwt import jwt_role_required
-from flask_ligand.extensions.api import Blueprint, AutoSchema
-
-pytest_plugins = ["flask_ligand"]
-
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:
+    from typing import Any, Generator, Optional, Tuple
+
     from flask import Flask
+
     from flask_ligand.extensions.api import Api
-    from typing import Any, Optional, Tuple, Generator
 
 
 # ======================================================================================================================

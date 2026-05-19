@@ -4,21 +4,24 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import pytest
+
 from typing import TYPE_CHECKING
-from flask.views import MethodView
+
+import pytest
 from flask.testing import FlaskClient
+from flask.views import MethodView
 from marshmallow_sqlalchemy import auto_field
+
+from flask_ligand.extensions.api import AutoSchema, Blueprint
 from flask_ligand.extensions.database import DB
 from flask_ligand.extensions.jwt import jwt_role_required
-from flask_ligand.extensions.api import Blueprint, AutoSchema
-
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:
     from typing import Any
+
     from flask import Flask
 
 

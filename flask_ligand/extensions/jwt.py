@@ -4,25 +4,28 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import json
-from requests import get
-from http import HTTPStatus
-from functools import wraps
-from flask import current_app
-from typing import TYPE_CHECKING
-from dataclasses import dataclass
-from jwt.algorithms import RSAAlgorithm
-from flask_ligand.extensions.api import abort
-from requests.exceptions import RequestException
-from flask_jwt_extended import verify_jwt_in_request, get_current_user, JWTManager
 
+import json
+from dataclasses import dataclass
+from functools import wraps
+from http import HTTPStatus
+from typing import TYPE_CHECKING
+
+from flask import current_app
+from flask_jwt_extended import JWTManager, get_current_user, verify_jwt_in_request
+from jwt.algorithms import RSAAlgorithm
+from requests import get
+from requests.exceptions import RequestException
+
+from flask_ligand.extensions.api import abort
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:  # pragma: no cover
+    from typing import Any, Callable
+
     from flask import Flask
-    from typing import Callable, Any
 
 
 # ======================================================================================================================

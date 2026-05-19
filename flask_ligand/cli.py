@@ -4,9 +4,11 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
+
 import click
 from flask import current_app
-from flask_ligand.controllers import gen_typescript_dl_link, gen_python_dl_link
+
+from flask_ligand.controllers import gen_python_dl_link, gen_typescript_dl_link
 
 
 # ======================================================================================================================

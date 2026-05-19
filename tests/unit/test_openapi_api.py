@@ -4,17 +4,23 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import pytest
-import flask_ligand
+
 from typing import TYPE_CHECKING
-from click.testing import CliRunner
 from unittest.mock import MagicMock
-from flask_ligand import create_app
+
+import pytest
+from click.testing import CliRunner
 from pytest_mock import MockerFixture
 
-# noinspection PyProtectedMember
-from flask_ligand.controllers import _gen_openapi_client_dl_link, gen_python_dl_link, gen_typescript_dl_link
+import flask_ligand
+from flask_ligand import create_app
 
+# noinspection PyProtectedMember
+from flask_ligand.controllers import (
+    _gen_openapi_client_dl_link,
+    gen_python_dl_link,
+    gen_typescript_dl_link,
+)
 
 # ======================================================================================================================
 # Type Checking

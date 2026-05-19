@@ -4,16 +4,18 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-import flask_ligand
+
+from http import HTTPStatus
 from json import dumps
+from typing import TYPE_CHECKING
+
 from flask import Flask
 from requests import post
-from http import HTTPStatus
-from typing import TYPE_CHECKING
-from urljoin import url_path_join
-from flask_ligand.extensions.api import abort
 from requests.exceptions import RequestException
+from urljoin import url_path_join
 
+import flask_ligand
+from flask_ligand.extensions.api import abort
 
 # ======================================================================================================================
 # Type Checking
