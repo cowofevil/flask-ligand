@@ -4,15 +4,16 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
+
 import os
 from typing import TYPE_CHECKING
-
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:  # pragma: no cover
     from typing import Any
+
     from flask import Flask
 
 
@@ -39,9 +40,11 @@ class _DefaultConfig(dict):  # type: ignore
         ligand_default_settings: dict[str, Any] = {
             "SERVICE_PUBLIC_URL": os.getenv("SERVICE_PUBLIC_URL"),
             "SERVICE_PRIVATE_URL": os.getenv("SERVICE_PRIVATE_URL"),
-            "ALLOWED_ROLES": os.getenv("ALLOWED_ROLES").split(",")  # type: ignore
-            if os.getenv("ALLOWED_ROLES") is not None
-            else None,
+            "ALLOWED_ROLES": (
+                os.getenv("ALLOWED_ROLES").split(",")  # type: ignore
+                if os.getenv("ALLOWED_ROLES") is not None
+                else None
+            ),
         }
 
         db_default_settings: dict[str, Any] = {

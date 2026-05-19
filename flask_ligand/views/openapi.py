@@ -4,19 +4,24 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-from flask import current_app
-from typing import TYPE_CHECKING
-from flask.views import MethodView
-from flask_ligand.extensions.api import Blueprint
-from flask_ligand.controllers import gen_python_dl_link, gen_typescript_dl_link
-from flask_ligand.schemas import OpenApiClientDownloadRespSchema, OpenApiClientDownloadQueryArgsSchema
 
+from typing import TYPE_CHECKING
+
+from flask import current_app
+from flask.views import MethodView
+
+from flask_ligand.controllers import gen_python_dl_link, gen_typescript_dl_link
+from flask_ligand.extensions.api import Blueprint
+from flask_ligand.schemas import (
+    OpenApiClientDownloadQueryArgsSchema,
+    OpenApiClientDownloadRespSchema,
+)
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:  # pragma: no cover
-    from typing import Mapping, Any
+    from typing import Any, Mapping
 
 
 # ======================================================================================================================

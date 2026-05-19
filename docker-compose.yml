@@ -1,9 +1,7 @@
-version: '3.9'
-
 services:
   postgres:
     container_name: postgres_flask_ligand
-    image: postgres:10-alpine
+    image: postgres:17-alpine
     volumes:
       - ./docker/db-data/:/var/lib/postgresql/data/
       - ./docker/postgres-data/:/docker-entrypoint-initdb.d/

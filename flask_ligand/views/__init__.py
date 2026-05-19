@@ -4,9 +4,10 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-from typing import TYPE_CHECKING
-from flask_ligand.views import openapi
 
+from typing import TYPE_CHECKING
+
+from flask_ligand.views import openapi
 
 # ======================================================================================================================
 # Type Checking

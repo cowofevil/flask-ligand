@@ -4,10 +4,11 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
-from typing import TYPE_CHECKING
-from flask_ligand.extensions.api import Api
-from flask_ligand.extensions import database, jwt
 
+from typing import TYPE_CHECKING
+
+from flask_ligand.extensions import database, jwt
+from flask_ligand.extensions.api import Api
 
 # ======================================================================================================================
 # Type Checking

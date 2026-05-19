@@ -3,12 +3,14 @@
 # ======================================================================================================================
 # Imports
 # ======================================================================================================================
-import pytest
 from http import HTTPStatus
-from flask_ligand.extensions.api import abort
+
+import pytest
 
 # noinspection PyPackageRequirements
 from werkzeug.exceptions import HTTPException
+
+from flask_ligand.extensions.api import abort
 
 
 # ======================================================================================================================

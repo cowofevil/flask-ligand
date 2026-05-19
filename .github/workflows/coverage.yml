@@ -10,22 +10,26 @@ on:
 
 jobs:
   coverage:
+    # Source - https://stackoverflow.com/a/71854535
+    # Posted by Maxim Krizhanovsky, modified by community. See post 'Timeline' for change history
+    # Retrieved 2026-05-13, License - CC BY-SA 4.0
+
+    if: ${{ github.actor != 'dependabot[bot]' }}
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
           cache: 'pip'
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          make develop
+      - name: Install Hatch
+        uses: pypa/hatch@install
       - name: Generate Coverage Report
-        run: make coverage-xml
+        run: hatch run coverage-xml
       - name: Upload Report to Codecov
         uses: codecov/codecov-action@v3
         with:

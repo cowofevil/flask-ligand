@@ -4,31 +4,32 @@
 # Imports
 # ======================================================================================================================
 from __future__ import annotations
+
 import uuid
+from typing import TYPE_CHECKING
+
 import pytest
+from flask.testing import FlaskClient
+from flask.views import MethodView
 
 # noinspection PyPackageRequirements
 from marshmallow import fields
 
-from typing import TYPE_CHECKING
-from flask.views import MethodView
-from flask.testing import FlaskClient
-
 # noinspection PyPackageRequirements
 from marshmallow.validate import Length
-
 from marshmallow_sqlalchemy import field_for
 from sqlalchemy_utils.types.uuid import UUIDType
-from flask_ligand.extensions.database import DB
-from flask_ligand.extensions.api import Blueprint, SQLCursorPage, Schema, AutoSchema
 
+from flask_ligand.extensions.api import AutoSchema, Blueprint, Schema, SQLCursorPage
+from flask_ligand.extensions.database import DB
 
 # ======================================================================================================================
 # Type Checking
 # ======================================================================================================================
 if TYPE_CHECKING:
-    from flask import Flask
     from typing import Any
+
+    from flask import Flask
 
 
 # ======================================================================================================================
