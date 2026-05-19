@@ -3,6 +3,14 @@ Changelog
 
 <!-- version list -->
 
+## v0.9.0 (2026-05-19)
+
+### :sparkles:
+
+- :sparkles: Migrate Setup, Build, Test to Hatch
+  ([`8514039`](https://github.com/cowofevil/flask-ligand/commit/851403942ce0af9293d8dc72b781cd95bb0f0464))
+
+
 ## v0.8.1 (2023-05-18)
 ### Fix
 * [FIX:bug:] Revert Back to SQLAlchemy 1.4 ([`e8cdf1a`](https://github.com/cowofevil/flask-ligand/commit/e8cdf1adf67a9c51360485a0c6641f021aed6315))
