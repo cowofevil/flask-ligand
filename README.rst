@@ -28,7 +28,7 @@ functionality out-of-the-box:
 - Create database models using the industry standard `SQLAlchemy ORM`_
 - Leverage those same database models to create schemas for marshalling data in and out of your `Flask`_ endpoints
   defined via Blueprints
-- Provide automatic `SwaggerUI`_ docs for quickly developing and testing your `Flask`_ application without the need
+- Provide automatic `OpenAPI`_ docs for quickly developing and testing your `Flask`_ application without the need
   of external tools like curl, Postman or Hoppscotch
 - `Generate OpenAPI clients`_ for a variety of languages
     - Endpoints for generating Python and Typescript clients already included!
@@ -39,8 +39,8 @@ functionality out-of-the-box:
 
 .. _`Flask`: https://flask.palletsprojects.com/en/2.2.x/
 .. _`Flask extensions`: https://flask.palletsprojects.com/en/2.2.x/extensions/
-.. _`SQLAlchemy ORM`: https://www.sqlalchemy.org/
-.. _`SwaggerUI`: https://swagger.io/tools/swagger-ui/
+.. _`SQLAlchemy ORM`: https://docs.sqlalchemy.org/en/14/
+.. _`OpenAPI`: https://www.openapis.org/
 .. _`Generate OpenAPI clients`: https://openapi-generator.tech/
 .. _`Auth0`: https://auth0.com/
 .. _`Keycloak`: https://www.keycloak.org/

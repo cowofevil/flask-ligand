@@ -578,19 +578,19 @@ local Flask server to serve the :swagger-ui:`SwaggerUI documentation <>`.
 
 1. Generate a '.env' file to configure Flask server to use the included Docker environment::
 
-    $ make gen-local-env-file
+    $ hatch run gen-local-env-file
 
 2. Initialize the database::
 
-    $ make setup-db
+    $ hatch run setup-db
 
 3. Generate a JWT access token with admin rights for accessing the included example project endpoints::
 
-    $ make gen-admin-access-token
+    $ hatch run gen-admin-access-token
 
 4. Start the local Flask server::
 
-    $ make run
+    $ hatch run run-server
 
 5. Open a browser and navigate to http://localhost:5000/apidocs.
 6. Click the 'Authorize' button and paste in the JWT access token you created previously.

@@ -9,34 +9,30 @@ Prerequisites
 -------------
 
 - Python 3.10+
-- virtualenvwrapper_
+- `Hatch 1.6+`_
 - Docker_ (with `Compose V2`_)
 
-Make Targets
-------------
+Hatch Scripts
+-------------
 
-Execute the following command to get a full list of ``make`` targets::
+Execute the following command to get a full list of available custom Hatch scripts::
 
-    $ make help
+    $ hatch env show
 
 Setup Python Environment
 ------------------------
 
-1. Create a Python virtual environment::
+1. Create a Hatch environment::
 
-    $ mkvirtualenv -p py310 flask-ligand
+    $ hatch env create
 
-2. Setup develop environment::
+2. Setup git pre-commit hooks::
 
-    $ make develop-venv
+    $ hatch run setup-pre-commit
 
-3. Setup git pre-commit hooks::
+3. Execute the following ``hatch`` script to run tests against all supported Python versions::
 
-    $ make setup-pre-commit
-
-4. Verify that environment is ready for development::
-
-    $ make test-tox
+    $ hatch run test-tox
 
 Configuration Settings
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -77,12 +73,12 @@ available built-in Flask environments)
 Python Black Support
 --------------------
 
-This repo utilizes `Python Black`_ for automatic code formatting using the ``make format`` task. However, this is not
+This repo utilizes `Python Black`_ for automatic code formatting using the ``hatch fmt`` script. However, this is not
 very convenient to use on a regular basis and instead it is recommended to integrate Python Black into your IDE
 workflow. Checkout these `editor integration`_ guides for integrating `Python Black`_ with popular IDEs and text
 editors.
 
-.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _Hatch 1.6+: https://hatch.pypa.io/latest/
 .. _Docker: https://www.docker.com/products/docker-desktop/
 .. _Compose V2: https://docs.master.dockerproject.org/compose/#compose-v2-and-the-new-docker-compose-command
 .. _flask_environments.rst: docs/flask_environments.rst

@@ -229,7 +229,6 @@ check-integration = """rm -f /tmp/ligand.resp; \
 setup-integration = "docker compose up -d"
 setup-db = "flask db upgrade -d tests/integration/migrations"
 teardown-integration = "docker compose down"
-gen-docs = "cd docs && make html"
 gen-local-env-file = """echo "FLASK_ENV=local\n"\
 	"OIDC_DISCOVERY_URL=http://localhost:8080/realms/flask-ligand/.well-known/openid-configuration\n"\
 	"SQLALCHEMY_DATABASE_URI=postgresql+pg8000://admin:password@localhost:5432/app" > '.env'"""
@@ -289,6 +288,21 @@ sem-noop-release = "semantic-release --noop version {args}"
 post-install-commands = [
     "develop",
 ]
+
+[tool.hatch.envs.docs]
+# This is an intentional duplicate of 'docs/requirements' dependencies in order to allow for easy local doc generation.
+# KEEP THIS IN SYNC WITH DOCS DEPENDENCIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+dependencies = [
+    "sphinx~=8.2.3",
+    "myst-parser~=5.1.0",
+    "linkify-it-py~=2.1.0",
+    "sphinx-hoverxref~=1.4.2",
+    "sphinx-issues~=5.0.1",
+    "sphinx-toolbox~=4.1.2"
+]
+
+[tool.hatch.envs.docs.scripts]
+gen-docs = "cd docs && make html"
 
 [tool.hatch.envs.hatch-test]
 # This is an intentional duplicate of 'test' dependencies in order to fix a bug in hatch

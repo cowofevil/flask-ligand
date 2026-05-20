@@ -27,7 +27,7 @@ Once a fork has been created, follow these steps to make a local clone and creat
 2. Setup develop environment::
 
     $ cd flask-ligand/
-    $ make develop-venv # OR 'make develop' if you're not using virtualenvwrapper
+    $ hatch env create
 
 3. Create a branch for local development::
 
@@ -42,9 +42,9 @@ Run All the Tests
 Before creating a commit it is essential that the changes be tested first. Also, make sure to write appropriate tests
 for the change you'll be proposing in the pull request!
 
-Simply execute the following ``make`` target to run tests against all supported Python versions::
+Simply execute the following ``hatch`` script to run tests against all supported Python versions::
 
-    $ make test-tox
+    $ hatch run test-tox
 
 Commit Message Formatting
 -------------------------
@@ -113,6 +113,6 @@ Before you submit a pull request, check that it meets these guidelines:
 .. _Github forking workflow: https://docs.github.com/en/get-started/quickstart/github-flow
 .. _Developer Quick Start Guide: docs/developer_guide.rst
 .. _fork this repo: https://docs.github.com/en/get-started/quickstart/fork-a-repo
-.. _python-semantic-release: https://python-semantic-release.readthedocs.io/en/latest/#
-.. _emoji commit parser: https://python-semantic-release.readthedocs.io/en/latest/configuration.html#commit-parser
+.. _python-semantic-release: https://python-semantic-release.readthedocs.io/en/latest/
+.. _emoji commit parser: https://python-semantic-release.readthedocs.io/en/latest/concepts/commit_parsing.html#emoji-commit-parser
 .. _semantic versioning: https://semver.org/

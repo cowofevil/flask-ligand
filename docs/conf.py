@@ -20,7 +20,7 @@
 import flask_ligand
 
 project = "flask-ligand"
-copyright = "2022, Ryan Gard and contributors"
+copyright = "2026, Ryan Gard and contributors"
 author = "Ryan Gard"
 
 version = release = flask_ligand.__version__
@@ -34,7 +34,7 @@ extensions = [
     "sphinx.ext.extlinks",
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
-    "sphinx_autodoc_typehints",  # https://github.com/tox-dev/sphinx-autodoc-typehints/issues/15
+    "sphinx_autodoc_typehints",
     "sphinx.ext.viewcode",
     "sphinx_tabs.tabs",
     "sphinx-prompt",
@@ -183,4 +183,12 @@ hoverxref_intersphinx = [
 
 # -- Configuration for 'autodoc' extension -------------------------------------------------
 
-autodoc_typehints = "description"
+autodoc_typehints = "signature"
+napoleon_use_rtype = False  # sphinx.ext.napoleon setting
+# Don't show "None" return types, but show all others
+typehints_document_rtype_none = False
+# Show the return type inline with the return description
+# instead of as a separate block
+typehints_use_rtype = False
+always_use_bars_union = True
+typehints_defaults = "comma"
