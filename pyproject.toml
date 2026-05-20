@@ -294,7 +294,7 @@ post-install-commands = [
 # KEEP THIS IN SYNC WITH DOCS DEPENDENCIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 dependencies = [
     "sphinx==8.1.3",
-    "myst-parser~=5.1.0",
+    "myst-parser~=4.0.1",
     "linkify-it-py~=2.1.0",
     "sphinx-hoverxref~=1.4.2",
     "sphinx-issues~=5.0.1",
