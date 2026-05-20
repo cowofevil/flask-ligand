@@ -3,6 +3,22 @@ Changelog
 
 <!-- version list -->
 
+## v0.9.1 (2026-05-20)
+
+### :bug:
+
+- :bug: Update Docs
+  ([`598d84c`](https://github.com/cowofevil/flask-ligand/commit/598d84c5a30d2a84ce4888fcc61b3e76b02b8b0a))
+
+### Other
+
+- :arrow_up: Bump mypy from 1.20.2 to 2.1.0
+  ([`ae294e8`](https://github.com/cowofevil/flask-ligand/commit/ae294e8862cf2414a0d9bd11f6ccc84df1c62862))
+
+- Use 'uv' for Tox
+  ([`9e41678`](https://github.com/cowofevil/flask-ligand/commit/9e4167890a7b6ae215ee33a02aafcd2cea2bed82))
+
+
 ## v0.9.0 (2026-05-19)
 
 ### :sparkles:
