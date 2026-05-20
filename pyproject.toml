@@ -115,7 +115,7 @@ dev = [
 testpaths = ["tests/unit",]
 
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["310", "311", "312", "313", "314"]
+python = ["312", "313", "314", "311", "310"]
 
 [tool.tox]
 skipsdist = true
@@ -293,7 +293,7 @@ post-install-commands = [
 # This is an intentional duplicate of 'docs/requirements' dependencies in order to allow for easy local doc generation.
 # KEEP THIS IN SYNC WITH DOCS DEPENDENCIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 dependencies = [
-    "sphinx~=8.2.3",
+    "sphinx==8.1.3",
     "myst-parser~=5.1.0",
     "linkify-it-py~=2.1.0",
     "sphinx-hoverxref~=1.4.2",
