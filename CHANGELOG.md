@@ -3,6 +3,14 @@ Changelog
 
 <!-- version list -->
 
+## v0.9.2 (2026-05-20)
+
+### :bug:
+
+- :bug: Fix Docs Again
+  ([`60627a5`](https://github.com/cowofevil/flask-ligand/commit/60627a57282a3df6487d33991f58bfc66a0a0321))
+
+
 ## v0.9.1 (2026-05-20)
 
 ### :bug:
