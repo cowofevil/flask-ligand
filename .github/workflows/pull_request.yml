@@ -1,28 +1,40 @@
-name: Pull Request
+name: Code Coverage Report
 
 on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
-  test:
+  coverage:
+    # Source - https://stackoverflow.com/a/71854535
+    # Posted by Maxim Krizhanovsky, modified by community. See post 'Timeline' for change history
+    # Retrieved 2026-05-13, License - CC BY-SA 4.0
+
+    if: ${{ github.actor != 'dependabot[bot]' }}
+
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
 
     steps:
       - name: Git Checkout
         uses: actions/checkout@v6
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.10'
           cache: 'pip'
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip3 install tox tox-gh-actions
-      - name: Test with tox
-        run: tox
+      - name: Install Hatch
+        uses: pypa/hatch@install
+      - name: Generate Coverage Report
+        run: hatch run coverage-xml
+      - name: Upload Report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          verbose: true
