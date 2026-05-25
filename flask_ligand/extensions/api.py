@@ -112,7 +112,7 @@ class Schema(ma.Schema):
         ordered = True
 
 
-class AutoSchema(SQLAlchemyAutoSchema):
+class AutoSchema(SQLAlchemyAutoSchema):  # type: ignore
     """
     Extend :class:`SQLAlchemyAutoSchema <marshmallow_sqlalchemy.SQLAlchemyAutoSchema>` to include the
     foreign key, automatically raise an exception when unknown fields are specified, enforce ordering of fields

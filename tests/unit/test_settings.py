@@ -12,6 +12,7 @@ import pytest
 from flask import Flask
 
 # noinspection PyProtectedMember
+from flask_ligand.default_settings import _DefaultConfig  # noqa
 from flask_ligand.default_settings import (
     ENVIRONMENTS,
     FlaskLocalConfig,
@@ -22,7 +23,6 @@ from flask_ligand.default_settings import (
     TestingConfig as ConfigForTesting,  # Renamed because of pytest warning
 )
 from flask_ligand.default_settings import (
-    _DefaultConfig,
     flask_environment_configurator,
 )
 

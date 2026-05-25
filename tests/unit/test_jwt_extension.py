@@ -24,6 +24,8 @@ if TYPE_CHECKING:
 
     from flask import Flask
 
+    from flask_ligand.extensions.api import Api
+
 
 # ======================================================================================================================
 # Globals
@@ -65,7 +67,7 @@ class JwtTestView(MethodView):
     @BLP.response(200, JwtTestSchema(many=True))
     @jwt_role_required(role="user")
     def get(self):
-        items: list[JwtTestModel] = JwtTestModel.query.all()
+        items: list[JwtTestModel] = JwtTestModel.query.all()  # noqa
 
         return items
 
@@ -85,7 +87,7 @@ class JwtBrokenView(MethodView):
     @BLP.response(200, JwtTestSchema(many=True))
     @jwt_role_required(role="broken")
     def get(self):
-        items: list[JwtTestModel] = JwtTestModel.query.all()
+        items: list[JwtTestModel] = JwtTestModel.query.all()  # noqa
 
         return items
 
@@ -110,12 +112,17 @@ def jwt_test_data_set() -> list[dict[str, Any]]:
 
 
 @pytest.fixture(scope="function")
-def jwt_test_client(basic_flask_app: Flask) -> FlaskClient:
+def jwt_test_client(basic_flask_app: tuple[Flask, Api]) -> FlaskClient:
     """Flask app test client with 'JwtTestView' pre-configured."""
 
-    basic_flask_app.register_blueprint(BLP)
+    # Register the Blueprints with the API rather than the Flask app.
+    basic_flask_app[1].register_blueprint(BLP)
 
-    return basic_flask_app.test_client()
+    # Turn on testing flag so full stack traces are available in exceptions
+    basic_flask_app[0].testing = True
+
+    # Return the test client from the Flask app
+    return basic_flask_app[0].test_client()
 
 
 @pytest.fixture(scope="function")
@@ -144,7 +151,7 @@ class TestJwtExtension(object):
 
         with primed_test_client.get(jwt_test_url, headers=access_token_headers) as ret:
             assert ret.status_code == 200
-            assert len(ret.json) == 3
+            assert len(ret.json) == 3  # noqa
 
 
 class TestNegativeJwtExtension(object):
@@ -165,7 +172,7 @@ class TestNegativeJwtExtension(object):
 
         with primed_test_client.get(jwt_test_url, headers=access_token_headers) as ret:
             assert ret.status_code == 403
-            assert ret.json["message"] == "This endpoint requires the user to have the 'user' role!"
+            assert ret.json["message"] == "This endpoint requires the user to have the 'user' role!"  # noqa
 
     def test_role_not_allowed(self, primed_test_client, jwt_test_url, access_token_headers):
         """
@@ -180,4 +187,4 @@ class TestNegativeJwtExtension(object):
 
         with primed_test_client.get(f"{jwt_test_url}broken/", headers=access_token_headers) as ret:
             assert ret.status_code == 500
-            assert ret.json["message"] == "Endpoint required role is not an allowed role!"
+            assert ret.json["message"] == "Endpoint required role is not an allowed role!"  # noqa

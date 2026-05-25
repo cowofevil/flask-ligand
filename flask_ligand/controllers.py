@@ -32,7 +32,7 @@ def _gen_openapi_client_dl_link(  # type: ignore
     use_private_url: bool,
     gen_lang: str,
     options: dict[str, str],
-) -> dict[str, str]:
+) -> dict[str, str]:  # noqa
     """
     Generate a download link URL from an OpenAPI online generator for a given language.
 
@@ -55,7 +55,7 @@ def _gen_openapi_client_dl_link(  # type: ignore
     open_api_gen_server_url: str = current_app_context.config["OPENAPI_GEN_SERVER_URL"]
 
     # Grab the OpenAPI spec from the view function directly to guarantee it is constructed correctly.
-    api_spec: dict[str, Any] = current_app_context.view_functions["api-docs.openapi_json"]().json
+    api_spec: dict[str, Any] = current_app_context.view_functions["api-docs.openapi_json"]().json  # type: ignore
 
     if use_private_url:
         api_spec["servers"][0] = {"url": current_app_context.config["SERVICE_PRIVATE_URL"]}
@@ -106,7 +106,7 @@ def gen_typescript_dl_link(current_app_context: Flask, use_private_url: bool) ->
         current_app_context,
         use_private_url,
         "typescript-axios",
-        options,
+        options,  # noqa
     )
 
 
