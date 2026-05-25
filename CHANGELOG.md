@@ -3,6 +3,26 @@ Changelog
 
 <!-- version list -->
 
+## v0.10.0 (2026-05-25)
+
+### :boom:
+
+- :boom: Update Dependencies to New Versions (BREAKING CHANGE)
+  ([`47d8a94`](https://github.com/cowofevil/flask-ligand/commit/47d8a94f6067bffcf6e28dcce16c32da6fd86e3a))
+
+### Other
+
+- Disable Code Coverage for Dependabot
+  ([`31bd863`](https://github.com/cowofevil/flask-ligand/commit/31bd863cd7fa8f350faa0c39e314e3887ec2041c))
+
+- Fix Codecov Issues
+  ([`d975609`](https://github.com/cowofevil/flask-ligand/commit/d975609c14be3953e591996d9be69d02d955e8d4))
+
+### Breaking Changes
+
+- Updating project to use Flask 3.x and SQLAlchemy 2.x which will be a breaking change.
+
+
 ## v0.9.3 (2026-05-20)
 
 ### :bug:
