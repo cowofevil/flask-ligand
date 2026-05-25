@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 
 from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase  # type: ignore[attr-defined]
 from sqlalchemy_utils import force_auto_coercion
 
 from flask_ligand.extensions.api import Query
@@ -21,9 +22,18 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 # ======================================================================================================================
+# Classes: Private
+# ======================================================================================================================
+class _Base(DeclarativeBase):
+    """SQLAlchemy declarative base class."""
+
+    pass
+
+
+# ======================================================================================================================
 # Globals
 # ======================================================================================================================
-DB = SQLAlchemy(query_class=Query)  # pylint: disable=invalid-name
+DB = SQLAlchemy(model_class=_Base, query_class=Query)  # pylint: disable=invalid-name
 MIGRATE = Migrate()
 
 

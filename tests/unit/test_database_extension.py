@@ -31,6 +31,8 @@ if TYPE_CHECKING:
 
     from flask import Flask
 
+    from flask_ligand.extensions.api import Api
+
 
 # ======================================================================================================================
 # Globals
@@ -82,7 +84,7 @@ class DatabaseTestView(MethodView):
     @BLP.response(200, DatabaseTestSchema(many=True))
     @BLP.paginate(SQLCursorPage)  # noqa
     def get(self, args):
-        return DatabaseTestModel.query.filter_by(**args)
+        return DatabaseTestModel.query.filter_by(**args)  # noqa
 
     @BLP.arguments(DatabaseTestSchema)
     @BLP.response(201, DatabaseTestSchema)
@@ -99,7 +101,7 @@ class DatabaseTestView(MethodView):
 class DatabaseTestViewFirst(MethodView):
     @BLP.response(200, DatabaseTestSchema)
     def get(self):
-        return DatabaseTestModel.query.first_or_404(description="Database is empty!")
+        return DatabaseTestModel.query.first_or_404(description="Database is empty!")  # noqa
 
 
 @BLP.route("/<uuid:item_id>")
@@ -107,12 +109,12 @@ class DatabaseTestViewFirst(MethodView):
 class DatabaseTestViewById(MethodView):
     @BLP.response(200, DatabaseTestSchema)
     def get(self, item_id):
-        return DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")
+        return DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")  # noqa
 
     @BLP.arguments(DatabaseTestSchema)
     @BLP.response(200, DatabaseTestSchema)
     def put(self, new_item, item_id):
-        item = DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")
+        item = DatabaseTestModel.query.get_or_404(item_id, description="Invalid item!")  # noqa
         BLP.check_etag(item, DatabaseTestSchema)
         DatabaseTestSchema().update(item, new_item)
         DB.session.add(item)
@@ -141,12 +143,17 @@ def db_test_data_set() -> list[dict[str, Any]]:
 
 
 @pytest.fixture(scope="function")
-def db_test_client(basic_flask_app: Flask) -> FlaskClient:
+def db_test_client(basic_flask_app: tuple[Flask, Api]) -> FlaskClient:
     """Flask app test client with 'DatabaseTestView' pre-configured."""
 
-    basic_flask_app.register_blueprint(BLP)
+    # Register the Blueprints with the API rather than the Flask app.
+    basic_flask_app[1].register_blueprint(BLP)
 
-    return basic_flask_app.test_client()
+    # Turn on testing flag so full stack traces are available in exceptions
+    basic_flask_app[0].testing = True
+
+    # Return the test client from the Flask app
+    return basic_flask_app[0].test_client()
 
 
 @pytest.fixture(scope="function")
@@ -156,7 +163,7 @@ def primed_test_client(
     """Flask app configured for testing with the database pre-populated with test data."""
 
     for i in range(3):
-        with db_test_client.post(db_test_url, json=db_test_data_set[i]) as ret:
+        with db_test_client.post(db_test_url, json=db_test_data_set[i]) as ret:  # noqa
             assert ret.status_code == 201
 
     return db_test_client
@@ -188,7 +195,7 @@ class TestDatabaseExtension(object):
 
         with primed_test_client.get(db_test_url) as ret:
             assert ret.status_code == 200
-            assert len(ret.json) == 3
+            assert len(ret.json) == 3  # noqa
 
     def test_get_first(self, primed_test_client, db_test_url, db_test_data_set, helpers):
         """Verify that the endpoint returns the first item."""
@@ -202,7 +209,7 @@ class TestDatabaseExtension(object):
 
         with primed_test_client.get(f"{db_test_url}?page=1&page_size=2") as ret:
             assert ret.status_code == 200
-            assert len(ret.json) == 2
+            assert len(ret.json) == 2  # noqa
 
             assert helpers.loads(ret.headers["X-Pagination"])["total"] == 3
             assert helpers.loads(ret.headers["X-Pagination"])["total_pages"] == 2
@@ -256,7 +263,7 @@ class TestNegativeDatabaseExtension(object):
 
         with primed_test_client.get(f"{db_test_url}?name=does_not_exist") as ret:
             assert ret.status_code == 200
-            assert len(ret.json) == 0
+            assert len(ret.json) == 0  # noqa
 
     def test_get_by_invalid_item_id(self, primed_test_client, db_test_url, dummy_id):
         """Verify that the correct HTTP code is returned when an invalid item ID is specified."""
