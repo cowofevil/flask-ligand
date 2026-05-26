@@ -269,7 +269,7 @@ coverage-xml = [
     "coverage xml"
 ]
 install = [
-    "clean",
+    "clean-all",
     "uv pip install '.'"
 ]
 install-edit = "uv pip install -e '.'"
