@@ -18,5 +18,4 @@ python:
   install:
     - method: uv
       command: pip
-      path: .
       requirements: docs/requirements.txt
