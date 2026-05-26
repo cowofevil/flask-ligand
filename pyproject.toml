@@ -202,6 +202,7 @@ clean-all = [
 	"rm -fr .pytest_cache/",
     "rm -fr .ruff_cache/",
     "rm -fr .mypy_cache/",
+    "rm -fr docs/_build/",
     "find . -name '*.pyc' -exec rm -f {{}} +",
     "find . -name '*.pyo' -exec rm -f {{}} +",
 	"find . -name '*~' -exec rm -f {{}} +",
@@ -293,16 +294,21 @@ post-install-commands = [
 # This is an intentional duplicate of 'docs/requirements' dependencies in order to allow for easy local doc generation.
 # KEEP THIS IN SYNC WITH DOCS DEPENDENCIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 dependencies = [
-    "sphinx==8.1.3",
-    "myst-parser~=4.0.1",
-    "linkify-it-py~=2.1.0",
-    "sphinx-hoverxref~=1.4.2",
-    "sphinx-issues~=5.0.1",
-    "sphinx-toolbox~=4.1.2"
+    "sphinx==8.2.3",
+    "myst-parser==4.0.1",
+    "linkify-it-py==2.1.0",
+    "sphinx-hoverxref==1.4.2",
+    "sphinx-issues==5.0.1",
+    "sphinx-toolbox==4.1.2",
+    "sphinx-autodoc-typehints==3.3.0"
 ]
+post-install-commands = []
 
 [tool.hatch.envs.docs.scripts]
-gen-docs = "cd docs && make html"
+gen-docs = [
+    "clean-all",
+    "cd docs && make html"
+]
 
 [tool.hatch.envs.hatch-test]
 # This is an intentional duplicate of 'test' dependencies in order to fix a bug in hatch

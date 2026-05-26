@@ -183,12 +183,18 @@ hoverxref_intersphinx = [
 
 # -- Configuration for 'autodoc' extension -------------------------------------------------
 
-autodoc_typehints = "signature"
+
+autodoc_typehints = "none"
 napoleon_use_rtype = False  # sphinx.ext.napoleon setting
+
+# An upstream Meta class is confusing typehints
+suppress_warnings = ["sphinx_autodoc_typehints.forward_reference"]
+
 # Don't show "None" return types, but show all others
 typehints_document_rtype_none = False
-# Show the return type inline with the return description
-# instead of as a separate block
+
+# Show the return type inline with the return description instead of as a separate block
 typehints_use_rtype = False
+
 always_use_bars_union = True
 typehints_defaults = "comma"
