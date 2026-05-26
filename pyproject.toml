@@ -81,7 +81,7 @@ black = [
 ]
 mypy = [
     "mypy==2.1.0",
-    "types-Flask-Cors~=3.0",
+    "types-Flask-Cors>=3,<7",
     "types-mock~=5.0",
     "types-PyYAML~=6.0",
     "types-requests~=2.28",
