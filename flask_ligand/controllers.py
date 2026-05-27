@@ -134,6 +134,6 @@ def gen_python_dl_link(current_app_context: Flask, use_private_url: bool) -> dic
     return _gen_openapi_client_dl_link(
         current_app_context,
         use_private_url,
-        "python-prior",
+        "python-pydantic-v1",
         options,
     )

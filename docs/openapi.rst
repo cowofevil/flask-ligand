@@ -13,6 +13,8 @@ For OpenAPI client generation to work properly your ``flask-ligand`` based micro
 public OpenAPI generator server URL located at http://api.openapi-generator.tech is also available, but since it is not
 a secure endpoint, it is recommended for use only in testing.
 
+.. important:: Currently ``flask-ligand`` only supports `openapi_generator v7.16.0`_!
+
 Online Generation
 =================
 
@@ -56,3 +58,4 @@ Generate a Python client download link with your ``flask-ligand`` based microser
 
 .. _`setting configured`: configuration.html#prod
 .. _`production environment`: configuration.html#prod
+.. _`openapi_generator v7.16.0`: https://github.com/OpenAPITools/openapi-generator/releases/tag/v7.16.0

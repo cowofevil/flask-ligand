@@ -171,7 +171,7 @@ class TestOpenApiPython(object):
         with app_test_client.get(python_url):
             assert mock_gen_openapi_client_dl_link.call_args.args[1] is True
 
-            assert mock_gen_openapi_client_dl_link.call_args.args[2] == "python-prior"
+            assert mock_gen_openapi_client_dl_link.call_args.args[2] == "python-pydantic-v1"
 
             assert mock_gen_openapi_client_dl_link.call_args.args[3] == {
                 "packageName": open_api_client_name.replace("-", "_"),
