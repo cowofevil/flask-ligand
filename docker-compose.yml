@@ -28,6 +28,13 @@ services:
       - backend
     command: start-dev --import-realm
 
+  openapi:
+    container_name: openapi_flask_ligand_example
+    image: openapitools/openapi-generator-online:v7.16.0
+    ports:
+      - '8888:8080'
+    command: java -Dio.swagger.v3.parser.util.RemoteUrl.trustAll=true -jar /generator/openapi-generator-online.jar
+
 networks:
   backend:
     name: backend
