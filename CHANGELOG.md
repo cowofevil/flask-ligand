@@ -3,6 +3,46 @@ Changelog
 
 <!-- version list -->
 
+## v0.10.1 (2026-05-27)
+
+### :bug:
+
+- :bug: Update OpenAPI Generator
+  ([`30b9332`](https://github.com/cowofevil/flask-ligand/commit/30b9332c2fd31b5cec9d2a840b6a510208115bba))
+
+### Other
+
+- :arrow_up: Bump actions/checkout from 5 to 6
+  ([`0d0d63a`](https://github.com/cowofevil/flask-ligand/commit/0d0d63a9e7276127e3afc0f46ea4443a10459492))
+
+- :arrow_up: Bump actions/setup-python from 5 to 6
+  ([`375e3c0`](https://github.com/cowofevil/flask-ligand/commit/375e3c0da719bc77965593b4a873addc5ff9d75d))
+
+- :arrow_up: Bump codecov/codecov-action from 5 to 6
+  ([`fcccf39`](https://github.com/cowofevil/flask-ligand/commit/fcccf39a0bb51a5cfbd1a66f02678695038bc3f4))
+
+- Bump black from 26.5.0 to 26.5.1
+  ([`6349eb9`](https://github.com/cowofevil/flask-ligand/commit/6349eb91fd9a8f140ae593896ad4c25f5d341fd7))
+
+- Fix Dependencies
+  ([`7ed82fb`](https://github.com/cowofevil/flask-ligand/commit/7ed82fb20d6107fa9a17de3e461d99cf351643c1))
+
+- Fix FIX FIX FIX the docs
+  ([`177058a`](https://github.com/cowofevil/flask-ligand/commit/177058a2bcd3729d4603140323410a4cde797797))
+
+- Fix fix fix the docs!
+  ([`badb28e`](https://github.com/cowofevil/flask-ligand/commit/badb28ef5258b733e17992c5f720adf38ded10ed))
+
+- Fix Hatch Script Issue
+  ([`5ac784a`](https://github.com/cowofevil/flask-ligand/commit/5ac784ac10967d0c4ddcd40bef36a14f77ca4095))
+
+- Fix Read The Docs Again and Again...
+  ([`32de77c`](https://github.com/cowofevil/flask-ligand/commit/32de77c2e91ab744d14b8f3b35b6695fe9e104b3))
+
+- Fix Read the Docs AGAIN!
+  ([`d62553e`](https://github.com/cowofevil/flask-ligand/commit/d62553e9d91bf4c19be67f6bbf7ab3da00a97f81))
+
+
 ## v0.10.0 (2026-05-25)
 
 ### :boom:
