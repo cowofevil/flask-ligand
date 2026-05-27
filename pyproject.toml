@@ -74,7 +74,7 @@ pre-commit = [
     "pyproject-pre-commit==0.6.1"
 ]
 black = [
-    "black==26.3.1",
+    "black==26.5.0",
     "flake8-pyproject==1.2.4",
     "flake8-bugbear==25.11.29",
     "isort==8.0.1"
@@ -93,7 +93,7 @@ test= [
     "pg8000==1.29.8",
     "pytest==9.0.3",
     "pytest-mock==3.15.1",
-    "tox==4.53.1",
+    "tox==4.54.0",
     "tox-uv==1.35.2",
     "coverage[toml]==7.14.1",
     "pytest-cov==7.1.0",
@@ -101,7 +101,7 @@ test= [
     "Pygments==2.20.0"
 ]
 dev = [
-    "ipython~=8.13",
+    "ipython==8.39.0",
     "python-semantic-release==10.5.3",
     {include-group = "pre-commit"},
     {include-group = "black"},
@@ -192,7 +192,7 @@ ignore_missing_imports = true
 [tool.hatch.envs.default.extra-scripts]
 setup-pre-commit = "pre-commit install"
 clean-all = [
-    "pip3 cache purge",
+    "uv cache clean",
     "rm -fr .tox/",
 	"rm -f .coverage",
 	"rm -f coverage.xml",
@@ -210,11 +210,6 @@ clean-all = [
 	"rm -fr .eggs/",
     "find . -name '*.egg-info' -exec rm -fr {{}} +",
 	"find . -name '*.egg' -exec rm -fr {{}} +"
-]
-run-pre-commit = [
-    "type pre-commit >/dev/null 2>&1 || ( echo >&2 'pre-commit not setup!'; exit 1; )",
-    "git diff --quiet || (echo 'Git staging is dirty!'; exit 1)",
-    "pre-commit run --all-files"
 ]
 check-integration = """rm -f /tmp/ligand.resp; \
     export RETRY_COUNT=0; \
@@ -312,12 +307,14 @@ gen-docs = [
 # This is an intentional duplicate of 'test' dependencies in order to fix a bug in hatch
 # KEEP THIS IN SYNC WITH TEST DEPENDENCIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 dependencies = [
+    "pg8000==1.29.8",
     "pytest==9.0.3",
     "pytest-mock==3.15.1",
-    "tox==4.53.1",
-    "coverage[toml]~=7.2",
+    "tox==4.54.0",
+    "tox-uv==1.35.2",
+    "coverage[toml]==7.14.1",
     "pytest-cov==7.1.0",
-    "pytest-flask-ligand==0.3.0",
+    "pytest-flask-ligand",
     "Pygments==2.20.0"
 ]
 
