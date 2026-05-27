@@ -74,7 +74,7 @@ pre-commit = [
     "pyproject-pre-commit==0.6.1"
 ]
 black = [
-    "black==26.5.0",
+    "black==26.5.1",
     "flake8-pyproject==1.2.4",
     "flake8-bugbear==25.11.29",
     "isort==8.0.1"
