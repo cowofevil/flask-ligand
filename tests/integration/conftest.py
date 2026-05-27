@@ -212,6 +212,9 @@ def app_test_client(basic_flask_app: Tuple[Flask, Api], migration_directory: str
 
     api.register_blueprint(BLP)
 
+    # Turn on testing flag so full stack traces are available in exceptions
+    app.testing = True
+
     yield app.test_client()
 
     # Teardown

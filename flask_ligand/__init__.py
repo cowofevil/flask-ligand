@@ -82,6 +82,6 @@ def create_app(
 
     views.register_blueprints(api)
 
-    app.cli.add_command(genclient)
+    app.cli.add_command(genclient)  # noqa
 
     return app, api

@@ -81,23 +81,21 @@ black = [
 ]
 mypy = [
     "mypy==2.1.0",
-    "types-Flask-Cors~=3.0",
-    "types-mock~=5.0",
-    "types-PyYAML~=6.0",
-    "types-requests~=2.28",
-    "types-setuptools~=67.7",
-    "types-smorest~=1.1",
-    "types-SQLAlchemy~=1.4",
-    "types-sqlalchemy-utils~=1.0",
+    "types-Flask-Cors==6.0.0.20260518",
+    "types-mock==5.2.0.20260518",
+    "types-PyYAML==6.0.12.20260518",
+    "types-requests==2.33.0.20260518",
+    "types-smorest==1.1.2",
+    "types-sqlalchemy-utils==1.1.0",
     "types-urllib3<1.27",
 ]
 test= [
-    "pg8000~=1.29",
+    "pg8000==1.29.8",
     "pytest==9.0.3",
     "pytest-mock==3.15.1",
     "tox==4.53.1",
     "tox-uv==1.35.2",
-    "coverage[toml]~=7.2",
+    "coverage[toml]==7.14.1",
     "pytest-cov==7.1.0",
     "pytest-flask-ligand",
     "Pygments==2.20.0"

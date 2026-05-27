@@ -62,6 +62,9 @@ def basic_flask_app(
 def app_test_client(basic_flask_app: tuple[Flask, Api]) -> FlaskClient:
     """Flask app test client."""
 
+    # Turn on testing flag so full stack traces are available in exceptions
+    basic_flask_app[0].testing = True
+
     return basic_flask_app[0].test_client()
 
 
