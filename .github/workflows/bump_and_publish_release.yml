@@ -47,7 +47,7 @@ jobs:
           push: true
           tag: true
           vcs_release: true
-          verbose: 1
+          verbosity: 1
           github_token: ${{ secrets.GITHUB_TOKEN }}
           git_committer_name: "github-actions"
           git_committer_email: "actions@users.noreply.github.com"
