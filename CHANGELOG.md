@@ -3,6 +3,28 @@ Changelog
 
 <!-- version list -->
 
+## v0.10.2 (2026-06-26)
+
+### :bug:
+
+- :bug: Update 'flask-cors' Dependency
+  ([`c0ac7cd`](https://github.com/cowofevil/flask-ligand/commit/c0ac7cdc8646df0c3363baafec5eda19ba01e9d3))
+
+### Other
+
+- Bump actions/checkout from 6 to 7
+  ([`507f2fe`](https://github.com/cowofevil/flask-ligand/commit/507f2fe798e00ed57638e8c2cfbb70ab91637175))
+
+- Bump codecov/codecov-action from 6 to 7
+  ([`1c038c0`](https://github.com/cowofevil/flask-ligand/commit/1c038c0dd0a2b7db511440f744d87d2846b58ddf))
+
+- Bump pg8000 from 1.29.8 to 1.31.5
+  ([`f06dd88`](https://github.com/cowofevil/flask-ligand/commit/f06dd883329fa358418d3b067b866385c96628eb))
+
+- Bump tox from 4.54.0 to 4.55.1
+  ([`73dc027`](https://github.com/cowofevil/flask-ligand/commit/73dc027eac6c45ac52411201824cbab7ff08c5c0))
+
+
 ## v0.10.1 (2026-05-27)
 
 ### :bug:
