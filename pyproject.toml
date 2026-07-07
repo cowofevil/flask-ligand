@@ -101,7 +101,7 @@ test= [
 ]
 dev = [
     "ipython==8.39.0",
-    "python-semantic-release==10.5.3",
+    "python-semantic-release==10.6.1",
     {include-group = "pre-commit"},
     {include-group = "black"},
     {include-group = "mypy"},
