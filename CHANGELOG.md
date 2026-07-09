@@ -3,6 +3,38 @@ Changelog
 
 <!-- version list -->
 
+## v0.10.3 (2026-07-09)
+
+### :bug:
+
+- :bug: Update Deps to Address CVE and Clarify Docs
+  ([`da15db2`](https://github.com/cowofevil/flask-ligand/commit/da15db285aaeb7d3d0ecd4127c72c7d52f9493a5))
+
+### Other
+
+- Bump coverage from 7.14.1 to 7.15.0
+  ([`c43a1ef`](https://github.com/cowofevil/flask-ligand/commit/c43a1ef7698f6b221451ff52dff9d1f9c00af490))
+
+- Bump cryptography from 48.0.0 to 49.0.0
+  ([`5c44792`](https://github.com/cowofevil/flask-ligand/commit/5c44792a2d52bc7ec6ac26254360cd8069160702))
+
+- Bump pytest from 9.0.3 to 9.1.1
+  ([`0adb5b1`](https://github.com/cowofevil/flask-ligand/commit/0adb5b1cad9864755ea810a5a2391306af94401c))
+
+- Bump python-semantic-release/publish-action from 10.5.3 to 10.6.1
+  ([`c8650c6`](https://github.com/cowofevil/flask-ligand/commit/c8650c674995672b709e12559c193503c01d9cf3))
+
+- Bump python-semantic-release/python-semantic-release from 10.5.3 to 10.6.1
+  ([#154](https://github.com/cowofevil/flask-ligand/pull/154),
+  [`36df931`](https://github.com/cowofevil/flask-ligand/commit/36df9311b2333f9d411edb449459906caacb4534))
+
+- Bump sqlalchemy from 2.0.50 to 2.0.51
+  ([`4058a1f`](https://github.com/cowofevil/flask-ligand/commit/4058a1fc7ff2c58a658e36164aab1b489ef7d297))
+
+- Bump tox from 4.55.1 to 4.56.1
+  ([`5cf4f8d`](https://github.com/cowofevil/flask-ligand/commit/5cf4f8d13d30c96354e79a4e91ea2f46b401b1f0))
+
+
 ## v0.10.2 (2026-06-26)
 
 ### :bug:
