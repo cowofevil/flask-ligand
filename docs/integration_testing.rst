@@ -26,4 +26,8 @@ Once the ``.env`` file has been generated you can start a local Flask server by 
 
 Simple navigate to http:://localhost:5000/apidocs to access the local environment via :swagger-ui:`SwaggerUI <>`.
 
+.. include:: ./quickstart.rst
+   :start-after: excerpt-start
+   :end-before: excerpt-end
+
 .. _Docker: https://www.docker.com/products/docker-desktop/

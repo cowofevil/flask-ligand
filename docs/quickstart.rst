@@ -25,7 +25,7 @@ Simple Example
 ==============
 
 Here is a basic “Petstore example” which is based on the :doc:`flask-smorest Quickstart example
-<flask-smorest:quickstart>`. (Which is a core library that ``flask-ligand`` is built upon)
+<flask-smorest:quickstart>` (Which is a core library that ``flask-ligand`` is built upon)
 
 Database Model
 --------------
@@ -567,6 +567,8 @@ file) that calls the example projects :func:`create_app <flask_ligand_example.cr
             print(f"Service initialization failure!\nReason: {e}")
             exit(1)
 
+.. excerpt-start
+
 Explore the App
 ===============
 
@@ -600,7 +602,7 @@ Now go ahead and start playing around with the API!
 Access Keycloak Admin Console
 -----------------------------
 
-If you would like to make changes to the `Keycloak`_ IAM clients to explore authentication then you can access the
+If you would like to make changes to the Keycloak_ IAM clients to explore authentication then you can access the
 admin console by navigating to 'http://localhost:8080/admin/master/console/'. The admin credentials can be found in the
 'docker/env_files/integration.env/' file.
 
@@ -613,5 +615,7 @@ the ``script.py.mako`` template in the ``migrations`` folder include an import f
 copying the `example project`_, then it is necessary you make the appropriate update to the ``script.py.mako`` template
 before using :doc:`Flask-Migrate <flask-migrate:index>`.
 
-.. _`example project`: https://github.com/cowofevil/flask-ligand-example
-.. _`Keycloak`: https://www.keycloak.org/
+.. _example project: https://github.com/cowofevil/flask-ligand-example
+.. _Keycloak: https://www.keycloak.org/
+
+.. excerpt-end
