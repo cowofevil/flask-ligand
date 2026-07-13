@@ -80,7 +80,7 @@ black = [
     "isort==8.0.1"
 ]
 mypy = [
-    "mypy==2.1.0",
+    "mypy==2.3.0",
     "types-mock==5.2.0.20260518",
     "types-PyYAML==6.0.12.20260518",
     "types-requests==2.33.0.20260518",
