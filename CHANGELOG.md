@@ -3,6 +3,31 @@ Changelog
 
 <!-- version list -->
 
+## v0.10.4 (2026-10-15)
+
+### :robot:
+
+- :robot: Update Core Dependencies
+  ([`743482c`](https://github.com/cowofevil/flask-ligand/commit/743482c63172feba8b35c76a086057bb411b0589))
+
+### Other
+
+- Bump actions/setup-python from 6 to 7
+  ([`a0dca86`](https://github.com/cowofevil/flask-ligand/commit/a0dca865e9ed162f310c94e2c01b45cc635b85b0))
+
+- Bump coverage from 7.15.0 to 7.15.2
+  ([`2ecfc62`](https://github.com/cowofevil/flask-ligand/commit/2ecfc62dbab8191ccc0b6992981bcefacd18ad4b))
+
+- Bump mypy from 2.1.0 to 2.3.0
+  ([`5531ad8`](https://github.com/cowofevil/flask-ligand/commit/5531ad8dc8462e277cb0a9a224a6bb0578aca7ad))
+
+- Bump types-pyyaml from 6.0.12.20260724 to 6.0.12.20260906
+  ([`421fc25`](https://github.com/cowofevil/flask-ligand/commit/421fc25ee50d859e86382b26d12cad977c93db4d))
+
+- Bump types-requests from 2.33.0.20260712 to 2.33.0.20261006
+  ([`395536a`](https://github.com/cowofevil/flask-ligand/commit/395536ac8b6e54f6fd04a3905c8d430fff55aea6))
+
+
 ## v0.10.3 (2026-07-09)
 
 ### :bug:
