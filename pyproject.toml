@@ -20,7 +20,7 @@ dependencies = [
     "Flask-JWT-Extended==4.7.4",
     "flask-smorest==0.47.0",
     "flask-sqlalchemy==3.1.1",
-    "gunicorn==26.0.0",
+    "gunicorn==26.2.0",
     "marshmallow-sqlalchemy==1.5.0",
     "python-dotenv==1.2.2",
     "requests==2.34.2",
