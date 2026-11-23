@@ -70,7 +70,7 @@ include = [
 
 [dependency-groups]
 pre-commit = [
-    "pre-commit==4.6.0",
+    "pre-commit==4.6.2",
     "pyproject-pre-commit==0.6.1"
 ]
 black = [
