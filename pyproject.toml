@@ -97,7 +97,7 @@ test= [
     "coverage[toml]==7.15.2",
     "pytest-cov==7.1.0",
     "pytest-flask-ligand",
-    "Pygments==2.20.0"
+    "Pygments==2.21.0"
 ]
 dev = [
     "ipython==8.39.0",
@@ -314,7 +314,7 @@ dependencies = [
     "coverage[toml]==7.15.2",
     "pytest-cov==7.1.0",
     "pytest-flask-ligand",
-    "Pygments==2.20.0"
+    "Pygments==2.21.0"
 ]
 
 [tool.hatch.envs.hatch-test.scripts]
